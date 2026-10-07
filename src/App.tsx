@@ -10,8 +10,11 @@ const App: React.FC = () => {
   const { currentAngle, setCurrentAngle, targetAngle, zone, zoneConfig } = useGoniometerState(0, 90);
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-8 p-6">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-8 p-6 font-sans">
       <WatchBezel>
+        <div className="absolute inset-0 flex items-center justify-center text-zinc-600 text-[10px] tracking-widest font-bold top-8 h-fit">
+          ARCO FISIO
+        </div>
         <div className="absolute inset-0 flex items-center justify-center">
           <GoniometerRing
             angle={currentAngle}
