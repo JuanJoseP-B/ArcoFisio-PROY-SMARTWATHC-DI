@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Chips de zona</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400..700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:"Roboto Flex",system-ui,sans-serif;color:#1F3A2B}
+.bezel{width:384px;height:384px;border-radius:50%;background:#000;padding:12px;box-shadow:0 0 0 3px #9A9C9A,0 18px 40px rgba(31,58,43,.25)}
+.screen{position:relative;width:384px;height:384px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#F8EEDD 0%,#EBD6B0 100%);overflow:hidden}
+.glass{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 28% 18%,rgba(255,255,255,.55),rgba(255,255,255,0) 42%);pointer-events:none}
+.chip{display:flex;align-items:center;gap:10px;height:44px;padding:0 18px 0 12px;border-radius:999px;font-size:15px;font-weight:600;box-sizing:border-box;width:236px;animation:in 500ms cubic-bezier(.05,.7,.1,1) both}
+.c2{animation-delay:90ms}.c3{animation-delay:180ms}.c4{animation-delay:270ms}
+@keyframes in{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+.fb{transform-box:fill-box;transform-origin:center}
+.fly{animation:fly 1.2s cubic-bezier(.2,0,0,1) infinite}
+@keyframes fly{0%{transform:translateX(-3px);opacity:1}60%{transform:translateX(6px);opacity:0}61%{transform:translateX(-3px);opacity:0}100%{transform:translateX(-3px);opacity:1}}
+.buzz{animation:buzz 130ms linear infinite}
+@keyframes buzz{0%,100%{transform:translateX(0)}25%{transform:translateX(1.2px)}75%{transform:translateX(-1.2px)}}
+.shake{animation:shake 900ms ease-in-out infinite}
+@keyframes shake{0%,40%,100%{transform:rotate(0)}10%{transform:rotate(-8deg)}20%{transform:rotate(7deg)}30%{transform:rotate(-4deg)}}
+.droop{transform-box:fill-box;transform-origin:left center;animation:droop 900ms ease-in-out infinite}
+@keyframes droop{0%,100%{transform:rotate(18deg)}50%{transform:rotate(26deg)}}
+.breathe{animation:breathe 1600ms ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(.86)}50%{transform:scale(1.04)}}
+</style>
+</helmet>
+<div style="width: 440px; height: 440px; display: flex; align-items: center; justify-content: center; background: #E9DCC4">
+<div class="bezel">
+<div class="screen">
+<svg class="layer" style="position:absolute;left:0;top:0" width="384" height="384" viewBox="0 0 384 384" aria-hidden="true"><defs><pattern id="bd1" patternUnits="userSpaceOnUse" width="32" height="28"><path d="M0 28 L16 6 L32 28 Z" fill="#B5532F"></path><path d="M10 28 L16 19 L22 28 Z" fill="#F6EBD9"></path><rect x="14" y="0" width="4" height="4" fill="#2F7F86"></rect></pattern></defs><g opacity="0.12"><rect x="0" y="0" width="384" height="56" fill="url(#bd1)"></rect><rect x="0" y="328" width="384" height="56" fill="url(#bd1)" transform="rotate(180 192 356)"></rect></g></svg>
+<div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px">
+<div style="font-size: 13px; line-height: 16px; font-weight: 500; color: #5C5140; margin-bottom: 4px">Zonas de movimiento</div>
+<div class="chip" style="background: #DDE7CF; color: #2F6B3F">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 3 Q19 12 7 21"></path><line x1="7" y1="3" x2="7" y2="21" stroke-width="1"></line><g class="fly"><line x1="3" y1="12" x2="20" y2="12"></line><path d="M17 9 L21 12 L17 15"></path></g></svg>
+Óptima</div>
+<div class="chip c2" style="background: #F3DFB5; color: #8A5A12">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 3 Q19 12 7 21"></path><g class="buzz"><path d="M7 3 L3 12 L7 21" stroke-width="1"></path><line x1="3" y1="12" x2="20" y2="12"></line><path d="M17 9 L21 12 L17 15"></path></g></svg>
+Precaución</div>
+<div class="chip c3" style="background: #F4D3C8; color: #A3392D">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><g class="fb shake"><path d="M7 3 Q19 12 7 21"></path><line x1="7" y1="3" x2="7" y2="21" stroke-width="1"></line></g><g class="droop"><line x1="5" y1="12" x2="18" y2="12"></line><path d="M15 9 L18 12 L15 15"></path></g></svg>
+Dolor</div>
+<div class="chip c4" style="background: #DCE4E3; color: #3E5F6A">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><g class="fb breathe"><path d="M5 8 Q12 20 19 8"></path><line x1="5" y1="8" x2="19" y2="8" stroke-width="1"></line></g></svg>
+Descanso</div>
+</div>
+<div class="glass"></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":440,"height":440}}'>
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

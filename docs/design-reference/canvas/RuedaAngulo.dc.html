@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Rueda de ángulo</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400..700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:"Roboto Flex",system-ui,sans-serif;color:#1F3A2B}
+.bezel{width:384px;height:384px;border-radius:50%;background:#000;padding:12px;box-shadow:0 0 0 3px #9A9C9A,0 18px 40px rgba(31,58,43,.25)}
+.screen{position:relative;width:384px;height:384px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#F8EEDD 0%,#EBD6B0 100%);overflow:hidden}
+.glass{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 28% 18%,rgba(255,255,255,.55),rgba(255,255,255,0) 42%);pointer-events:none}
+.layer{position:absolute;left:0;top:0}
+.wheel{transform-box:view-box;transform-origin:192px 192px;transition:transform 180ms cubic-bezier(.34,1.56,.64,1)}
+.nock{animation:nock 650ms cubic-bezier(.2,0,0,1) infinite}
+@keyframes nock{0%{transform:translateY(-5px)}35%{transform:translateY(2px)}100%{transform:translateY(0)}}
+</style>
+</helmet>
+<div style="width: 440px; height: 440px; display: flex; align-items: center; justify-content: center; background: #E9DCC4">
+<div class="bezel">
+<div class="screen">
+<svg class="layer" style="position:absolute;left:0;top:0" width="384" height="384" viewBox="0 0 384 384" aria-hidden="true"><g opacity="0.13"><path d="M192 192 L183 0 L201 0 Z" transform="rotate(0 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(15 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(30 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(45 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(60 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(75 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(90 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(105 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(120 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(135 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(150 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(165 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(180 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(195 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(210 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(225 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(240 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(255 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(270 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(285 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(300 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(315 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(330 192 192)" fill="#C8902E"></path><path d="M192 192 L183 0 L201 0 Z" transform="rotate(345 192 192)" fill="#C8902E"></path><circle cx="192" cy="192" r="120" fill="none" stroke="#7A4E14" stroke-width="2"></circle><circle cx="192" cy="192" r="104" fill="none" stroke="#7A4E14" stroke-width="1" stroke-dasharray="3 6"></circle></g></svg>
+<svg class="layer" width="384" height="384" viewBox="0 0 384 384" aria-hidden="true">
+<circle cx="192" cy="192" r="158" fill="none" stroke="#E3CA9C" stroke-width="28"></circle>
+<g class="wheel" style="transform: rotate({{rot}}deg)">
+<sc-for list="{{ticks}}" as="tk" hint-placeholder-count="72">
+<line x1="{{tk.x1}}" y1="{{tk.y1}}" x2="{{tk.x2}}" y2="{{tk.y2}}" stroke="{{tk.c}}" stroke-width="2" stroke-linecap="round"></line>
+</sc-for>
+<sc-for list="{{labels}}" as="lb" hint-placeholder-count="7">
+<text x="{{lb.x}}" y="{{lb.y}}" transform="{{lb.tr}}" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="500" fill="#5C5140">{{lb.t}}</text>
+</sc-for>
+</g>
+<g class="nock">
+<line x1="192" y1="2" x2="192" y2="30" stroke="#7A4E14" stroke-width="4" stroke-linecap="round"></line>
+<path d="M 192 46 L 182 26 L 192 31 L 202 26 Z" fill="#7A4E14"></path>
+</g>
+</svg>
+<div class="layer" style="width: 384px; height: 384px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding-top: 24px; box-sizing: border-box">
+<div style="font-size: 13px; line-height: 16px; font-weight: 500; color: #5C5140">Ángulo objetivo</div>
+<div style="font-size: 72px; line-height: 72px; font-weight: 600; font-variant-numeric: tabular-nums">{{v}}°</div>
+<div style="font-size: 11px; line-height: 14px; font-weight: 500; color: #7A4E14">Detenciones cada 5°</div>
+</div>
+<div class="glass"></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":440,"height":440}}'>
+class Component extends DCLogic {
+componentDidMount() {
+  const seq = [];
+  for (let v = 90; v <= 150; v += 5) seq.push(v);
+  for (let v = 145; v > 90; v -= 5) seq.push(v);
+  this.seq = seq; this.i = 0;
+  this.iv = setInterval(() => { this.i = (this.i + 1) % this.seq.length; this.forceUpdate(); }, 650);
+  this.forceUpdate();
+}
+componentWillUnmount() { clearInterval(this.iv); }
+renderVals() {
+  const v = this.seq ? this.seq[this.i] : 90;
+  const P = (a, r) => { const x = a * Math.PI / 180; return [192 + r * Math.sin(x), 192 - r * Math.cos(x)]; };
+  const ticks = [], labels = [];
+  for (let k = 0; k < 72; k++) {
+    const a = k * 5, major = a % 30 === 0;
+    const p1 = P(a, major ? 146 : 154), p2 = P(a, 168);
+    ticks.push({ x1: p1[0].toFixed(1), y1: p1[1].toFixed(1), x2: p2[0].toFixed(1), y2: p2[1].toFixed(1), c: major ? '#1F3A2B' : '#C8902E' });
+    if (major && a <= 180) { const q = P(a, 128); labels.push({ x: q[0].toFixed(1), y: q[1].toFixed(1), t: a + '°', tr: 'rotate(' + a + ' ' + q[0].toFixed(1) + ' ' + q[1].toFixed(1) + ')' }); }
+  }
+  return { v, rot: -v, ticks, labels };
+}
+}
+</script>
+</body>
+</html>

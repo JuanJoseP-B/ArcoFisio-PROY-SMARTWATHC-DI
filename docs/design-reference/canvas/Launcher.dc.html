@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Launcher hexagonal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400..700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:"Roboto Flex",system-ui,sans-serif;color:#1F3A2B}
+.bezel{width:384px;height:384px;border-radius:50%;background:#000;padding:12px;box-shadow:0 0 0 3px #9A9C9A,0 18px 40px rgba(31,58,43,.25)}
+.screen{position:relative;width:384px;height:384px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#F8EEDD 0%,#EBD6B0 100%);overflow:hidden}
+.glass{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 28% 18%,rgba(255,255,255,.55),rgba(255,255,255,0) 42%);pointer-events:none}
+.cell{position:absolute;width:84px;height:96px;margin:-48px 0 0 -42px;transition:transform 300ms cubic-bezier(.34,1.35,.64,1),filter 300ms}
+.hex{width:84px;height:96px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:background-color 180ms,color 180ms}
+</style>
+</helmet>
+<div style="width: 440px; height: 440px; display: flex; align-items: center; justify-content: center; background: #E9DCC4">
+<div class="bezel">
+<div class="screen">
+<svg class="layer" style="position:absolute;left:0;top:0" width="384" height="384" viewBox="0 0 384 384" aria-hidden="true"><defs><pattern id="bd2" patternUnits="userSpaceOnUse" width="32" height="28"><path d="M0 28 L16 6 L32 28 Z" fill="#B5532F"></path><path d="M10 28 L16 19 L22 28 Z" fill="#F6EBD9"></path><rect x="14" y="0" width="4" height="4" fill="#2F7F86"></rect></pattern></defs><g opacity="0.12"><rect x="0" y="0" width="384" height="56" fill="url(#bd2)"></rect><rect x="0" y="328" width="384" height="56" fill="url(#bd2)" transform="rotate(180 192 356)"></rect></g></svg>
+<sc-for list="{{cells}}" as="c" hint-placeholder-count="7">
+<div class="cell" style="left: {{c.x}}px; top: {{c.y}}px; transform: scale({{c.s}}); filter: {{c.f}}; z-index: {{c.z}}">
+<div class="hex" style="background: {{c.bg}}; color: {{c.fg}}">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{c.d}}"></path></svg>
+<div style="font-size: 11px; line-height: 14px; font-weight: 600">{{c.t}}</div>
+</div>
+</div>
+</sc-for>
+<div class="glass"></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":440,"height":440}}'>
+class Component extends DCLogic {
+componentDidMount() { this.k = 0; this.iv = setInterval(() => { this.k = (this.k + 1) % 7; this.forceUpdate(); }, 1300); }
+componentWillUnmount() { clearInterval(this.iv); }
+renderVals() {
+  const defs = [
+    { dx: 0, dy: 0, t: 'Medir', d: 'M8 4 Q20 12 8 20 M8 4 L8 20 M4 12 L21 12 M18 9 L21 12 L18 15' },
+    { dx: 96, dy: 0, t: 'Sesión', d: 'M4 18 A10 10 0 0 1 20 10 M16 7 L20 10 L16 13' },
+    { dx: -96, dy: 0, t: 'Rutinas', d: 'M7 21 L10 8 L16 8 L19 21 Z M10 8 L8 3 M13 8 L13 2 M16 8 L18 3' },
+    { dx: 48, dy: -83, t: 'Resumen', d: 'M12 3 A9 9 0 1 0 12.01 3 M12 8 A4 4 0 1 0 12.01 8 M12 12 L12.01 12' },
+    { dx: -48, dy: -83, t: 'Dolor', d: 'M4 18 A9 9 0 0 1 20 18 M12 5 L12 10 M9 6 L10.5 10 M15 6 L13.5 10' },
+    { dx: 48, dy: 83, t: 'Guía IA', d: 'M12 3 L13.5 10.5 L21 12 L13.5 13.5 L12 21 L10.5 13.5 L3 12 L10.5 10.5 Z' },
+    { dx: -48, dy: 83, t: 'Ajustes', d: 'M4 7 L20 7 M4 17 L20 17 M9 4 L9 10 M15 14 L15 20' }
+  ];
+  const order = [0, 3, 1, 5, 6, 2, 4];
+  const f = order[this.k || 0];
+  const fx = defs[f].dx, fy = defs[f].dy;
+  const cells = defs.map((c, i) => {
+    const on = i === f;
+    const dist = Math.hypot(c.dx - fx, c.dy - fy);
+    const s = on ? 1.2 : dist < 100 ? .94 : .82;
+    return { ...c, x: 192 + c.dx, y: 192 + c.dy, s, z: on ? 2 : 1,
+      f: on ? 'drop-shadow(0 6px 18px rgba(31,58,43,.18))' : 'none',
+      bg: on ? '#1F3A2B' : '#EDD9B4', fg: on ? '#EDD9B4' : '#1F3A2B' };
+  });
+  return { cells };
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Temporizador de descanso</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400..700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:"Roboto Flex",system-ui,sans-serif;color:#1F3A2B}
+.bezel{width:384px;height:384px;border-radius:50%;background:#000;padding:12px;box-shadow:0 0 0 3px #9A9C9A,0 18px 40px rgba(31,58,43,.25)}
+.screen{position:relative;width:384px;height:384px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#F8EEDD 0%,#EBD6B0 100%);overflow:hidden}
+.glass{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 28% 18%,rgba(255,255,255,.55),rgba(255,255,255,0) 42%);pointer-events:none}
+.layer{position:absolute;left:0;top:0}
+.halo{animation:halo 1600ms ease-in-out infinite}
+@keyframes halo{0%,100%{opacity:.35}50%{opacity:.9}}
+</style>
+</helmet>
+<div style="width: 440px; height: 440px; display: flex; align-items: center; justify-content: center; background: #E9DCC4">
+<div class="bezel">
+<div class="screen">
+<svg class="layer" style="position:absolute;left:0;top:0" width="384" height="384" viewBox="0 0 384 384" aria-hidden="true"><g opacity="0.16"><circle cx="270" cy="250" r="54" fill="#C8902E"></circle><path d="M0 300 Q70 240 140 290 Q210 230 290 285 Q340 260 384 280 L384 384 L0 384 Z" fill="#B5803F"></path><path d="M0 330 Q90 290 190 325 Q290 300 384 320 L384 384 L0 384 Z" fill="#7A4E14"></path><path d="M20 384 Q24 340 28 338" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M33 384 Q37 340 27 339" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M46 384 Q50 340 54 340" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M59 384 Q63 340 67 341" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M72 384 Q76 340 66 342" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M85 384 Q89 340 93 343" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M98 384 Q102 340 106 344" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M111 384 Q115 340 105 345" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M124 384 Q128 340 132 346" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M137 384 Q141 340 145 347" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M150 384 Q154 340 144 318" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M163 384 Q167 340 171 319" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M176 384 Q180 340 184 320" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M189 384 Q193 340 183 321" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M202 384 Q206 340 210 322" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M215 384 Q219 340 223 323" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M228 384 Q232 340 222 324" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M241 384 Q245 340 249 325" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M254 384 Q258 340 262 326" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M267 384 Q271 340 261 327" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M280 384 Q284 340 288 328" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M293 384 Q297 340 301 329" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M306 384 Q310 340 300 330" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M319 384 Q323 340 327 331" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M332 384 Q336 340 340 332" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M345 384 Q349 340 339 333" stroke="#7A4E14" stroke-width="2" fill="none"></path><path d="M358 384 Q362 340 366 334" stroke="#7A4E14" stroke-width="2" fill="none"></path></g></svg>
+<svg class="layer" width="384" height="384" viewBox="0 0 384 384" aria-hidden="true">
+<circle class="halo" cx="192" cy="192" r="164" fill="none" stroke="#DCE4E3" stroke-width="28"></circle>
+<circle cx="192" cy="192" r="164" fill="none" stroke="#E3CA9C" stroke-width="14"></circle>
+<circle cx="192" cy="192" r="164" fill="none" stroke="{{ringC}}" stroke-width="14" stroke-linecap="round" stroke-dasharray="1030.44" stroke-dashoffset="{{off}}" transform="rotate(-90 192 192)"></circle>
+<path d="M 132 140 Q 192 70 252 140" fill="none" stroke="#1F3A2B" stroke-width="6" stroke-linecap="round"></path>
+<path d="M 132 140 L 192 {{sy}} L 252 140" fill="none" stroke="#5C5140" stroke-width="2" stroke-linejoin="round"></path>
+<g opacity="{{aop}}">
+<line x1="192" y1="{{at}}" x2="192" y2="{{sy}}" stroke="#1F3A2B" stroke-width="3" stroke-linecap="round"></line>
+<path d="M 192 {{ah}} l -7 12 l 7 -3 l 7 3 Z" fill="#1F3A2B"></path>
+</g>
+</svg>
+<div class="layer" style="width: 384px; height: 384px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; padding-bottom: 92px; box-sizing: border-box">
+<div style="font-size: 13px; line-height: 16px; font-weight: 500; color: #3E5F6A">{{label}}</div>
+<div style="font-size: 72px; line-height: 72px; font-weight: 600; font-variant-numeric: tabular-nums">{{time}}</div>
+</div>
+<div class="glass"></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":440,"height":440}}'>
+class Component extends DCLogic {
+componentDidMount() { this.t0 = Date.now(); this.iv = setInterval(() => this.forceUpdate(), 33); }
+componentWillUnmount() { clearInterval(this.iv); }
+renderVals() {
+  const C = 1030.44, run = 8000, total = 10000;
+  const el = (Date.now() - (this.t0 || Date.now())) % total;
+  const p = Math.min(el / run, 1);
+  const left = Math.ceil(30 * (1 - p));
+  let sy = 140 + 34 * p, shaft = 168, aop = 1;
+  if (el >= run) {
+    const q = (el - run) / 600;
+    sy = 140 + 34 * Math.max(0, 1 - q * 4) + (q < .5 ? Math.sin(q * 40) * 6 * (1 - q * 2) : 0);
+    shaft = 168 + 34 - 260 * Math.min(q, 1);
+    aop = q < 1 ? 1 - q : 0;
+  } else { shaft = sy; }
+  const tip = shaft - 74;
+  return {
+    off: (C * p).toFixed(2),
+    ringC: el >= run ? '#2F6B3F' : '#3E5F6A',
+    sy: sy.toFixed(1), at: (tip + 10).toFixed(1), ah: tip.toFixed(1), aop: aop.toFixed(2),
+    time: el >= run ? '¡Listo!' : '0:' + String(left).padStart(2, '0'),
+    label: el >= run ? 'Siguiente serie' : 'Descanso'
+  };
+}
+}
+</script>
+</body>
+</html>
