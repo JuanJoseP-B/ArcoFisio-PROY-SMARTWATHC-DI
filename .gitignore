@@ -1,4 +1,10 @@
 node_modules
 dist
+coverage
 *.local
 *.tsbuildinfo
+.vercel
+.env*
+.DS_Store
+Thumbs.db
+.claude/settings.local.json

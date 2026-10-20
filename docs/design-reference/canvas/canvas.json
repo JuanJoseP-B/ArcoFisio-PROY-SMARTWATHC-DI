@@ -1,0 +1,17 @@
+{"v":3,"createdOnFiles":{"v":1,"at":"2026-10-19T15:00:00Z"},"title":"Arco Fisio · Animaciones","launch":{"view":"canvas"},"pages":[],
+"boards":{
+"Main.dc.html":{"x":0,"y":0,"w":440,"h":440,"title":"01 · Intro"},
+"Goniometro.dc.html":{"x":520,"y":0,"w":440,"h":440,"title":"02 · Goniómetro"},
+"RuedaAngulo.dc.html":{"x":1040,"y":0,"w":440,"h":440,"title":"03 · Rueda de ángulo"},
+"ArcoDoloroso.dc.html":{"x":1560,"y":0,"w":440,"h":440,"title":"04 · Arco doloroso"},
+"ChipZona.dc.html":{"x":0,"y":560,"w":440,"h":440,"title":"05 · Chips de zona"},
+"Progreso.dc.html":{"x":520,"y":560,"w":440,"h":440,"title":"06 · Progreso por pasos"},
+"Temporizador.dc.html":{"x":1040,"y":560,"w":440,"h":440,"title":"07 · Temporizador de descanso"},
+"Launcher.dc.html":{"x":1560,"y":560,"w":440,"h":440,"title":"08 · Launcher hexagonal"},
+"Boton.dc.html":{"x":0,"y":1120,"w":440,"h":440,"title":"09 · Botón píldora"},
+"Lista.dc.html":{"x":520,"y":1120,"w":440,"h":440,"title":"10 · Tarjetas y lista"},
+"Resumen.dc.html":{"x":1040,"y":1120,"w":440,"h":440,"title":"11 · Resumen"}
+},
+"order":["Main.dc.html","Goniometro.dc.html","RuedaAngulo.dc.html","ArcoDoloroso.dc.html","ChipZona.dc.html","Progreso.dc.html","Temporizador.dc.html","Launcher.dc.html","Boton.dc.html","Lista.dc.html","Resumen.dc.html"],
+"notes":{"t1":{"x":0,"y":-300,"text":"Arco Fisio · el arco como identidad","kind":"title1","maxW":2000}},
+"designSystems":[{"title":"Arco Fisio","namespace":"arco-fisio","artifact":"https://claude.ai/code/artifact/9c9993f2-7e83-4b9e-addc-3e40db3e3178","version":null,"copiedAt":"2026-10-19T15:00:00Z"}]}

@@ -1,0 +1,29 @@
+.confirm {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  width: var(--af-touch-min);
+  height: var(--af-touch-min);
+  margin-left: calc(var(--af-touch-min) / -2);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--af-color-ink);
+  color: var(--af-color-ink-on-primary);
+  cursor: pointer;
+  transition: transform var(--af-dur-instant);
+}
+
+.confirm:active {
+  transform: scale(0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confirm,
+  .confirm:active {
+    transition: none;
+    transform: none;
+  }
+}

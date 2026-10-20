@@ -1,0 +1,35 @@
+.face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--af-space-2);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--af-color-ink);
+  cursor: pointer;
+}
+
+.time {
+  font-size: var(--af-type-display-size);
+  line-height: var(--af-type-display-line);
+  font-weight: var(--af-type-display-weight);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.date {
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-color-ink-muted);
+  white-space: nowrap;
+}
+
+.date::first-letter {
+  text-transform: uppercase;
+}

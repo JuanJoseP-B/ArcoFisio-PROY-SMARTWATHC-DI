@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Intro Arco Fisio</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Roboto+Flex:opsz,wght@8..144,400..700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:"Roboto Flex",system-ui,sans-serif;color:#1F3A2B}
+.bezel{width:384px;height:384px;border-radius:50%;background:#000;padding:12px;box-shadow:0 0 0 3px #9A9C9A,0 18px 40px rgba(31,58,43,.25)}
+.screen{position:relative;width:384px;height:384px;border-radius:50%;background:#F6EBD9;overflow:hidden}
+.glass{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 28% 18%,rgba(255,255,255,.55),rgba(255,255,255,0) 42%);pointer-events:none}
+.layer{position:absolute;left:0;top:0}
+</style>
+</helmet>
+<div style="width: 440px; height: 440px; display: flex; align-items: center; justify-content: center; background: #E9DCC4">
+<div class="bezel">
+<div class="screen">
+<svg class="layer" width="384" height="384" viewBox="0 0 384 384" aria-hidden="true">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D98A3A"></stop><stop offset="0.55" stop-color="#EDBE72"></stop><stop offset="1" stop-color="#F6DFAE"></stop></linearGradient>
+<pattern id="bead" patternUnits="userSpaceOnUse" width="24" height="16"><path d="M0 16 L12 2 L24 16 Z" fill="#B5532F"></path><path d="M8 16 L12 10 L16 16 Z" fill="#EDD9B4"></path><rect x="10" y="0" width="4" height="3" fill="#2F7F86"></rect></pattern>
+</defs>
+<g opacity="{{sceneOp}}">
+<rect x="0" y="0" width="384" height="384" fill="url(#sky)"></rect>
+<circle cx="262" cy="{{sunY}}" r="86" fill="#F8E7BE" opacity="0.35"></circle>
+<circle cx="262" cy="{{sunY}}" r="58" fill="#FBF0D2"></circle>
+<path d="M0 268 Q60 226 120 258 Q190 212 260 252 Q320 228 384 246 L384 384 L0 384 Z" fill="#B5803F" opacity="0.55"></path>
+<path d="M0 292 Q100 270 200 290 Q300 276 384 288 L384 384 L0 384 Z" fill="#9C6B2E"></path>
+<g transform="translate({{manX}} 0)" opacity="{{manOp}}">
+<sc-for list="{{trail}}" as="f" hint-placeholder-count="7">
+<g transform="{{f.tr}}"><path d="M0 -6 Q-6 -24 0 -44 Q6 -24 0 -6 Z" fill="#F3E9D8" stroke="#2A1C12" stroke-width="0.8"></path><path d="M-3.5 -36 Q0 -48 3.5 -36 Q0 -40 -3.5 -36 Z" fill="#2A1C12"></path></g>
+</sc-for>
+<sc-for list="{{fan}}" as="f" hint-placeholder-count="13">
+<g transform="{{f.tr}}"><path d="M0 -8 Q-7 -30 0 -56 Q7 -30 0 -8 Z" fill="#F3E9D8" stroke="#2A1C12" stroke-width="0.8"></path><path d="M-4.5 -46 Q0 -62 4.5 -46 Q0 -51 -4.5 -46 Z" fill="#2A1C12"></path><line x1="0" y1="-8" x2="0" y2="-18" stroke="#B5532F" stroke-width="3"></line></g>
+</sc-for>
+<path d="M144 122 Q130 160 132 214 L142 214 Q142 170 154 134 Z" fill="#1E140E"></path>
+<path d="M156 216 L172 258 L186 296 M148 216 L134 258 L120 296" fill="none" stroke="#C9AE86" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M136 150 Q152 143 168 150 L174 224 L132 224 Z" fill="#D9C3A0"></path>
+<path d="M134 230 L136 240 M142 230 L143 242 M150 230 L150 242 M158 230 L157 242 M166 230 L165 240 M172 228 L172 238" stroke="#C9AE86" stroke-width="2"></path>
+<rect x="134" y="196" width="40" height="7" fill="url(#bead)"></rect>
+<path d="M134 150 Q148 145 160 150 L152 234 L126 240 Z" fill="#A6402A"></path>
+<path d="M131 196 L156 192" stroke="#C8902E" stroke-width="4"></path>
+<path d="M164 156 L198 148" stroke="#D9C3A0" stroke-width="12" stroke-linecap="round"></path>
+<path d="M176 160 L178 168 M184 158 L186 166 M192 156 L194 164" stroke="#C9AE86" stroke-width="1.5"></path>
+<path d="M198 148 L232 140" stroke="#8A5233" stroke-width="8" stroke-linecap="round"></path>
+<path d="M224 78 Q264 140 224 202" fill="none" stroke="#5A3A1E" stroke-width="6" stroke-linecap="round"></path>
+<rect x="238" y="132" width="8" height="16" rx="3" fill="#C8902E"></rect>
+<path d="M224 78 L {{nx}} 140 L 224 202" fill="none" stroke="#F3E9D8" stroke-width="1.4" stroke-linejoin="round"></path>
+<path d="M158 156 L {{ex}} {{ey}} L {{nx}} 140" fill="none" stroke="#8A5233" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+<circle cx="154" cy="128" r="15" fill="#8A5233"></circle>
+<path d="M167 124 L173 131 L167 134 Z" fill="#8A5233"></path>
+<path d="M146 116 Q154 110 164 116 L162 122 Q152 118 144 122 Z" fill="#1E140E"></path>
+<rect x="139" y="118" width="29" height="6" fill="url(#bead)"></rect>
+<path d="M160 140 Q162 160 158 182" stroke="#1E140E" stroke-width="4" fill="none" stroke-linecap="round"></path>
+</g>
+<g opacity="{{arOp}}" transform="translate({{arX}} {{arY}})">
+<line x1="0" y1="140" x2="96" y2="140" stroke="#2A1C12" stroke-width="3" stroke-linecap="round"></line>
+<path d="M104 140 L92 133 L95 140 L92 147 Z" fill="#2A1C12"></path>
+<path d="M2 140 L-6 133 M2 140 L-6 147 M8 140 L0 133 M8 140 L0 147" stroke="#B5532F" stroke-width="2.5" stroke-linecap="round"></path>
+</g>
+<g transform="{{floatTr}}" opacity="{{floatOp}}"><path d="M0 -8 Q-7 -30 0 -56 Q7 -30 0 -8 Z" fill="#F3E9D8" stroke="#2A1C12" stroke-width="0.8"></path><path d="M-4.5 -46 Q0 -62 4.5 -46 Q0 -51 -4.5 -46 Z" fill="#2A1C12"></path></g>
+<sc-for list="{{grass}}" as="g" hint-placeholder-count="46">
+<path d="{{g.d}}" stroke="{{g.c}}" stroke-width="3" fill="none" stroke-linecap="round"></path>
+</sc-for>
+</g>
+<circle cx="192" cy="192" r="{{irisR}}" fill="#1F3A2B"></circle>
+<g opacity="{{ringOp}}">
+<circle cx="192" cy="192" r="170" fill="none" stroke="#345A43" stroke-width="10"></circle>
+<circle cx="192" cy="192" r="170" fill="none" stroke="#C8902E" stroke-width="10" stroke-linecap="round" stroke-dasharray="1068" stroke-dashoffset="{{ringOff}}" transform="rotate(-90 192 192)"></circle>
+<rect x="92" y="262" width="200" height="16" fill="url(#bead)" opacity="0.9"></rect>
+</g>
+</svg>
+<div class="layer" style="width: 384px; height: 384px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding-bottom: 20px; box-sizing: border-box; opacity: {{wOp}}; transform: translateY({{wY}}px)">
+<div style="font-family: Cinzel, serif; font-size: 52px; line-height: 56px; font-weight: 700; letter-spacing: 0.1em; padding-left: 0.1em; color: #EDD9B4">ARCO</div>
+<svg width="130" height="14" viewBox="0 0 130 14" aria-hidden="true"><line x1="12" y1="7" x2="118" y2="7" stroke="#C8902E" stroke-width="2"></line><path d="M126 7 L114 1 L117 7 L114 13 Z" fill="#C8902E"></path><path d="M12 7 L4 1 M12 7 L4 13 M19 7 L11 1 M19 7 L11 13" stroke="#B5532F" stroke-width="2" stroke-linecap="round"></path></svg>
+<div style="font-family: Cinzel, serif; font-size: 26px; line-height: 30px; font-weight: 500; letter-spacing: 0.42em; padding-left: 0.42em; color: #C8902E">FISIO</div>
+<div style="margin-top: 6px; font-size: 13px; line-height: 16px; font-weight: 500; color: #D9C3A0">Cada grado cuenta</div>
+</div>
+<div class="glass"></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":440,"height":440}}'>
+class Component extends DCLogic {
+componentDidMount() { this.t0 = Date.now(); this.iv = setInterval(() => this.forceUpdate(), 33); }
+componentWillUnmount() { clearInterval(this.iv); }
+renderVals() {
+  const T = 9000, now = Date.now();
+  const ms = now - (this.t0 || now);
+  const p = (ms % T) / T, s = ms / 1000;
+  const cl = (x) => Math.max(0, Math.min(1, x));
+  const io = (x) => { x = cl(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+  const out = (x) => 1 - Math.pow(1 - cl(x), 3);
+  const R = (a, b) => cl((p - a) / (b - a));
+  const fan = [];
+  for (let i = 0; i < 13; i++) {
+    const th = 12 - i * 13 + Math.sin(s * 2.2 + i * .6) * 2.5;
+    fan.push({ tr: 'translate(150 124) rotate(' + th.toFixed(1) + ')' });
+  }
+  const trail = [];
+  for (let i = 0; i < 7; i++) {
+    const th = -128 + Math.sin(s * 2 + i) * 4;
+    trail.push({ tr: 'translate(' + (134 - i * 1.5) + ' ' + (150 + i * 16) + ') rotate(' + th.toFixed(1) + ') scale(.8)' });
+  }
+  const grass = [];
+  for (let i = 0; i < 46; i++) {
+    const x = i * 8.6 + (i % 2) * 3, h = 52 + (i * 37) % 44;
+    const sw = Math.sin(s * 1.8 + i * .45) * 7 + 3;
+    const ty = 384 - h;
+    grass.push({ d: 'M' + x.toFixed(1) + ' 392 Q' + (x + sw / 2).toFixed(1) + ' ' + (392 - h / 2).toFixed(1) + ' ' + (x + sw).toFixed(1) + ' ' + ty, c: ['#7A4E14', '#9C6B2E', '#B5803F'][i % 3] });
+  }
+  let d = io(R(.22, .42));
+  if (p >= .46) { const q = R(.46, .54); d = q < 1 ? Math.sin(q * 26) * .12 * (1 - q) : 0; }
+  const dd = Math.max(d, 0);
+  const nx = 224 - 52 * d;
+  let arX = nx, arY = 0, arOp = R(.14, .2);
+  if (p >= .46) { const q = R(.46, .52); arX = 172 + 440 * q * q; arY = -70 * q; arOp = q < 1 ? 1 : 0; }
+  const fq = R(.46, .66);
+  const floatTr = 'translate(' + (150 + 110 * fq).toFixed(1) + ' ' + (110 - 30 * Math.sin(fq * 3)).toFixed(1) + ') rotate(' + (-40 + 220 * fq).toFixed(1) + ')';
+  const manIn = out(R(.05, .18));
+  const fin = 1 - R(.94, 1);
+  return {
+    fan, trail, grass,
+    sceneOp: R(0, .07).toFixed(2), sunY: (230 - 70 * out(R(0, .18))).toFixed(1),
+    manX: (-40 * (1 - manIn)).toFixed(1), manOp: manIn.toFixed(2),
+    nx: nx.toFixed(1), ex: (186 - 58 * dd).toFixed(1), ey: (160 - 14 * dd).toFixed(1),
+    arX: arX.toFixed(1), arY: arY.toFixed(1), arOp: arOp.toFixed(2),
+    floatTr, floatOp: (p >= .46 && fq < 1 ? 1 - fq * .3 : 0).toFixed(2),
+    irisR: (290 * io(R(.56, .66)) * fin).toFixed(1),
+    ringOp: (R(.62, .66) * fin).toFixed(2), ringOff: (1068 * (1 - out(R(.63, .8)))).toFixed(1),
+    wOp: (R(.66, .76) * fin).toFixed(2), wY: (14 * (1 - out(R(.66, .78)))).toFixed(1)
+  };
+}
+}
+</script>
+</body>
+</html>

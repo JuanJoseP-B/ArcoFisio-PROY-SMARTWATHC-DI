@@ -1,0 +1,124 @@
+.wheel {
+  position: absolute;
+  inset: 0;
+  outline: none;
+  cursor: grab;
+}
+
+.wheel:active {
+  cursor: grabbing;
+}
+
+/* The ring itself is not a button, so the focus cue sits on the rim. */
+.wheel:focus-visible .rim {
+  stroke: var(--af-color-bronze);
+}
+
+.layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.rim {
+  fill: none;
+  stroke: var(--af-color-surface-sunken);
+  stroke-width: 28;
+  transition: stroke var(--af-dur-instant);
+}
+
+.dial {
+  transform-box: view-box;
+  transform-origin: 192px 192px;
+  transition: transform var(--af-dur-quick) var(--af-ease-wheel);
+}
+
+.tick,
+.tickMajor {
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.tick {
+  stroke: var(--af-color-gold);
+}
+
+.tickMajor {
+  stroke: var(--af-color-ink);
+}
+
+.label {
+  font-size: var(--af-type-caption-size);
+  font-weight: var(--af-type-label-weight);
+  fill: var(--af-color-ink-muted);
+}
+
+.nockShaft {
+  stroke: var(--af-color-bronze);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.nockHead {
+  fill: var(--af-color-bronze);
+}
+
+.nock {
+  animation: nock 650ms var(--af-ease-standard) infinite;
+}
+
+@keyframes nock {
+  0% {
+    transform: translateY(-5px);
+  }
+  35% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.readout {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-top: 24px;
+  pointer-events: none;
+}
+
+.title {
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-color-ink-muted);
+}
+
+.value {
+  font-size: var(--af-type-hero-size);
+  line-height: var(--af-type-hero-line);
+  font-weight: var(--af-type-hero-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink);
+}
+
+.caption {
+  font-size: var(--af-type-caption-size);
+  line-height: var(--af-type-caption-line);
+  font-weight: var(--af-type-caption-weight);
+  color: var(--af-color-bronze);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dial {
+    transition: none;
+  }
+
+  .nock {
+    animation: none;
+  }
+}

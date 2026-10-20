@@ -1,0 +1,74 @@
+.ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.segment {
+  fill: none;
+  stroke: var(--af-color-surface-sunken);
+  stroke-width: var(--af-ring-stroke);
+  stroke-linecap: round;
+  transition: stroke var(--af-dur-quick);
+}
+
+.segment[data-state='done'] {
+  stroke: var(--af-color-ink);
+}
+
+.segment[data-state='active'] {
+  stroke: var(--af-color-gold);
+}
+
+.arrow {
+  transform-origin: 192px 192px;
+  animation: step-shot 700ms both;
+}
+
+.shaft {
+  stroke: var(--af-color-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.head {
+  fill: var(--af-color-ink);
+}
+
+.fletching {
+  fill: none;
+  stroke: var(--af-color-gold);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+/* Sheet 06: out from the middle over 55% of the step with an ease-out, then gone. */
+@keyframes step-shot {
+  0% {
+    transform: rotate(var(--aim)) translateY(86px);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+  }
+
+  55% {
+    transform: rotate(var(--aim)) translateY(0);
+    opacity: 1;
+    animation-timing-function: linear;
+  }
+
+  65%,
+  100% {
+    transform: rotate(var(--aim)) translateY(0);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .segment {
+    transition: none;
+  }
+
+  .arrow {
+    display: none;
+  }
+}

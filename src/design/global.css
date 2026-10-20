@@ -1,0 +1,41 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--af-color-stage);
+  color: var(--af-color-ink);
+  font-family: var(--af-font-sans);
+  font-size: var(--af-type-body-size);
+  line-height: var(--af-type-body-line);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* Keyboard focus is always visible (components with their own ring opt out). */
+button:focus-visible,
+[role='button']:focus-visible {
+  outline: 3px solid var(--af-color-bronze);
+  outline-offset: 2px;
+}

@@ -1,0 +1,85 @@
+.settings {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/* Scrolls inside the circle like the library; the mask fades what the circle cuts off. */
+.list {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--af-space-2);
+  padding: 90px 0 84px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  /* The page turns touch gestures off; this list takes the vertical ones back. */
+  touch-action: pan-y;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 70px,
+    var(--af-color-ink) 104px,
+    var(--af-color-ink) calc(100% - 70px),
+    transparent calc(100% - 26px)
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 70px,
+    var(--af-color-ink) 104px,
+    var(--af-color-ink) calc(100% - 70px),
+    transparent calc(100% - 26px)
+  );
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+.list > * {
+  flex: none;
+}
+
+.title {
+  margin: 0 0 var(--af-space-1);
+  font-size: var(--af-type-title-size);
+  line-height: var(--af-type-title-line);
+  font-weight: var(--af-type-title-weight);
+  color: var(--af-color-ink);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--af-space-2);
+  margin-top: var(--af-space-2);
+}
+
+.confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--af-space-2);
+}
+
+.question {
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-color-zone-pain);
+}
+
+.notice {
+  margin: 0;
+  max-width: 220px;
+  text-align: center;
+  font-size: var(--af-type-caption-size);
+  line-height: var(--af-type-caption-line);
+  font-weight: var(--af-type-caption-weight);
+  color: var(--af-color-zone-caution);
+}

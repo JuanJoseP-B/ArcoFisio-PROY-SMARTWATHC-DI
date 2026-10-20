@@ -1,0 +1,7 @@
+export const SIM_GRAVITY = 9.81
+
+export const CALIBRATION_MIN_SAMPLES = 20
+export const CALIBRATION_MAX_SPREAD_DEG = 4
+export const CALIBRATION_TIMEOUT_MS = 3000
+
+export const NO_DATA_TIMEOUT_MS = 2000

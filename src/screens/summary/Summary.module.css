@@ -1,0 +1,94 @@
+.summary {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/*
+ * Sheet 11 stacks label, figure and chip from the bottom up. Here it ends 78 px above the edge
+ * so the repetitions fit under the chip and the buttons under them.
+ */
+.stack {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 78px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-color-ink-muted);
+}
+
+.max {
+  font-size: var(--af-type-hero-size);
+  line-height: var(--af-type-hero-line);
+  font-weight: var(--af-type-hero-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink);
+}
+
+.held {
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--af-type-title-size);
+  line-height: var(--af-type-title-line);
+  font-weight: var(--af-type-title-weight);
+  color: var(--af-color-ink);
+}
+
+.empty {
+  margin: 0;
+  max-width: 220px;
+  font-size: var(--af-type-body-size);
+  line-height: var(--af-type-body-line);
+  color: var(--af-color-ink-muted);
+}
+
+/* Inside the rim: the row sits 28 px above the bottom edge, 48 px buttons 12 px apart. */
+.actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 28px;
+  display: flex;
+  justify-content: center;
+  gap: var(--af-space-3);
+}
+
+/* Text rises 16 px into place once the arrow has hit (26 %): the chip and the count 120 ms later. */
+.up {
+  animation: up 5s var(--af-ease-enter) both;
+}
+
+.second {
+  animation-delay: 120ms;
+}
+
+@keyframes up {
+  0%,
+  26% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  40%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .up {
+    animation: none;
+  }
+}

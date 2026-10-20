@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Goniómetro</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400..700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:"Roboto Flex",system-ui,sans-serif;color:#1F3A2B}
+.bezel{width:384px;height:384px;border-radius:50%;background:#000;padding:12px;box-shadow:0 0 0 3px #9A9C9A,0 18px 40px rgba(31,58,43,.25)}
+.screen{position:relative;width:384px;height:384px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#F8EEDD 0%,#EBD6B0 100%);overflow:hidden}
+.glass{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 28% 18%,rgba(255,255,255,.55),rgba(255,255,255,0) 42%);pointer-events:none}
+.layer{position:absolute;left:0;top:0}
+.chip{transition:background-color 90ms,color 90ms}
+.tgt{transition:r 300ms cubic-bezier(.34,1.56,.64,1)}
+</style>
+</helmet>
+<div style="width: 440px; height: 440px; display: flex; align-items: center; justify-content: center; background: #E9DCC4">
+<div class="bezel">
+<div class="screen">
+<svg class="layer" style="position:absolute;left:0;top:0" width="384" height="384" viewBox="0 0 384 384" aria-hidden="true"><g opacity="0.11"><g transform="rotate(-64 192 384)"><path d="M192 384 Q174 250 192 96 Q210 250 192 384 Z" fill="#7A4E14"></path><path d="M192 384 L192 110" stroke="#F6EBD9" stroke-width="1.5"></path><path d="M183 140 Q192 112 201 140 Q192 128 183 140 Z" fill="#2A1C12"></path></g><g transform="rotate(-48 192 384)"><path d="M192 384 Q174 250 192 96 Q210 250 192 384 Z" fill="#7A4E14"></path><path d="M192 384 L192 110" stroke="#F6EBD9" stroke-width="1.5"></path><path d="M183 140 Q192 112 201 140 Q192 128 183 140 Z" fill="#2A1C12"></path></g><g transform="rotate(-32 192 384)"><path d="M192 384 Q174 250 192 96 Q210 250 192 384 Z" fill="#7A4E14"></path><path d="M192 384 L192 110" stroke="#F6EBD9" stroke-width="1.5"></path><path d="M183 140 Q192 112 201 140 Q192 128 183 140 Z" fill="#2A1C12"></path></g><g transform="rotate(-16 192 384)"><path d="M192 384 Q174 250 192 96 Q210 250 192 384 Z" fill="#7A4E14"></path><path d="M192 384 L192 110" stroke="#F6EBD9" stroke-width="1.5"></path><path d="M183 140 Q192 112 201 140 Q192 128 183 140 Z" fill="#2A1C12"></path></g><g transform="rotate(0 192 384)"><path d="M192 384 Q174 250 192 96 Q210 250 192 384 Z" fill="#7A4E14"></path><path d="M192 384 L192 110" stroke="#F6EBD9" stroke-width="1.5"></path><path d="M183 140 Q192 112 201 140 Q192 128 183 140 Z" fill="#2A1C12"></path></g><g transform="rotate(16 192 384)"><path d="M192 384 Q174 250 192 96 Q210 250 192 384 Z" fill="#7A4E14"></path><path d="M192 384 L192 110" stroke="#F6EBD9" stroke-width="1.5"></path><path d="M183 140 Q192 112 201 140 Q192 128 183 140 Z" fill="#2A1C12"></path></g><g transform="rotate(32 192 384)"><path d="M192 384 Q174 250 192 96 Q210 250 192 384 Z" fill="#7A4E14"></path><path d="M192 384 L192 110" stroke="#F6EBD9" stroke-width="1.5"></path><path d="M183 140 Q192 112 201 140 Q192 128 183 140 Z" fill="#2A1C12"></path></g><g transform="rotate(48 192 384)"><path d="M192 384 Q174 250 192 96 Q210 250 192 384 Z" fill="#7A4E14"></path><path d="M192 384 L192 110" stroke="#F6EBD9" stroke-width="1.5"></path><path d="M183 140 Q192 112 201 140 Q192 128 183 140 Z" fill="#2A1C12"></path></g><g transform="rotate(64 192 384)"><path d="M192 384 Q174 250 192 96 Q210 250 192 384 Z" fill="#7A4E14"></path><path d="M192 384 L192 110" stroke="#F6EBD9" stroke-width="1.5"></path><path d="M183 140 Q192 112 201 140 Q192 128 183 140 Z" fill="#2A1C12"></path></g></g></svg>
+<svg class="layer" width="384" height="384" viewBox="0 0 384 384" aria-hidden="true">
+<circle cx="192" cy="192" r="164" fill="none" stroke="#E3CA9C" stroke-width="14"></circle>
+<circle cx="192" cy="192" r="164" fill="none" stroke="#1F3A2B" stroke-width="14" stroke-linecap="round" stroke-dasharray="1030.44" stroke-dashoffset="{{off}}" transform="rotate(-90 192 192)"></circle>
+<line x1="192" y1="28" x2="{{ex}}" y2="{{ey}}" stroke="#345A43" stroke-width="2" stroke-dasharray="4 5" opacity="{{strOp}}"></line>
+<g transform="rotate(150 192 192)">
+<circle class="tgt" cx="192" cy="28" r="{{tgtR}}" fill="#F6EBD9" stroke="#7A4E14" stroke-width="2.5"></circle>
+<circle cx="192" cy="28" r="3.5" fill="#7A4E14"></circle>
+</g>
+<g transform="rotate({{a}} 192 192)">
+<circle cx="192" cy="28" r="12" fill="#EDD9B4" stroke="#1F3A2B" stroke-width="3"></circle>
+<path d="M 189 23 L 195 28 L 189 33" fill="none" stroke="#1F3A2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</g>
+</svg>
+<div class="layer" style="width: 384px; height: 384px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+<div style="font-size: 13px; line-height: 16px; font-weight: 500; color: #5C5140">Flexión de hombro</div>
+<div style="font-size: 72px; line-height: 72px; font-weight: 600; font-variant-numeric: tabular-nums; color: #1F3A2B">{{deg}}°</div>
+<div class="chip" style="padding: 6px 14px; border-radius: 999px; font-size: 13px; line-height: 16px; font-weight: 500; background: {{chipBg}}; color: {{chipFg}}">{{chipTxt}}</div>
+</div>
+<div class="glass"></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":440,"height":440}}'>
+class Component extends DCLogic {
+componentDidMount() { this.t0 = Date.now(); this.iv = setInterval(() => this.forceUpdate(), 33); }
+componentWillUnmount() { clearInterval(this.iv); }
+renderVals() {
+  const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  const t = ((Date.now() - (this.t0 || Date.now())) % 5000) / 5000;
+  let a = 0;
+  if (t < .32) a = 150 * ease(t / .32);
+  else if (t < .52) a = 150;
+  else if (t < .84) a = 150 * (1 - ease((t - .52) / .32));
+  const r = a * Math.PI / 180;
+  const hit = a >= 149.5;
+  return {
+    a: a.toFixed(2),
+    off: (1030.44 * (1 - a / 360)).toFixed(2),
+    ex: (192 + 164 * Math.sin(r)).toFixed(2),
+    ey: (192 - 164 * Math.cos(r)).toFixed(2),
+    strOp: a > 6 ? .45 : 0,
+    deg: Math.round(a),
+    tgtR: hit ? 14 : 9,
+    chipBg: hit ? '#DDE7CF' : '#EDD9B4',
+    chipFg: hit ? '#2F6B3F' : '#7A4E14',
+    chipTxt: hit ? 'Objetivo alcanzado' : 'Objetivo 150°'
+  };
+}
+}
+</script>
+</body>
+</html>

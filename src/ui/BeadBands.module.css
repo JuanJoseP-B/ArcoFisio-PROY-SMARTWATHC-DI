@@ -1,0 +1,11 @@
+.terracotta {
+  fill: var(--af-color-terracotta);
+}
+
+.light {
+  fill: var(--af-color-screen-base);
+}
+
+.turquoise {
+  fill: var(--af-color-turquoise);
+}

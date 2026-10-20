@@ -1,0 +1,33 @@
+.intro {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--af-color-screen-base);
+}
+
+/* Reduced motion: no scene animation, just the finished lockup easing in once. */
+.still {
+  animation: still-in var(--af-dur-emphasis) var(--af-ease-standard) both;
+}
+
+@keyframes still-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* The whole circle is a skip button: a tap anywhere hands over to the watch face. */
+.skip {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}

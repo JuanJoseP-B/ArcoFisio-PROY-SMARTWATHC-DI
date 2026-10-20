@@ -1,0 +1,82 @@
+.launcher {
+  position: absolute;
+  inset: 0;
+}
+
+.cell {
+  position: absolute;
+  width: 84px;
+  height: 96px;
+  margin: -48px 0 0 -42px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: none;
+  transition:
+    transform var(--af-dur-standard) var(--af-ease-honeycomb),
+    filter var(--af-dur-standard);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cell[data-focused='true'] {
+  filter: drop-shadow(0 6px 18px var(--af-color-cell-shadow));
+}
+
+.cell:focus {
+  outline: none;
+}
+
+.hex {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--af-space-1);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: var(--af-color-surface);
+  color: var(--af-color-ink);
+  transition:
+    background-color var(--af-dur-quick),
+    color var(--af-dur-quick);
+}
+
+.cell[data-focused='true'] .hex {
+  background: var(--af-color-ink);
+  color: var(--af-color-ink-on-primary);
+}
+
+.label {
+  font-size: var(--af-type-caption-size);
+  line-height: var(--af-type-caption-line);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* The hexagon clips outlines, so the keyboard focus ring is its own polygon on top. */
+.ring {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ring polygon {
+  fill: none;
+  stroke: var(--af-color-bronze);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.cell:focus-visible .ring {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    transition: none;
+  }
+}

@@ -1,0 +1,57 @@
+.guide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/* From the top down to just above the buttons, so five lines of advice always fit. */
+.content {
+  position: absolute;
+  top: 52px;
+  bottom: 116px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--af-space-2);
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--af-type-title-size);
+  line-height: var(--af-type-title-line);
+  font-weight: var(--af-type-title-weight);
+  color: var(--af-color-ink);
+}
+
+.tip {
+  margin: 0;
+  max-width: 232px;
+  font-size: var(--af-type-body-size);
+  line-height: var(--af-type-body-line);
+  font-weight: var(--af-type-body-weight);
+  color: var(--af-color-ink);
+}
+
+.counter {
+  font-size: var(--af-type-caption-size);
+  line-height: var(--af-type-caption-line);
+  font-weight: var(--af-type-caption-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink-muted);
+}
+
+/* Inside the ring: the row sits 52 px above the bottom edge so no button touches the rim. */
+.actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 52px;
+  display: flex;
+  justify-content: center;
+  gap: var(--af-space-3);
+}

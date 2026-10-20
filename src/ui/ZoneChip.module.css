@@ -1,0 +1,44 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--af-space-2);
+  padding: 6px 14px;
+  border-radius: var(--af-radius-pill);
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  white-space: nowrap;
+  background: var(--af-color-surface);
+  color: var(--af-color-bronze);
+  transition:
+    background-color var(--af-dur-instant),
+    color var(--af-dur-instant);
+}
+
+.chip[data-zone='approach'],
+.chip[data-zone='near'] {
+  background: var(--af-color-zone-caution-tint);
+  color: var(--af-color-zone-caution);
+}
+
+.chip[data-zone='target'] {
+  background: var(--af-color-zone-optimal-tint);
+  color: var(--af-color-zone-optimal);
+}
+
+.chip[data-zone='overshoot'],
+.chip[data-zone='pain'] {
+  background: var(--af-color-zone-pain-tint);
+  color: var(--af-color-zone-pain);
+}
+
+.chip[data-zone='rest'] {
+  background: var(--af-color-zone-rest-tint);
+  color: var(--af-color-zone-rest);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    transition: none;
+  }
+}
