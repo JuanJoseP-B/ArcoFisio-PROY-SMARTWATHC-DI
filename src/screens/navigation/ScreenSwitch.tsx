@@ -14,6 +14,7 @@ import { Pain } from '../pain/Pain'
 import { PlayerScreen } from '../player/PlayerScreen'
 import { RoutineDetail } from '../routine/RoutineDetail'
 import { Placeholder } from '../placeholder/Placeholder'
+import { Summary } from '../summary/Summary'
 import { LanguageSelect } from '../setup/LanguageSelect'
 import { SensorSetup } from '../setup/SensorSetup'
 import type { Route } from './stack'
@@ -27,7 +28,7 @@ interface ScreenSwitchProps {
 }
 
 /**
- * Which screen each route shows. The apps a later stage builds (Summary, Settings) show a
+ * Which screen each route shows. The app a later stage builds (Settings) shows a
  * placeholder until then.
  */
 export function ScreenSwitch({ route }: ScreenSwitchProps) {
@@ -61,7 +62,7 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'builder':
       return <Builder routineId={route.routineId} />
     case 'summary':
-      return <Placeholder title="launcher.summary" />
+      return <Summary />
     case 'history':
       return <History />
     case 'pain':

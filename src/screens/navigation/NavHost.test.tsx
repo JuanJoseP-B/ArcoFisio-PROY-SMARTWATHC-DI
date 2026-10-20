@@ -158,10 +158,7 @@ describe('NavHost: first run', () => {
 })
 
 describe('NavHost: every app opens from the launcher and the way back always works', () => {
-  const APPS = [
-    ['summary', 'Resumen'],
-    ['settings', 'Ajustes'],
-  ] as const
+  const APPS = [['settings', 'Ajustes']] as const
 
   for (const [cell, title] of APPS) {
     it(`${title}: opens, shows its name and returns with the back button and with Escape`, () => {
@@ -197,6 +194,25 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     expect(part('hex-launcher')).not.toBeNull()
 
     click(host.querySelector('[data-cell="pain"]'))
+    escape()
+    expect(part('hex-launcher')).not.toBeNull()
+
+    escape()
+    expect(part('face')).not.toBeNull()
+  })
+
+  it('Resumen: opens the summary, and the way back works with the button and with Escape', () => {
+    const { part, host, click, escape } = mount(FACE)
+
+    click(part('face'))
+    click(host.querySelector('[data-cell="summary"]'))
+    expect(part('summary')).not.toBeNull()
+    expect(part('placeholder')).toBeNull()
+
+    click(host.querySelector('[data-part="icon-button"][data-icon="back"]'))
+    expect(part('hex-launcher')).not.toBeNull()
+
+    click(host.querySelector('[data-cell="summary"]'))
     escape()
     expect(part('hex-launcher')).not.toBeNull()
 
@@ -343,9 +359,10 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     const { part, host, click } = mount(FACE, 'en')
     click(part('face'))
     click(host.querySelector('[data-cell="summary"]'))
-    expect(part('placeholder')?.querySelector('h1')?.textContent).toBe('Summary')
-    expect(part('back-button')?.getAttribute('aria-label')).toBe('Back')
-    click(part('back-button'))
+    expect(part('summary')?.querySelector('h1')?.textContent).toBe('Summary')
+    const back = host.querySelector('[data-part="icon-button"][data-icon="back"]')
+    expect(back?.getAttribute('aria-label')).toBe('Back')
+    click(back)
 
     click(host.querySelector('[data-cell="guide"]'))
     expect(part('guide')?.querySelector('h1')?.textContent).toBe('AI Guide')
@@ -370,7 +387,7 @@ describe('NavHost: swipe back', () => {
     surface.getBoundingClientRect = () => ({ width: 384 }) as DOMRect
 
     click(part('face'))
-    click(host.querySelector('[data-cell="summary"]'))
+    click(host.querySelector('[data-cell="settings"]'))
     expect(part('placeholder')).not.toBeNull()
 
     swipe(surface, 100, 240)
