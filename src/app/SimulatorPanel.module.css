@@ -1,0 +1,30 @@
+.panel {
+  position: fixed;
+  left: 50%;
+  bottom: var(--af-space-4);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--af-space-3);
+  width: min(320px, calc(100vw - 2 * var(--af-space-4)));
+  padding: var(--af-space-2) var(--af-space-4);
+  border-radius: var(--af-radius-pill);
+  background: var(--af-color-surface);
+  color: var(--af-color-ink);
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  touch-action: auto;
+}
+
+.slider {
+  flex: 1;
+  min-height: var(--af-touch-min);
+  accent-color: var(--af-color-ink);
+}
+
+.value {
+  min-width: 3ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

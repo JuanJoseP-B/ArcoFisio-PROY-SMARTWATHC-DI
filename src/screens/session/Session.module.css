@@ -1,0 +1,45 @@
+.session {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.readout {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.name {
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-color-ink-muted);
+}
+
+.angle {
+  font-size: var(--af-type-hero-size);
+  line-height: var(--af-type-hero-line);
+  font-weight: var(--af-type-hero-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink);
+}
+
+.reps {
+  display: flex;
+  gap: var(--af-space-2);
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-color-ink-muted);
+}
+
+.repsCount {
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink);
+}
