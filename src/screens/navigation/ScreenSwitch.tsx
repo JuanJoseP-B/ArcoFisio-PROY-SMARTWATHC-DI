@@ -8,6 +8,7 @@ import { Library } from '../library/Library'
 import { Launcher } from '../launcher/Launcher'
 import { Measure } from '../measure/Measure'
 import { ModeSelect } from '../mode/ModeSelect'
+import { Pain } from '../pain/Pain'
 import { PlayerScreen } from '../player/PlayerScreen'
 import { RoutineDetail } from '../routine/RoutineDetail'
 import { Placeholder } from '../placeholder/Placeholder'
@@ -24,8 +25,8 @@ interface ScreenSwitchProps {
 }
 
 /**
- * Which screen each route shows. The apps a later stage builds (Routines, Summary, Pain, AI
- * Guide, Settings) show a placeholder until then.
+ * Which screen each route shows. The apps a later stage builds (Summary, AI Guide, Settings)
+ * show a placeholder until then.
  */
 export function ScreenSwitch({ route }: ScreenSwitchProps) {
   const nav = useNav()
@@ -60,7 +61,7 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'summary':
       return <Placeholder title="launcher.summary" />
     case 'pain':
-      return <Placeholder title="launcher.pain" />
+      return <Pain />
     case 'guide':
       return <Placeholder title="launcher.guide" />
     case 'settings':

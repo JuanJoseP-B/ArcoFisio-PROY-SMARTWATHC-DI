@@ -160,7 +160,6 @@ describe('NavHost: first run', () => {
 describe('NavHost: every app opens from the launcher and the way back always works', () => {
   const APPS = [
     ['summary', 'Resumen'],
-    ['pain', 'Dolor'],
     ['guide', 'Guía IA'],
     ['settings', 'Ajustes'],
   ] as const
@@ -186,6 +185,25 @@ describe('NavHost: every app opens from the launcher and the way back always wor
       expect(part('face')).not.toBeNull()
     })
   }
+
+  it('Dolor: opens the painful arc screen, and the way back works with the button and with Escape', () => {
+    const { part, host, click, escape } = mount(FACE)
+
+    click(part('face'))
+    click(host.querySelector('[data-cell="pain"]'))
+    expect(part('pain')).not.toBeNull()
+    expect(part('placeholder')).toBeNull()
+
+    click(part('back-button'))
+    expect(part('hex-launcher')).not.toBeNull()
+
+    click(host.querySelector('[data-cell="pain"]'))
+    escape()
+    expect(part('hex-launcher')).not.toBeNull()
+
+    escape()
+    expect(part('face')).not.toBeNull()
+  })
 
   it('Rutinas: opens the library, and the way back works with the button and with Escape', () => {
     const { part, host, click, escape } = mount(FACE)
@@ -330,7 +348,7 @@ describe('NavHost: swipe back', () => {
     surface.getBoundingClientRect = () => ({ width: 384 }) as DOMRect
 
     click(part('face'))
-    click(host.querySelector('[data-cell="pain"]'))
+    click(host.querySelector('[data-cell="summary"]'))
     expect(part('placeholder')).not.toBeNull()
 
     swipe(surface, 100, 240)
