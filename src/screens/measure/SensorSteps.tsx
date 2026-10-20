@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
 import { useI18n } from '../../app/useI18n'
 import type { AngleActions } from '../../app/useAngle'
-import type { MessageKey } from '../../i18n/translate'
 import type { TrackerStatus } from '../../sensors/tracker'
 import { PillButton } from '../../ui/PillButton'
-import { failureMessage, messageFor, stepFor, suggestsSimulator } from './measureFlow'
+import { messageFor, stepFor, suggestsSimulator } from './measureFlow'
 import styles from './SensorSteps.module.css'
+import { useCalibrate } from './useCalibrate'
 
 interface SensorStepsProps {
   status: TrackerStatus
@@ -21,27 +20,10 @@ interface SensorStepsProps {
  */
 export function SensorSteps({ status, actions, onSkip }: SensorStepsProps) {
   const { t } = useI18n()
-  const [busy, setBusy] = useState(false)
-  const [failure, setFailure] = useState<MessageKey | null>(null)
-  const alive = useRef(true)
+  const calibration = useCalibrate(actions)
   const step = stepFor(status)
 
-  useEffect(() => {
-    alive.current = true
-    return () => {
-      alive.current = false
-    }
-  }, [])
-
-  const calibrate = async () => {
-    setBusy(true)
-    setFailure(null)
-    const result = await actions.calibrate()
-    if (!alive.current) return
-    setBusy(false)
-    if (!result.ok) setFailure(failureMessage(result.reason))
-  }
-
+  const { busy, failure } = calibration
   const message = busy ? 'measure.calibrating' : (failure ?? messageFor(status))
 
   return (
@@ -58,7 +40,7 @@ export function SensorSteps({ status, actions, onSkip }: SensorStepsProps) {
         />
       ) : null}
       {step === 'calibrate' && !busy ? (
-        <PillButton label={t('sensor.calibrate')} onPress={() => void calibrate()} />
+        <PillButton label={t('sensor.calibrate')} onPress={() => void calibration.run()} />
       ) : null}
       {onSkip ? <PillButton variant="secondary" label={t('setup.skip')} onPress={onSkip} /> : null}
     </div>
