@@ -39,6 +39,17 @@ export const es = {
   'mode.title': 'Ejercicio',
   'mode.abduction': 'Abducción',
   'mode.flexion': 'Flexión',
+  'config.target': 'Ángulo objetivo',
+  'config.detents': 'Detenciones cada 5°',
+  'config.next': 'Continuar',
+  'config.reps': 'Repeticiones',
+  'config.sets': 'Series',
+  'config.rest': 'Descanso',
+  'config.seconds': '{n} s',
+  'config.increase': 'Aumentar: {name}',
+  'config.decrease': 'Disminuir: {name}',
+  'config.start': 'Iniciar',
+
   'soon.note': 'Próximamente',
   'intro.skip': 'Saltar la introducción',
 } as const

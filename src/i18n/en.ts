@@ -41,6 +41,17 @@ export const en: Record<MessageKey, string> = {
   'mode.title': 'Exercise',
   'mode.abduction': 'Abduction',
   'mode.flexion': 'Flexion',
+  'config.target': 'Target angle',
+  'config.detents': 'Detents every 5°',
+  'config.next': 'Continue',
+  'config.reps': 'Repetitions',
+  'config.sets': 'Sets',
+  'config.rest': 'Rest',
+  'config.seconds': '{n} s',
+  'config.increase': 'Increase: {name}',
+  'config.decrease': 'Decrease: {name}',
+  'config.start': 'Start',
+
   'soon.note': 'Coming soon',
   'intro.skip': 'Skip the intro',
 }
