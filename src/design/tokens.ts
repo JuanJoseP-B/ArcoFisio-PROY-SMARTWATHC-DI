@@ -16,7 +16,7 @@ export const color = {
   turquoise: '#2F7F86',
   zoneOptimal: '#2F6B3F',
   zoneOptimalTint: '#DDE7CF',
-  zoneCaution: '#8A5A12',
+  zoneCaution: '#845610',
   zoneCautionTint: '#F3DFB5',
   zonePain: '#A3392D',
   zonePainTint: '#F4D3C8',
