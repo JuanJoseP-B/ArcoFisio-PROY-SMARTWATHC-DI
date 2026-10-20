@@ -2,6 +2,10 @@
 
 Guía para Claude Code en este repositorio. La fuente de verdad del comportamiento es `docs/spec.md`; la de lo visual y el movimiento es `docs/design-reference/`.
 
+## Contexto vivo: PROJECT.md
+
+`PROJECT.md` (raíz) resume el proyecto, la arquitectura, el estado de cada etapa y notas útiles. **Leerlo al empezar** y **actualizarlo en el mismo commit** (o en uno `docs(project)` inmediato) cada vez que cambie el repo: al terminar o aprobar una etapa, añadir o mover módulos, cambiar comandos, parámetros de URL o decisiones. Si cambia su estructura o esta regla, actualizar también este `CLAUDE.md`.
+
 ## Proyecto
 
 Arco Fisio: simulador web de un smartwatch de telerrehabilitación del hombro (materia Diseño de Interfaces). App estática, sin servidor: Vite + React 18 + TypeScript estricto + Vitest. Persistencia solo en `localStorage`. El teléfono hace de sensor y de pantalla del reloj. Reinicio limpio: no se reutiliza código del prototipo anterior.
