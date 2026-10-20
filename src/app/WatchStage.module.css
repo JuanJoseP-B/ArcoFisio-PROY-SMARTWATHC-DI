@@ -1,0 +1,22 @@
+.stage {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--af-color-stage);
+}
+
+.frame {
+  position: relative;
+}
+
+.scaler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--af-watch-extent);
+  height: var(--af-watch-extent);
+  padding: var(--af-bezel-ring);
+  transform-origin: 0 0;
+}
