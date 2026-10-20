@@ -2,7 +2,7 @@
 
 > Archivo vivo. Se actualiza en **cada commit que cambie el estado del repo** (etapa, estructura, comandos, decisiones). Ver la regla en [`CLAUDE.md`](CLAUDE.md). Detalle completo del comportamiento: [`docs/spec.md`](docs/spec.md). Detalle visual y de movimiento: [`docs/design-reference/`](docs/design-reference/).
 
-_Última actualización: 2026-10-20 · etapas 0–8 mezcladas en `develop` (`v0.8.0`) · etapa 9 en curso en `feature/09-config-and-measure`._
+_Última actualización: 2026-10-20 · etapas 0–8 mezcladas en `develop` (`v0.8.0`) · etapa 9 terminada en `feature/09-config-and-measure`, esperando aprobación._
 
 ## Qué es
 
@@ -60,7 +60,7 @@ Cada etapa = rama `feature/NN-nombre` → `develop` con `merge --no-ff` **solo c
 | 6   | `feature/06-goniometer-session`  | Goniómetro en vivo y pantalla Sesión                                                   | Mezclada · `v0.6.0` (33 commits, 417 tests)                                                                           |
 | 7   | `feature/07-feedback-engine`     | Audio y vibración                                                                      | Mezclada · `v0.7.0` (26 commits, 489 tests)                                                                           |
 | 8   | `feature/08-navigation-launcher` | Navegación, cara del reloj, launcher                                                   | Mezclada · `v0.8.0` (43 commits)                                                                                      |
-| 9   | `feature/09-config-and-measure`  | Rueda de ángulo, configuración, calibración, primera ejecución                         | **En curso**                                                                                                          |
+| 9   | `feature/09-config-and-measure`  | Rueda de ángulo, configuración, calibración, primera ejecución                         | Terminada, **esperando aprobación** (25 commits, 715 tests)                                                           |
 | 10  | `feature/10-routines`            | Biblioteca, detalle, constructor, reproductor, descanso                                | Pendiente                                                                                                             |
 | 11  | `feature/11-pain-arc-and-guide`  | Arco doloroso y Guía IA (reglas locales)                                               | Pendiente                                                                                                             |
 | 12  | `feature/12-summary-history`     | Resumen e historial                                                                    | Pendiente                                                                                                             |
