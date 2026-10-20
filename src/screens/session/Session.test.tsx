@@ -10,12 +10,33 @@ import { FakeStorage } from '../../data/testStorage'
 import type { PainArc } from '../../domain/zones'
 import type { Feedback } from '../../feedback/feedback'
 import { createSensorKit } from '../../sensors/kit'
-import { Session, SessionView } from './Session'
+import { useSessionRun } from '../../app/useSessionRun'
 import type { UseSessionRun } from '../../app/useSessionRun'
+import { useWakeLock } from '../../app/useWakeLock'
+import type { SensorKit } from '../../sensors/kit'
+import { SessionView } from './Session'
 
 ;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
 
 const routine = SEED_ROUTINES[0]! // Abducción 90°, 10 reps
+
+interface LiveProps {
+  painArc: PainArc | null
+  kit: SensorKit
+  feedback?: Feedback
+  onMeasure?: () => void
+}
+
+/** What the player does around the view: drive it with a live run and keep the screen awake. */
+function Live({ painArc, kit, feedback, onMeasure }: LiveProps) {
+  const run = useSessionRun({
+    config: { target: routine.targetAngle, tolerance: routine.tolerance, painArc },
+    kit,
+    ...(feedback ? { feedback } : {}),
+  })
+  useWakeLock()
+  return createElement(SessionView, { routine, run, ...(onMeasure ? { onMeasure } : {}) })
+}
 const roots: Root[] = []
 let frames = new Map<number, FrameRequestCallback>()
 let nextId = 1
@@ -58,8 +79,7 @@ function mount(
       createElement(
         I18nProvider,
         { lang },
-        createElement(Session, {
-          routine,
+        createElement(Live, {
           painArc,
           kit,
           ...(feedback ? { feedback } : {}),
