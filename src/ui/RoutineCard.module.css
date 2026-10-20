@@ -1,0 +1,115 @@
+.card {
+  flex: none;
+  box-sizing: border-box;
+  width: 264px;
+  height: 64px;
+  padding: 0 var(--af-space-4) 0 10px;
+  border: 0;
+  border-radius: var(--af-radius-card);
+  display: flex;
+  align-items: center;
+  gap: var(--af-space-3);
+  background: var(--af-color-surface);
+  box-shadow: 0 2px 8px var(--af-color-cell-shadow);
+  color: var(--af-color-ink);
+  text-align: left;
+  cursor: pointer;
+  transform-origin: left center;
+  animation: card-hit 1000ms var(--af-ease-enter) both;
+}
+
+.card:active {
+  filter: brightness(0.96);
+}
+
+.thumb {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--af-radius-sm);
+  display: grid;
+  place-items: center;
+  background: var(--af-color-surface-raised);
+}
+
+.track {
+  stroke: var(--af-color-surface-sunken);
+  stroke-width: 4;
+}
+
+.fill {
+  stroke: var(--af-color-ink);
+  stroke-width: 4;
+  stroke-linecap: round;
+  animation: card-fill 1500ms var(--af-ease-standard) both;
+}
+
+.plus {
+  stroke: var(--af-color-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--af-type-body-size);
+  line-height: var(--af-type-body-line);
+  font-weight: 500;
+}
+
+.subtitle {
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink-muted);
+}
+
+/* Sheet 10: the card flies in from the right and settles with a small rebound. */
+@keyframes card-hit {
+  0% {
+    transform: translateX(320px) skewX(-12deg);
+    opacity: 0;
+  }
+
+  60% {
+    transform: translateX(-8px) skewX(4deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: translateX(3px) skewX(-2deg);
+  }
+
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes card-fill {
+  0%,
+  47% {
+    stroke-dashoffset: 63;
+  }
+
+  100% {
+    stroke-dashoffset: var(--o);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .fill {
+    animation: none;
+  }
+}
