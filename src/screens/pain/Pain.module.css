@@ -1,0 +1,74 @@
+.steps {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--af-space-4);
+}
+
+.pain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/* Title, angle, chip and hint stack from the top so the mark button fits under them. */
+.readout {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.title {
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-color-ink-muted);
+}
+
+.angle {
+  font-size: var(--af-type-hero-size);
+  line-height: var(--af-type-hero-line);
+  font-weight: var(--af-type-hero-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink);
+}
+
+.note {
+  max-width: 200px;
+  min-height: 32px;
+  text-align: center;
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-bronze);
+}
+
+.mark {
+  position: absolute;
+  top: 226px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Inside the ring: the row sits 52 px above the bottom edge so no button touches the rim. */
+.actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 52px;
+  display: flex;
+  justify-content: center;
+  gap: var(--af-space-3);
+}
