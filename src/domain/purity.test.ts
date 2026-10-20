@@ -8,7 +8,7 @@ const FORBIDDEN_IMPORT = /from\s+['"](react|react-dom)(\/[^'"]*)?['"]/
 
 describe('backend layers stay free of React', () => {
   it.each(BACKEND_LAYERS)('src/%s does not import react', (layer) => {
-    let files: string[] = []
+    let files: string[]
     try {
       files = readdirSync(join(__dirname, '..', layer)).filter((f) => /\.tsx?$/.test(f))
     } catch {
