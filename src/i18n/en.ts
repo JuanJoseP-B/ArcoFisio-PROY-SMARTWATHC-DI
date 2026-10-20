@@ -52,6 +52,23 @@ export const en: Record<MessageKey, string> = {
   'config.decrease': 'Decrease: {name}',
   'config.start': 'Start',
 
+  'player.set': 'Set {n} of {total}',
+  'player.pause': 'Pause',
+  'player.resume': 'Resume',
+  'player.next': 'Next',
+  'player.stop': 'Finish',
+  'player.paused': 'Paused',
+
+  'rest.label': 'Rest',
+  'rest.ready': 'Ready!',
+  'rest.nextSet': 'Next set',
+
+  'done.completed': 'Routine complete',
+  'done.stopped': 'Routine finished',
+  'done.reps': '{n} repetitions',
+  'done.max': 'Max {n}°',
+  'done.exit': 'Exit',
+
   'measure.title': 'Measure range',
   'measure.enable': 'Turn on the motion sensor',
   'measure.calibrate': 'Let your arm hang still',

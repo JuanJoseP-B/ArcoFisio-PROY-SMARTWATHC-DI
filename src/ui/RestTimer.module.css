@@ -103,7 +103,8 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--af-space-1);
-  padding-bottom: 92px;
+  /* The sheet has 92 px; the player's buttons sit below, so the time is lifted 12 px. */
+  padding-bottom: 104px;
 }
 
 .label {

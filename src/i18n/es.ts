@@ -50,6 +50,23 @@ export const es = {
   'config.decrease': 'Disminuir: {name}',
   'config.start': 'Iniciar',
 
+  'player.set': 'Serie {n} de {total}',
+  'player.pause': 'Pausar',
+  'player.resume': 'Reanudar',
+  'player.next': 'Siguiente',
+  'player.stop': 'Terminar',
+  'player.paused': 'En pausa',
+
+  'rest.label': 'Descanso',
+  'rest.ready': '¡Listo!',
+  'rest.nextSet': 'Siguiente serie',
+
+  'done.completed': 'Rutina completa',
+  'done.stopped': 'Rutina terminada',
+  'done.reps': '{n} repeticiones',
+  'done.max': 'Máximo {n}°',
+  'done.exit': 'Salir',
+
   'measure.title': 'Medir rango',
   'measure.enable': 'Activa el sensor de movimiento',
   'measure.calibrate': 'Deja el brazo colgando y quieto',
