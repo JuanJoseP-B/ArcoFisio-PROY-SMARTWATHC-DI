@@ -60,7 +60,7 @@ export function Player({
   const plan = { sets: routine.sets, reps: routine.reps, restSec: routine.restSec }
   const [workout, setWorkout] = useState(createWorkout)
   const [paused, setPaused] = useState(false)
-  const [readyMs, setReadyMs] = useState(0)
+  const readyMs = useRef(0)
   const [startedAt] = useState(() => new Date())
   const reported = useRef(false)
 
@@ -81,11 +81,10 @@ export function Player({
   // The rest clock runs on animation frames; "¡Listo!" holds a moment, then the next set starts.
   useFrameDelta(resting && !paused && !over, (dt) => setWorkout((w) => tickRest(w, dt)))
   useFrameDelta(resting && !paused && over, (dt) => {
-    if (readyMs + dt >= READY_HOLD_MS) {
-      setReadyMs(0)
+    readyMs.current += dt
+    if (readyMs.current >= READY_HOLD_MS) {
+      readyMs.current = 0
       setWorkout(endRest)
-    } else {
-      setReadyMs(readyMs + dt)
     }
   })
 
