@@ -7,6 +7,7 @@ import { createCalibrationRepo } from '../../data/calibrationRepo'
 import { createStorage } from '../../data/storage'
 import { FakeStorage } from '../../data/testStorage'
 import type { Routine, Session } from '../../data/types'
+import type { PainArc } from '../../domain/zones'
 import { createSensorKit } from '../../sensors/kit'
 import { PRESS_DELAY_MS } from '../../ui/pressTiming'
 import { READY_HOLD_MS, Player } from './Player'
@@ -65,7 +66,7 @@ const routine: Routine = {
   builtin: false,
 }
 
-function mount(options: { routine?: Routine; lang?: 'es' | 'en' } = {}) {
+function mount(options: { routine?: Routine; lang?: 'es' | 'en'; painArc?: PainArc } = {}) {
   const kit = newKit()
   const host = document.createElement('div')
   document.body.appendChild(host)
@@ -80,6 +81,7 @@ function mount(options: { routine?: Routine; lang?: 'es' | 'en' } = {}) {
         { lang: options.lang ?? 'es' },
         createElement(Player, {
           routine: options.routine ?? routine,
+          painArc: options.painArc ?? null,
           kit,
           onFinish: (session: Session | null) => finished.push(session),
           onExit,
@@ -118,6 +120,14 @@ function mount(options: { routine?: Routine; lang?: 'es' | 'en' } = {}) {
 const phase = (m: ReturnType<typeof mount>) => m.part('player')?.dataset.phase
 
 describe('Player', () => {
+  it('draws the saved painful arc on the live set, and names it when the arm is inside', () => {
+    const { part, moveTo, host } = mount({ painArc: { from: 40, to: 60 } })
+    expect(part('pain-band')).not.toBeNull()
+    moveTo(50)
+    frame(100)
+    expect(host.querySelector('[data-part="zone-chip"]')?.textContent).toBe('Dolor · 40–60°')
+  })
+
   it('opens on the first set, live, with a pause button and the set under the counter', () => {
     const m = mount()
     expect(phase(m)).toBe('set')

@@ -149,6 +149,7 @@ export function Player({
           <SessionView
             routine={routine}
             run={run}
+            painArc={painArc}
             {...(onMeasure ? { onMeasure } : {})}
             {...(plan.sets > 1
               ? { caption: t('player.set', { n: workout.set, total: plan.sets }) }
