@@ -1,6 +1,7 @@
 import { SensorProbe } from './app/SensorProbe'
 import { WatchStage } from './app/WatchStage'
 import { getDataLayer } from './data'
+import { I18nProvider } from './app/I18nProvider'
 import { Intro } from './screens/intro/Intro'
 import { RadialTransition } from './ui/RadialTransition'
 import { SafeZone, WatchScreen } from './ui/WatchScreen'
@@ -23,19 +24,21 @@ function CurrentScreen() {
 
   return (
     <RadialTransition screenKey="intro">
-      <Intro lang={getDataLayer().settings.get().lang} />
+      <Intro />
     </RadialTransition>
   )
 }
 
 export function App() {
   return (
-    <WatchStage>
-      <WatchBezel>
-        <WatchScreen>
-          <CurrentScreen />
-        </WatchScreen>
-      </WatchBezel>
-    </WatchStage>
+    <I18nProvider lang={getDataLayer().settings.get().lang}>
+      <WatchStage>
+        <WatchBezel>
+          <WatchScreen>
+            <CurrentScreen />
+          </WatchScreen>
+        </WatchBezel>
+      </WatchStage>
+    </I18nProvider>
   )
 }

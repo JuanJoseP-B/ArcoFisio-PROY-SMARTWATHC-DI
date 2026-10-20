@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import type { Root } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { I18nProvider } from '../../app/I18nProvider'
 import { Intro } from './Intro'
 import { INTRO_PERIOD_MS } from './frame'
 
@@ -33,7 +34,7 @@ function mount(lang: 'es' | 'en') {
   const host = document.createElement('div')
   const root = createRoot(host)
   roots.push(root)
-  act(() => root.render(createElement(Intro, { lang })))
+  act(() => root.render(createElement(I18nProvider, { lang }, createElement(Intro))))
   return host
 }
 
@@ -56,8 +57,18 @@ afterEach(() => {
 
 describe('Intro', () => {
   it('renders the wordmark with the tagline in each language', () => {
-    expect(renderToString(<Intro lang="es" />)).toContain('Cada grado cuenta')
-    const en = renderToString(<Intro lang="en" />)
+    expect(
+      renderToString(
+        <I18nProvider lang="es">
+          <Intro />
+        </I18nProvider>,
+      ),
+    ).toContain('Cada grado cuenta')
+    const en = renderToString(
+      <I18nProvider lang="en">
+        <Intro />
+      </I18nProvider>,
+    )
     expect(en).toContain('Every degree counts')
     expect(en).toContain('ARCO')
     expect(en).toContain('FISIO')
