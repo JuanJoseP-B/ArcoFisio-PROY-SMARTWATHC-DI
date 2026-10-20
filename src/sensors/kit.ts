@@ -43,3 +43,8 @@ export function getSensorKit(): SensorKit {
   }
   return shared
 }
+
+/** Forgets the arm-down reference after the saved data is erased: the phone must be calibrated again. */
+export function forgetCalibration(kit: SensorKit): void {
+  kit.tracker.setCalibration(kit.simulated ? { gravityRef: gravityForAngle(0) } : null)
+}
