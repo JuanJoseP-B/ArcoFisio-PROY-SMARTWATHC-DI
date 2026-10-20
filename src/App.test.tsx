@@ -390,6 +390,57 @@ describe('App', () => {
     app.unmount()
   })
 
+  it('switches to English from Ajustes without reloading and every app speaks it, keeping the choice', () => {
+    open('?sim=1')
+    getDataLayer().settings.update({ lang: 'es', firstRunDone: true })
+    const wait = (ms: number) =>
+      act(() => {
+        vi.advanceTimersByTime(ms)
+      })
+    const app = mount()
+    app.click(app.part('intro-skip'))
+    app.click(app.part('face'))
+    const cell = (id: string) => app.host.querySelector(`[data-cell="${id}"]`)
+    const back = () =>
+      app.click(app.host.querySelector('[data-part="back-button"], [data-icon="back"]'))
+    const screenText = () => app.part('screen')?.textContent ?? ''
+    // A message that was never translated shows as its key, like "zone.far" or "guide.first".
+    const RAW_KEY = /\b[a-z]+\.[a-zA-Z]+\b/
+
+    // Ajustes -> language: the whole app switches at once.
+    app.click(cell('settings'))
+    expect(app.part('settings')?.querySelector('h1')?.textContent).toBe('Ajustes')
+    app.click(app.host.querySelector('[data-part="stepper"] [data-action="increase"]'))
+    expect(app.part('settings')?.querySelector('h1')?.textContent).toBe('Settings')
+    expect(getDataLayer().settings.get().lang).toBe('en')
+    expect(document.documentElement.lang).toBe('en')
+    back()
+
+    // Every app opens in English with no raw key showing.
+    const titles = new Map([
+      ['measure', 'Measure range'],
+      ['routines', 'Routines'],
+      ['summary', 'Summary'],
+      ['pain', 'Painful arc'],
+      ['guide', 'AI Guide'],
+      ['settings', 'Settings'],
+    ])
+    for (const [id, title] of titles) {
+      app.click(cell(id))
+      wait(1500)
+      expect(screenText(), id).not.toMatch(RAW_KEY)
+      if (id !== 'measure' && id !== 'pain') {
+        expect(app.part('screen')?.querySelector('h1')?.textContent, id).toBe(title)
+      }
+      back()
+    }
+    expect(app.part('hex-launcher')?.textContent).toContain('Summary')
+    app.unmount()
+
+    // Reopened, the app is still in English.
+    expect(renderToString(<App />)).toContain('Every degree counts')
+  })
+
   it('shows the simulator only with ?sim=1 and keeps it out of the watch circle', () => {
     const plain = mount()
     expect(plain.part('simulator-panel')).toBeNull()
