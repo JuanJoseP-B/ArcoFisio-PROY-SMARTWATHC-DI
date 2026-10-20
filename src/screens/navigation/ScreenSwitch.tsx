@@ -8,6 +8,7 @@ import { Launcher } from '../launcher/Launcher'
 import { Measure } from '../measure/Measure'
 import { ModeSelect } from '../mode/ModeSelect'
 import { PlayerScreen } from '../player/PlayerScreen'
+import { RoutineDetail } from '../routine/RoutineDetail'
 import { Placeholder } from '../placeholder/Placeholder'
 import { LanguageSelect } from '../setup/LanguageSelect'
 import { SensorSetup } from '../setup/SensorSetup'
@@ -52,6 +53,7 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'routines':
       return <Library />
     case 'routine':
+      return <RoutineDetail routineId={route.routineId} />
     case 'builder':
       return <Placeholder title="launcher.routines" />
     case 'summary':
