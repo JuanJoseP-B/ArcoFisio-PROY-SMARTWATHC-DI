@@ -1,7 +1,17 @@
 import styles from './IconButton.module.css'
 
 export type IconName =
-  'back' | 'reset' | 'calibrate' | 'play' | 'pause' | 'next' | 'stop' | 'plus' | 'edit' | 'trash'
+  | 'back'
+  | 'reset'
+  | 'calibrate'
+  | 'play'
+  | 'pause'
+  | 'next'
+  | 'stop'
+  | 'plus'
+  | 'edit'
+  | 'trash'
+  | 'history'
 
 interface IconButtonProps {
   icon: IconName
@@ -27,6 +37,7 @@ const PATHS: Record<IconName, string[]> = {
   stop: ['M6 6 L18 6 L18 18 L6 18 Z'],
   plus: ['M12 5 L12 19', 'M5 12 L19 12'],
   edit: ['M4 20 L5 15 L16 4 L20 8 L9 19 Z', 'M13 7 L17 11'],
+  history: ['M12 4 A8 8 0 1 1 12 20 A8 8 0 1 1 12 4', 'M12 8 L12 12 L15 14'],
   trash: [
     'M5 7 L19 7',
     'M10 7 L10 4 L14 4 L14 7',

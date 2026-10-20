@@ -41,6 +41,7 @@ describe('IconButton', () => {
       'plus',
       'edit',
       'trash',
+      'history',
     ]
     const drawings = icons.map((icon) =>
       [...mount(icon, () => undefined).querySelectorAll('path')]
