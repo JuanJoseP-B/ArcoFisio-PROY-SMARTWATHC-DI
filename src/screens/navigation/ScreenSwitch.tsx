@@ -1,4 +1,5 @@
 import { getDataLayer } from '../../data'
+import { Builder } from '../builder/Builder'
 import { Config } from '../config/Config'
 import { Counts } from '../config/Counts'
 import { Face } from '../face/Face'
@@ -55,7 +56,7 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'routine':
       return <RoutineDetail routineId={route.routineId} />
     case 'builder':
-      return <Placeholder title="launcher.routines" />
+      return <Builder routineId={route.routineId} />
     case 'summary':
       return <Placeholder title="launcher.summary" />
     case 'pain':
