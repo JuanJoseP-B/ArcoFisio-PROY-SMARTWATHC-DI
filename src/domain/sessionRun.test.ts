@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { HOLD_MS } from './constants'
-import { createSessionRunState, sessionStats, stepSessionRun } from './sessionRun'
+import { createSessionRunState, pauseSessionRun, sessionStats, stepSessionRun } from './sessionRun'
 import type { SessionRunConfig, SessionRunState } from './sessionRun'
 
 const config: SessionRunConfig = { target: 90, tolerance: 2, painArc: null }
@@ -109,5 +109,27 @@ describe('stepSessionRun', () => {
       painEntries: 0,
     })
     expect(sessionStats(state).reps).toHaveLength(1)
+  })
+})
+
+describe('pauseSessionRun', () => {
+  it('forgets a hold in progress so paused time is not counted', () => {
+    let state = stepSessionRun(createSessionRunState(), { angle: 90, tMs: 0 }, config).state
+    expect(state.rep.targetSince).toBe(0)
+
+    state = pauseSessionRun(state)
+    expect(state.rep.targetSince).toBeNull()
+
+    const resumed = stepSessionRun(state, { angle: 90, tMs: 5000 }, config)
+    expect(resumed.events).not.toContain('held')
+    expect(resumed.state.rep.targetSince).toBe(5000)
+  })
+
+  it('keeps the repetitions already counted', () => {
+    const { state } = run([
+      [90, 0],
+      [10, 100],
+    ])
+    expect(pauseSessionRun(state).rep.reps).toHaveLength(1)
   })
 })
