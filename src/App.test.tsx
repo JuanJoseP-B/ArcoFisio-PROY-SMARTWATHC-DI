@@ -11,6 +11,7 @@ import { PRESS_DELAY_MS } from './ui/pressTiming'
 const open = (search: string) => window.history.replaceState(null, '', `/${search}`)
 
 beforeEach(() => {
+  localStorage.clear()
   vi.useFakeTimers()
 })
 
@@ -43,7 +44,7 @@ describe('App', () => {
     expect(html).not.toContain('data-part="simulator-panel"')
   })
 
-  it('goes from the intro to the face, the launcher, the exercise selector and a live session', () => {
+  it('goes from the intro to the face, the launcher, the exercise, its configuration and a live session', () => {
     open('?sim=1')
     const { host, part, click, unmount } = mount()
 
@@ -53,10 +54,17 @@ describe('App', () => {
     click(host.querySelector('[data-cell="session"]'))
     expect(part('mode-select')).not.toBeNull()
 
-    click(host.querySelectorAll('[data-part="pill-button"]')[0] ?? null)
-    act(() => {
-      vi.advanceTimersByTime(PRESS_DELAY_MS)
-    })
+    const pressPill = () => {
+      click(host.querySelector('[data-part="pill-button"]'))
+      act(() => {
+        vi.advanceTimersByTime(PRESS_DELAY_MS)
+      })
+    }
+    pressPill()
+    expect(part('angle-wheel')).not.toBeNull()
+    click(part('confirm-button'))
+    expect(part('counts')).not.toBeNull()
+    pressPill()
     expect(part('session')).not.toBeNull()
     expect(part('goniometer-ring')).not.toBeNull()
     unmount()

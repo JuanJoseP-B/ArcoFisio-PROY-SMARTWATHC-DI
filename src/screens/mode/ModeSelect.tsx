@@ -1,21 +1,16 @@
 import { useI18n } from '../../app/useI18n'
-import { getDataLayer } from '../../data'
 import type { Exercise } from '../../data/types'
 import { BackButton } from '../../ui/BackButton'
 import { PillButton } from '../../ui/PillButton'
-import { routineForExercise } from '../navigation/targets'
 import { useNav } from '../navigation/useNav'
 import styles from './ModeSelect.module.css'
 
-/** Choose the exercise, then go straight to a live session with its first routine. */
+/** Choose the exercise, then set it up (target, repetitions, sets) before the session. */
 export function ModeSelect() {
   const { t } = useI18n()
   const nav = useNav()
 
-  const start = (exercise: Exercise) => {
-    const routine = routineForExercise(getDataLayer().routines.list(), exercise)
-    if (routine) nav.push({ id: 'session', routineId: routine.id })
-  }
+  const start = (exercise: Exercise) => nav.push({ id: 'config', exercise })
 
   return (
     <div className={styles.mode} data-part="mode-select">

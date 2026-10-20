@@ -32,11 +32,11 @@ afterEach(() => {
 
 function mount(lang: 'es' | 'en') {
   const host = document.createElement('div')
-  const seen = { id: '', routineId: '' as string | undefined }
+  const seen = { id: '', exercise: '' as string | undefined }
   function Spy() {
     const { route } = useNav()
     seen.id = route.id
-    seen.routineId = route.routineId
+    seen.exercise = route.exercise
     return null
   }
   const root = createRoot(host)
@@ -79,18 +79,18 @@ describe('ModeSelect', () => {
     expect(labels).toEqual(['Abduction', 'Flexion'])
   })
 
-  it('starts a session with the abduction routine', () => {
+  it('goes to the configuration of abduction', () => {
     const { seen, press } = mount('es')
     press(0)
-    expect(seen.id).toBe('session')
-    expect(seen.routineId).toBe('builtin-abduction-90')
+    expect(seen.id).toBe('config')
+    expect(seen.exercise).toBe('abduction')
   })
 
-  it('starts a session with the flexion routine', () => {
+  it('goes to the configuration of flexion', () => {
     const { seen, press } = mount('es')
     press(1)
-    expect(seen.id).toBe('session')
-    expect(seen.routineId).toBe('builtin-flexion-150')
+    expect(seen.id).toBe('config')
+    expect(seen.exercise).toBe('flexion')
   })
 
   it('has a labelled back button that returns to the launcher', () => {

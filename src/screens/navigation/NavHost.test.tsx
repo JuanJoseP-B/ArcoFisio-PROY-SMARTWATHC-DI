@@ -16,6 +16,7 @@ let frames = new Map<number, FrameRequestCallback>()
 let nextId = 1
 
 beforeEach(() => {
+  localStorage.clear()
   frames = new Map()
   nextId = 1
   vi.useFakeTimers()
@@ -135,7 +136,15 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     })
   }
 
-  it('Session: launcher, exercise selector, live session, and all the way back', () => {
+  const start = (host: HTMLElement, click: (el: Element | null) => void) => {
+    click(host.querySelector('[data-part="confirm-button"]'))
+    click(host.querySelector('[data-part="pill-button"]'))
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
+  }
+
+  it('Session: launcher, exercise selector, configuration, live session, and all the way back', () => {
     const { part, host, click, escape } = mount(FACE)
 
     click(part('face'))
@@ -146,11 +155,24 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     act(() => {
       vi.advanceTimersByTime(PRESS_DELAY_MS)
     })
+    expect(part('config')?.dataset.exercise).toBe('abduction')
+    expect(part('angle-wheel')).not.toBeNull()
+
+    click(host.querySelector('[data-part="confirm-button"]'))
+    expect(part('counts')).not.toBeNull()
+    click(host.querySelector('[data-part="pill-button"]'))
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
     expect(part('session')).not.toBeNull()
     expect(part('back-button')?.dataset.placement).toBe('bottom')
-    expect(host.textContent).toContain('Abducción 90°')
+    expect(host.textContent).toContain('Abducción personalizada')
 
     click(part('back-button'))
+    expect(part('counts')).not.toBeNull()
+    escape()
+    expect(part('config')).not.toBeNull()
+    escape()
     expect(part('mode-select')).not.toBeNull()
     escape()
     expect(part('hex-launcher')).not.toBeNull()
@@ -158,7 +180,7 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     expect(part('face')).not.toBeNull()
   })
 
-  it('Session with flexion runs the flexion routine', () => {
+  it('Session with flexion runs the custom flexion routine', () => {
     const { part, host, click } = mount({
       stack: [{ id: 'face' }, { id: 'launcher' }, { id: 'mode' }],
     })
@@ -166,8 +188,10 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     act(() => {
       vi.advanceTimersByTime(PRESS_DELAY_MS)
     })
+    expect(part('config')?.dataset.exercise).toBe('flexion')
+    start(host, click)
     expect(part('session')).not.toBeNull()
-    expect(host.textContent).toContain('Flexión 150°')
+    expect(host.textContent).toContain('Flexión personalizada')
   })
 
   it('works the same in English', () => {
