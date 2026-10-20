@@ -133,7 +133,6 @@ export const es = {
   'summary.empty': 'Aún no hay sesiones. Haz la primera.',
   'summary.history': 'Ver historial',
   'history.title': 'Historial',
-  'history.held': '{held}/{total} sostenidas',
   'history.removed': 'Rutina eliminada',
 
   'setup.language': 'Idioma',

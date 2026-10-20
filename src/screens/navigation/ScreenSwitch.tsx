@@ -4,6 +4,7 @@ import { Config } from '../config/Config'
 import { Counts } from '../config/Counts'
 import { Face } from '../face/Face'
 import { Guide } from '../guide/Guide'
+import { History } from '../history/History'
 import { Intro } from '../intro/Intro'
 import { Library } from '../library/Library'
 import { Launcher } from '../launcher/Launcher'
@@ -61,6 +62,8 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
       return <Builder routineId={route.routineId} />
     case 'summary':
       return <Placeholder title="launcher.summary" />
+    case 'history':
+      return <History />
     case 'pain':
       return <Pain />
     case 'guide':

@@ -135,7 +135,6 @@ export const en: Record<MessageKey, string> = {
   'summary.empty': 'No sessions yet. Do the first one.',
   'summary.history': 'View history',
   'history.title': 'History',
-  'history.held': '{held}/{total} held',
   'history.removed': 'Routine removed',
 
   'setup.language': 'Language',
