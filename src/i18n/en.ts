@@ -52,6 +52,23 @@ export const en: Record<MessageKey, string> = {
   'config.decrease': 'Decrease: {name}',
   'config.start': 'Start',
 
+  'measure.title': 'Measure range',
+  'measure.enable': 'Turn on the motion sensor',
+  'measure.calibrate': 'Let your arm hang still',
+  'measure.calibrating': 'Measuring… hold still',
+  'measure.unstable': 'You moved. Try again',
+  'measure.noReading': 'No readings. Check the permission',
+  'measure.current': 'Current angle',
+  'measure.max': 'Maximum {n}°',
+  'measure.reset': 'Reset maximum',
+  'measure.recalibrate': 'Calibrate again',
+
+  'setup.language': 'Language',
+  'setup.ready': 'Sensor ready',
+  'setup.skip': 'Skip',
+  'lang.es': 'Español',
+  'lang.en': 'English',
+
   'soon.note': 'Coming soon',
   'intro.skip': 'Skip the intro',
 }

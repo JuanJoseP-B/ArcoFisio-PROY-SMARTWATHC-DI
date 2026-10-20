@@ -50,6 +50,23 @@ export const es = {
   'config.decrease': 'Disminuir: {name}',
   'config.start': 'Iniciar',
 
+  'measure.title': 'Medir rango',
+  'measure.enable': 'Activa el sensor de movimiento',
+  'measure.calibrate': 'Deja el brazo colgando y quieto',
+  'measure.calibrating': 'Midiendo… no te muevas',
+  'measure.unstable': 'Te moviste. Inténtalo de nuevo',
+  'measure.noReading': 'Sin lecturas. Revisa el permiso',
+  'measure.current': 'Ángulo actual',
+  'measure.max': 'Máximo {n}°',
+  'measure.reset': 'Reiniciar máximo',
+  'measure.recalibrate': 'Calibrar de nuevo',
+
+  'setup.language': 'Idioma',
+  'setup.ready': 'Sensor listo',
+  'setup.skip': 'Omitir',
+  'lang.es': 'Español',
+  'lang.en': 'English',
+
   'soon.note': 'Próximamente',
   'intro.skip': 'Saltar la introducción',
 } as const
