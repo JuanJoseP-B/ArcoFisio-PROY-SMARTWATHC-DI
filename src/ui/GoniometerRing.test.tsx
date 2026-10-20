@@ -42,6 +42,13 @@ describe('GoniometerRing', () => {
     expect(render(250)).toContain('rotate(180.00 192 192)')
   })
 
+  it('leaves the target marker out when there is no target', () => {
+    expect(renderToString(<GoniometerRing angle={40} target={null} />)).not.toContain(
+      'data-part="target"',
+    )
+    expect(render(40)).toContain('data-part="target"')
+  })
+
   it('exposes the zone for styling', () => {
     expect(render(10, 90, 'overshoot')).toContain('data-zone="overshoot"')
     expect(render(10)).not.toContain('data-zone')

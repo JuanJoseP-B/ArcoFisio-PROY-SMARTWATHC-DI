@@ -13,7 +13,8 @@ import {
 interface GoniometerRingProps {
   /** Live angle in degrees; the arc fills `angle / 360` of the ring from the top, clockwise. */
   angle: number
-  target: number
+  /** Where the target marker sits; null leaves it out (Measure range and Pain have none). */
+  target: number | null
   /** Drives the arc color and the size of the target marker. */
   zone?: Zone | null
   /** The saved painful arc: a pulsing band behind the ring, marked at both ends. */
@@ -109,10 +110,17 @@ export function GoniometerRing({
         opacity={stringOpacity}
         data-part="string"
       />
-      <g transform={rotate(target)} data-part="target">
-        <circle className={styles.target} cx={RING_CENTER} cy={RING_TOP_Y} r={targetRadius(zone)} />
-        <circle className={styles.targetDot} cx={RING_CENTER} cy={RING_TOP_Y} r="3.5" />
-      </g>
+      {target === null ? null : (
+        <g transform={rotate(target)} data-part="target">
+          <circle
+            className={styles.target}
+            cx={RING_CENTER}
+            cy={RING_TOP_Y}
+            r={targetRadius(zone)}
+          />
+          <circle className={styles.targetDot} cx={RING_CENTER} cy={RING_TOP_Y} r="3.5" />
+        </g>
+      )}
       <g transform={rotate(a)} data-part="knob">
         <g className={styles.tremor}>
           <circle className={styles.knob} cx={RING_CENTER} cy={RING_TOP_Y} r="12" />
