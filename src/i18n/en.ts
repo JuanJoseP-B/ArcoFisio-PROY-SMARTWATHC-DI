@@ -68,7 +68,6 @@ export const en: Record<MessageKey, string> = {
   'done.stopped': 'Routine finished',
   'done.reps': '{n} repetitions',
   'done.max': 'Max {n}°',
-  'done.exit': 'Exit',
   'done.summary': 'See summary',
 
   'library.new': 'New routine',

@@ -66,7 +66,6 @@ export const es = {
   'done.stopped': 'Rutina terminada',
   'done.reps': '{n} repeticiones',
   'done.max': 'Máximo {n}°',
-  'done.exit': 'Salir',
   'done.summary': 'Ver resumen',
 
   'library.new': 'Nueva rutina',

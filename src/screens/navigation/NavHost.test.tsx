@@ -334,6 +334,9 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     act(() => {
       vi.advanceTimersByTime(PRESS_DELAY_MS)
     })
+    // The way out leads to the summary, with the launcher under it.
+    expect(part('summary')).not.toBeNull()
+    escape()
     expect(part('hex-launcher')).not.toBeNull()
     escape()
     expect(part('face')).not.toBeNull()
