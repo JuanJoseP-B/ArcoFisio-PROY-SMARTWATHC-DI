@@ -47,6 +47,7 @@ function mount(
   lang: 'es' | 'en' = 'es',
   painArc: PainArc | null = null,
   feedback?: Feedback,
+  onMeasure?: () => void,
 ) {
   const host = document.createElement('div')
   const root = createRoot(host)
@@ -56,7 +57,13 @@ function mount(
       createElement(
         I18nProvider,
         { lang },
-        createElement(Session, { routine, painArc, kit, ...(feedback ? { feedback } : {}) }),
+        createElement(Session, {
+          routine,
+          painArc,
+          kit,
+          ...(feedback ? { feedback } : {}),
+          ...(onMeasure ? { onMeasure } : {}),
+        }),
       ),
     ),
   )
@@ -148,16 +155,19 @@ describe('Session', () => {
     expect(chip(host)?.textContent).toBe('Dolor')
   })
 
-  it('replaces the chip with a notice and a button when calibration is missing', () => {
+  it('replaces the chip with a notice and a way to Measure when calibration is missing', () => {
     const kit = newKit()
-    const { host } = mount(kit)
+    const onMeasure = vi.fn()
+    const { host } = mount(kit, 'es', null, undefined, onMeasure)
     act(() => kit.tracker.setCalibration(null))
 
     expect(chip(host)).toBeNull()
     expect(host.querySelector('[data-part="sensor-notice"]')?.textContent).toContain(
       'Calibra con el brazo abajo',
     )
-    expect(host.querySelector('button')?.textContent).toBe('Brazo abajo')
+    expect(host.querySelector('button')?.textContent).toBe('Medir')
+    act(() => host.querySelector('button')?.click())
+    expect(onMeasure).toHaveBeenCalledTimes(1)
     expect(reading(host)).toBe('--°')
   })
 
