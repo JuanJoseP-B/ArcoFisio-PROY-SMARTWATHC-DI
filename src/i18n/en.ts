@@ -84,7 +84,6 @@ export const en: Record<MessageKey, string> = {
   'builder.confirmDelete': 'Delete this routine?',
   'builder.confirmYes': 'Yes, delete',
   'builder.cancel': 'Cancel',
-  'builder.autoName': '{exercise} {target}°',
 
   'measure.title': 'Measure range',
   'measure.enable': 'Turn on the motion sensor',

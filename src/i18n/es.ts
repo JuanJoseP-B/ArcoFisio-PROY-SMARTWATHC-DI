@@ -82,7 +82,6 @@ export const es = {
   'builder.confirmDelete': '¿Eliminar esta rutina?',
   'builder.confirmYes': 'Sí, eliminar',
   'builder.cancel': 'Cancelar',
-  'builder.autoName': '{exercise} {target}°',
 
   'measure.title': 'Medir rango',
   'measure.enable': 'Activa el sensor de movimiento',
