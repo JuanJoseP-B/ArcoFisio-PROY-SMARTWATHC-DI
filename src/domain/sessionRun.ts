@@ -63,6 +63,15 @@ export function stepSessionRun(
   }
 }
 
+/**
+ * Call when readings stop (tab hidden, sensor lost): a hold in progress cannot count time
+ * nobody was measuring, so it restarts when readings come back.
+ */
+export const pauseSessionRun = (state: SessionRunState): SessionRunState => ({
+  ...state,
+  rep: { ...state.rep, targetSince: null },
+})
+
 /** Numbers a finished session is saved with (see the `sessions` data model). */
 export const sessionStats = (state: SessionRunState): SessionStats => ({
   maxAngle: state.rep.maxAngle,
