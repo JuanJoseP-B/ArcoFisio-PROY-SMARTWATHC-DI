@@ -57,8 +57,11 @@ export function AngleWheel({ value, onChange, title, caption }: AngleWheelProps)
         event.clientY,
       )
     }
+    // Native events can arrive faster than React re-renders, so the ref moves on at once.
     const set = (next: number) => {
-      if (next !== latest.current.current) latest.current.onChange(next)
+      if (next === latest.current.current) return
+      latest.current.current = next
+      latest.current.onChange(next)
     }
 
     const onDown = (event: PointerEvent) => {

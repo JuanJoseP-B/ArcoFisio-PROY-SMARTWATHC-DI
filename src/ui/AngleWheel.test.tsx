@@ -158,6 +158,18 @@ describe('AngleWheel', () => {
     expect(value()).toBe('90°')
   })
 
+  it('counts every notch of a fast scroll, even before the screen has redrawn', () => {
+    const { wheel, value } = mount(90)
+    act(() => {
+      for (let notch = 0; notch < 3; notch += 1) {
+        wheel.dispatchEvent(
+          new WheelEvent('wheel', { deltaY: -100, bubbles: true, cancelable: true }),
+        )
+      }
+    })
+    expect(value()).toBe('105°')
+  })
+
   it('shows the nearest detent for a value between two', () => {
     const { value } = mount(92)
     expect(value()).toBe('90°')
