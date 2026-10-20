@@ -1,23 +1,33 @@
-import { SensorProbe } from './app/SensorProbe'
+import { I18nProvider } from './app/I18nProvider'
+import { SimulatorPanel } from './app/SimulatorPanel'
 import { WatchStage } from './app/WatchStage'
 import { getDataLayer } from './data'
-import { I18nProvider } from './app/I18nProvider'
+import type { Routine } from './data'
+import { isSimRequested } from './sensors/kit'
 import { Intro } from './screens/intro/Intro'
+import { Session } from './screens/session/Session'
 import { RadialTransition } from './ui/RadialTransition'
-import { SafeZone, WatchScreen } from './ui/WatchScreen'
+import { WatchScreen } from './ui/WatchScreen'
 import { WatchBezel } from './ui/WatchBezel'
 
-const probeRequested = (): boolean =>
-  new URLSearchParams(window.location.search).get('probe') === '1'
+const params = (): URLSearchParams => new URLSearchParams(window.location.search)
+
+/** The routine for ?session=1: the one named by ?routine=<id>, else the first available. */
+function pickRoutine(routines: Routine[], id: string | null): Routine | null {
+  return routines.find((routine) => routine.id === id) ?? routines[0] ?? null
+}
 
 /** Interim screen host: the stage 8 navigation machine replaces this choice. */
 function CurrentScreen() {
-  if (probeRequested()) {
+  const query = params()
+  const data = getDataLayer()
+  const routine =
+    query.get('session') === '1' ? pickRoutine(data.routines.list(), query.get('routine')) : null
+
+  if (routine) {
     return (
-      <RadialTransition screenKey="probe">
-        <SafeZone>
-          <SensorProbe />
-        </SafeZone>
+      <RadialTransition screenKey="session">
+        <Session routine={routine} painArc={data.painArc.get()} />
       </RadialTransition>
     )
   }
@@ -39,6 +49,7 @@ export function App() {
           </WatchScreen>
         </WatchBezel>
       </WatchStage>
+      {isSimRequested(window.location.search) ? <SimulatorPanel /> : null}
     </I18nProvider>
   )
 }
