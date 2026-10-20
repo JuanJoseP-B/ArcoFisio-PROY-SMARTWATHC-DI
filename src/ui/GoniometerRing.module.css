@@ -1,0 +1,72 @@
+.ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.track {
+  fill: none;
+  stroke: var(--af-color-surface-sunken);
+  stroke-width: var(--af-ring-stroke);
+}
+
+.arc {
+  fill: none;
+  stroke: var(--af-color-ink);
+  stroke-width: var(--af-ring-stroke);
+  stroke-linecap: round;
+  transition: stroke var(--af-dur-instant);
+}
+
+.string {
+  stroke: var(--af-color-primary-soft);
+  stroke-width: 2;
+  stroke-dasharray: 4 5;
+}
+
+.target {
+  fill: var(--af-color-screen-base);
+  stroke: var(--af-color-bronze);
+  stroke-width: 2.5;
+  transition: r var(--af-dur-standard) var(--af-ease-wheel);
+}
+
+.targetDot {
+  fill: var(--af-color-bronze);
+}
+
+.knob {
+  fill: var(--af-color-surface);
+  stroke: var(--af-color-ink);
+  stroke-width: 3;
+}
+
+.chevron {
+  fill: none;
+  stroke: var(--af-color-ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The word on the chip always accompanies these colors; the arc only reinforces it. */
+.ring[data-zone='approach'] .arc {
+  stroke: var(--af-color-gold);
+}
+
+.ring[data-zone='near'] .arc {
+  stroke: var(--af-color-bronze);
+}
+
+.ring[data-zone='target'] .arc {
+  stroke: var(--af-color-zone-optimal);
+}
+
+.ring[data-zone='overshoot'] .arc,
+.ring[data-zone='pain'] .arc {
+  stroke: var(--af-color-zone-pain);
+}
+
+.ring[data-zone='rest'] .arc {
+  stroke: var(--af-color-zone-rest);
+}
