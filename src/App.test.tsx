@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { afterEach, describe, expect, it } from 'vitest'
 import { App } from './App'
+import { getFeedback } from './feedback'
 
 ;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
 
@@ -56,6 +57,18 @@ describe('App', () => {
     const screen = host.querySelector('[data-part="screen"]')
     const panel = host.querySelector('[data-part="simulator-panel"]')
     expect(screen?.contains(panel)).toBe(false)
+    act(() => root.unmount())
+  })
+
+  it('unlocks the audio on the first touch of the page', async () => {
+    const { root } = mount()
+    expect(getFeedback().audio.state).toBe('locked')
+
+    // jsdom has no Web Audio, so the attempt ends as "unsupported": it did try on the gesture.
+    await act(async () => {
+      document.dispatchEvent(new Event('pointerdown'))
+    })
+    expect(getFeedback().audio.state).toBe('unsupported')
     act(() => root.unmount())
   })
 })

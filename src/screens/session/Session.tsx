@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSessionRun } from '../../app/useSessionRun'
 import { useI18n } from '../../app/useI18n'
+import type { Feedback } from '../../feedback/feedback'
 import type { SensorKit } from '../../sensors/kit'
 import { createWakeLock } from '../../feedback/wakeLock'
 import type { PainArc } from '../../domain/zones'
@@ -17,17 +18,20 @@ interface SessionProps {
   painArc?: PainArc | null
   /** Injected in tests; the app-wide sensor kit is used otherwise. */
   kit?: SensorKit
+  /** Sound and vibration for the zones; the session is silent without it. */
+  feedback?: Feedback
 }
 
 /**
  * Live session: the goniometer follows the arm, the chip says which zone it is in and the
  * counter tracks repetitions. Keeps the screen awake while it is open.
  */
-export function Session({ routine, painArc = null, kit }: SessionProps) {
+export function Session({ routine, painArc = null, kit, feedback }: SessionProps) {
   const { t, lang } = useI18n()
   const run = useSessionRun({
     config: { target: routine.targetAngle, tolerance: routine.tolerance, painArc },
     ...(kit ? { kit } : {}),
+    ...(feedback ? { feedback } : {}),
   })
   const { angle, status, zone, view, actions } = run
 

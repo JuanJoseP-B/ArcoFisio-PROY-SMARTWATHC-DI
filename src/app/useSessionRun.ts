@@ -7,6 +7,7 @@ import {
 } from '../domain/sessionRun'
 import type { SessionRunConfig, SessionRunState, SessionStats } from '../domain/sessionRun'
 import type { AngleZone } from '../domain/zones'
+import type { Feedback } from '../feedback/feedback'
 import type { SensorKit } from '../sensors/kit'
 import { useAngle } from './useAngle'
 import type { UseAngle } from './useAngle'
@@ -33,6 +34,8 @@ export interface UseSessionRun extends UseAngle {
 export interface UseSessionRunOptions {
   config: SessionRunConfig
   kit?: SensorKit
+  /** Sound and vibration driven by the same frame tick; stopped when readings stop. */
+  feedback?: Feedback
 }
 
 const EMPTY_VIEW: SessionView = {
@@ -66,23 +69,26 @@ const sameView = (a: SessionView, b: SessionView): boolean =>
  * repetition machine with the latest angle. Ticking every frame (not only when the angle
  * changes) lets a steady hold on the target reach its 1 s.
  */
-export function useSessionRun({ config, kit }: UseSessionRunOptions): UseSessionRun {
+export function useSessionRun({ config, kit, feedback }: UseSessionRunOptions): UseSessionRun {
   const angleState = useAngle(kit ? { kit } : {})
   const { angle, status } = angleState
 
   const angleRef = useRef<number | null>(angle)
   const configRef = useRef(config)
+  const feedbackRef = useRef(feedback)
   const runRef = useRef<SessionRunState>(createSessionRunState())
   const [view, setView] = useState<SessionView>(EMPTY_VIEW)
 
   useEffect(() => {
     angleRef.current = angle
     configRef.current = config
+    feedbackRef.current = feedback
   })
 
   useEffect(() => {
     if (status !== 'live') {
       runRef.current = pauseSessionRun(runRef.current)
+      feedbackRef.current?.stop()
       return undefined
     }
 
@@ -90,18 +96,19 @@ export function useSessionRun({ config, kit }: UseSessionRunOptions): UseSession
     const tick = (now: number) => {
       const current = angleRef.current
       if (current !== null) {
-        runRef.current = stepSessionRun(
-          runRef.current,
-          { angle: current, tMs: now },
-          configRef.current,
-        ).state
+        const step = stepSessionRun(runRef.current, { angle: current, tMs: now }, configRef.current)
+        runRef.current = step.state
+        feedbackRef.current?.tick({ zone: step.zone, angle: current, tMs: now })
         const next = viewOf(runRef.current)
         setView((previous) => (sameView(previous, next) ? previous : next))
       }
       handle = requestAnimationFrame(tick)
     }
     handle = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(handle)
+    return () => {
+      cancelAnimationFrame(handle)
+      feedbackRef.current?.stop()
+    }
   }, [status])
 
   const stats = useCallback(() => sessionStats(runRef.current), [])

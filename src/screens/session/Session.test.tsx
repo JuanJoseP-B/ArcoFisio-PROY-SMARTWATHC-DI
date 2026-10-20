@@ -8,6 +8,7 @@ import { SEED_ROUTINES } from '../../data/seeds'
 import { createStorage } from '../../data/storage'
 import { FakeStorage } from '../../data/testStorage'
 import type { PainArc } from '../../domain/zones'
+import type { Feedback } from '../../feedback/feedback'
 import { createSensorKit } from '../../sensors/kit'
 import { Session } from './Session'
 
@@ -45,13 +46,18 @@ function mount(
   kit: ReturnType<typeof newKit>,
   lang: 'es' | 'en' = 'es',
   painArc: PainArc | null = null,
+  feedback?: Feedback,
 ) {
   const host = document.createElement('div')
   const root = createRoot(host)
   roots.push(root)
   act(() =>
     root.render(
-      createElement(I18nProvider, { lang }, createElement(Session, { routine, painArc, kit })),
+      createElement(
+        I18nProvider,
+        { lang },
+        createElement(Session, { routine, painArc, kit, ...(feedback ? { feedback } : {}) }),
+      ),
     ),
   )
   return { host, root }
@@ -169,5 +175,30 @@ describe('Session', () => {
     expect(release).toHaveBeenCalled()
 
     Reflect.deleteProperty(navigator, 'wakeLock')
+  })
+
+  it('plays the zone feedback while the arm moves', () => {
+    const played: (string | null)[] = []
+    const feedback = {
+      tick: (input: { zone: string | null }) => played.push(input.zone),
+      stop: vi.fn(),
+    } as unknown as Feedback
+    const kit = newKit()
+    mount(kit, 'es', null, feedback)
+
+    moveTo(kit, 90)
+    flushFrame(100)
+    moveTo(kit, 100)
+    flushFrame(200)
+
+    expect(played).toEqual(['target', 'overshoot'])
+  })
+
+  it('stays silent when no feedback is given', () => {
+    const kit = newKit()
+    const { host } = mount(kit)
+    moveTo(kit, 90)
+    expect(() => flushFrame(100)).not.toThrow()
+    expect(chip(host)?.textContent).toBe('Objetivo alcanzado')
   })
 })

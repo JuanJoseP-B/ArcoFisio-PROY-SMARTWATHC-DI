@@ -6,6 +6,7 @@ import { createCalibrationRepo } from '../data/calibrationRepo'
 import { createStorage } from '../data/storage'
 import { FakeStorage } from '../data/testStorage'
 import type { SessionRunConfig } from '../domain/sessionRun'
+import type { Feedback } from '../feedback/feedback'
 import { createSensorKit } from '../sensors/kit'
 import type { UseSessionRun } from './useSessionRun'
 import { useSessionRun } from './useSessionRun'
@@ -40,10 +41,10 @@ afterEach(() => {
 const newKit = () => createSensorKit('sim', createCalibrationRepo(createStorage(new FakeStorage())))
 const config: SessionRunConfig = { target: 90, tolerance: 2, painArc: null }
 
-function mount(kit: ReturnType<typeof newKit>, cfg = config) {
+function mount(kit: ReturnType<typeof newKit>, cfg = config, feedback?: Feedback) {
   const latest: { current: UseSessionRun | null } = { current: null }
   function Probe() {
-    latest.current = useSessionRun({ config: cfg, kit })
+    latest.current = useSessionRun({ config: cfg, kit, ...(feedback ? { feedback } : {}) })
     return null
   }
   const root = createRoot(document.createElement('div'))
@@ -143,5 +144,49 @@ describe('useSessionRun', () => {
     act(() => root.unmount())
     roots.length = 0
     expect(frames.size).toBe(0)
+  })
+
+  describe('feedback', () => {
+    const fakeFeedback = () => {
+      const ticks: { zone: string | null; angle: number | null; tMs: number }[] = []
+      const stop = vi.fn()
+      const feedback = {
+        tick: (input: (typeof ticks)[number]) => ticks.push(input),
+        stop,
+      } as unknown as Feedback
+      return { feedback, ticks, stop }
+    }
+
+    it('ticks the feedback on every frame with the zone and the latest angle', () => {
+      const kit = newKit()
+      const { feedback, ticks } = fakeFeedback()
+      mount(kit, config, feedback)
+
+      moveTo(kit, 70)
+      flushFrame(100)
+      flushFrame(116)
+      flushFrame(132)
+
+      expect(ticks.map((t) => t.tMs)).toEqual([100, 116, 132])
+      expect(ticks.every((t) => t.zone === 'approach')).toBe(true)
+      expect(ticks[0]?.angle).toBeCloseTo(70, 0)
+    })
+
+    it('stops the feedback when readings stop and when the screen closes', () => {
+      const kit = newKit()
+      const { feedback, stop } = fakeFeedback()
+      const { root } = mount(kit, config, feedback)
+      moveTo(kit, 70)
+      flushFrame(100)
+
+      act(() => kit.tracker.pause())
+      expect(stop).toHaveBeenCalled()
+
+      stop.mockClear()
+      act(() => kit.tracker.resume())
+      act(() => root.unmount())
+      roots.length = 0
+      expect(stop).toHaveBeenCalled()
+    })
   })
 })
