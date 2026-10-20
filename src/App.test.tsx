@@ -308,6 +308,88 @@ describe('App', () => {
     after.unmount()
   })
 
+  it('ends a session on the summary and, after three sessions, shows the change with its sign', () => {
+    open('?sim=1')
+    getDataLayer().settings.update({ lang: 'es', firstRunDone: true })
+
+    // Two sessions saved before: 80° and then 90°.
+    const routineId = getDataLayer().routines.list()[0]!.id
+    const saved = (id: string, maxAngle: number, minute: number) =>
+      getDataLayer().sessions.add({
+        id,
+        routineId,
+        startedAt: new Date(2026, 9, 1, 10, minute).toISOString(),
+        endedAt: new Date(2026, 9, 1, 10, minute + 5).toISOString(),
+        maxAngle,
+        hits: 1,
+        overshoots: 0,
+        painEntries: 0,
+        reps: [{ peak: maxAngle, held: true }],
+      })
+    expect(saved('a', 80, 0)).toBe(true)
+    expect(saved('b', 90, 10)).toBe(true)
+
+    const move = (angle: number) =>
+      act(() => {
+        for (let i = 0; i < 80; i += 1) getSensorKit().simulated?.setAngle(angle)
+      })
+    const wait = (ms: number) =>
+      act(() => {
+        vi.advanceTimersByTime(ms)
+      })
+    move(0)
+    wait(100)
+
+    const app = mount()
+    app.click(app.part('intro-skip'))
+    app.click(app.part('face'))
+    app.click(app.host.querySelector('[data-cell="session"]'))
+    const pressPill = () => {
+      app.click(app.host.querySelector('[data-part="pill-button"]'))
+      wait(PRESS_DELAY_MS)
+    }
+    pressPill()
+    app.click(app.part('confirm-button'))
+    pressPill()
+
+    // The third session reaches 85°, five degrees less than the one before.
+    move(85)
+    wait(100)
+    const icon = (name: string) =>
+      app.host.querySelector(`[data-part="icon-button"][data-icon="${name}"]`)
+    app.click(icon('pause'))
+    app.click(icon('stop'))
+    expect(app.part('done-view')).not.toBeNull()
+    expect(getDataLayer().sessions.last()?.maxAngle).toBeCloseTo(85, 0)
+
+    // The way out of the workout is the summary: today's reach and the setback with its sign.
+    app.click(app.part('done-view')?.querySelector('button') ?? null)
+    wait(PRESS_DELAY_MS)
+    expect(app.part('summary')).not.toBeNull()
+    expect(app.part('summary-label')?.textContent).toBe('Rango máximo de hoy')
+    expect(app.part('summary-max')?.textContent).toBe('85°')
+    expect(app.part('zone-chip')?.textContent).toBe('−5° vs. sesión anterior')
+
+    // The history shows the three sessions, newest first, each against the one before it.
+    app.click(icon('history'))
+    const rows = [...app.host.querySelectorAll('[data-part="history-row"]')]
+    expect(rows.map((row) => row.querySelector('[data-part="history-max"]')?.textContent)).toEqual([
+      '85°',
+      '90°',
+      '80°',
+    ])
+    expect(
+      rows.map((row) => row.querySelector('[data-part="history-change"]')?.textContent ?? null),
+    ).toEqual(['−5°', '+10°', null])
+
+    // Back from the history to the summary, then to the launcher.
+    app.click(app.host.querySelector('[data-part="back-button"]'))
+    expect(app.part('summary')).not.toBeNull()
+    app.click(icon('back'))
+    expect(app.part('hex-launcher')).not.toBeNull()
+    app.unmount()
+  })
+
   it('shows the simulator only with ?sim=1 and keeps it out of the watch circle', () => {
     const plain = mount()
     expect(plain.part('simulator-panel')).toBeNull()

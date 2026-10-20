@@ -9,7 +9,7 @@ interface DoneViewProps {
   onExit(): void
 }
 
-/** The end of a workout: how it ended, what was counted, and the way out. */
+/** The end of a workout: how it ended, what was counted, and the way on to the summary. */
 export function DoneView({ outcome, totals, onExit }: DoneViewProps) {
   const { t } = useI18n()
 
@@ -25,7 +25,7 @@ export function DoneView({ outcome, totals, onExit }: DoneViewProps) {
         {t('done.max', { n: Math.round(totals.maxAngle) })}
       </div>
       <div className={styles.doneAction}>
-        <PillButton label={t('done.exit')} onPress={onExit} />
+        <PillButton label={t('done.summary')} onPress={onExit} />
       </div>
     </div>
   )

@@ -10,7 +10,8 @@ interface PlayerScreenProps {
 
 /**
  * The player wired to the app: the chosen routine, the saved pain arc, sound, the finished
- * workout kept in the session history, and a way out that lands on the launcher.
+ * workout kept in the session history, and a way out that lands on the summary, with the
+ * launcher under it.
  */
 export function PlayerScreen({ routineId }: PlayerScreenProps) {
   const nav = useNav()
@@ -34,6 +35,7 @@ export function PlayerScreen({ routineId }: PlayerScreenProps) {
       onExit={() => {
         nav.reset({ id: 'face' })
         nav.push({ id: 'launcher' })
+        nav.push({ id: 'summary' })
       }}
     />
   )

@@ -15,6 +15,7 @@ export type ScreenId =
   | 'routine'
   | 'builder'
   | 'summary'
+  | 'history'
   | 'pain'
   | 'guide'
   | 'settings'
