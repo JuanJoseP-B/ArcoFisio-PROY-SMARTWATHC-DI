@@ -67,6 +67,7 @@ export const es = {
   'done.reps': '{n} repeticiones',
   'done.max': 'Máximo {n}°',
   'done.exit': 'Salir',
+  'done.summary': 'Ver resumen',
 
   'library.new': 'Nueva rutina',
   'routine.summary': '{sets}×{reps} · {target}°',
@@ -123,6 +124,17 @@ export const es = {
   'guide.tone.good': 'Bien',
   'guide.tone.info': 'Consejo',
   'guide.next': 'Siguiente consejo',
+
+  'summary.maxToday': 'Rango máximo de hoy',
+  'summary.maxLast': 'Rango máximo de la última sesión',
+  'summary.vsPrevious': '{delta} vs. sesión anterior',
+  'summary.first': 'Primera sesión registrada',
+  'summary.held': 'Sostenidas: {held} de {total}',
+  'summary.empty': 'Aún no hay sesiones. Haz la primera.',
+  'summary.history': 'Ver historial',
+  'history.title': 'Historial',
+  'history.held': '{held}/{total} sostenidas',
+  'history.removed': 'Rutina eliminada',
 
   'setup.language': 'Idioma',
   'setup.ready': 'Sensor listo',

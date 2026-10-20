@@ -69,6 +69,7 @@ export const en: Record<MessageKey, string> = {
   'done.reps': '{n} repetitions',
   'done.max': 'Max {n}°',
   'done.exit': 'Exit',
+  'done.summary': 'See summary',
 
   'library.new': 'New routine',
   'routine.summary': '{sets}×{reps} · {target}°',
@@ -125,6 +126,17 @@ export const en: Record<MessageKey, string> = {
   'guide.tone.good': 'Nice',
   'guide.tone.info': 'Tip',
   'guide.next': 'Next tip',
+
+  'summary.maxToday': 'Max range today',
+  'summary.maxLast': 'Max range, last session',
+  'summary.vsPrevious': '{delta} vs. previous session',
+  'summary.first': 'First session on record',
+  'summary.held': 'Held: {held} of {total}',
+  'summary.empty': 'No sessions yet. Do the first one.',
+  'summary.history': 'View history',
+  'history.title': 'History',
+  'history.held': '{held}/{total} held',
+  'history.removed': 'Routine removed',
 
   'setup.language': 'Language',
   'setup.ready': 'Sensor ready',
