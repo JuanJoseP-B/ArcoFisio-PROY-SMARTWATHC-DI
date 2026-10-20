@@ -5,7 +5,7 @@ import { renderToString } from 'react-dom/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { I18nProvider } from '../../app/I18nProvider'
 import { Intro } from './Intro'
-import { INTRO_PERIOD_MS } from './frame'
+import { INTRO_END_MS, INTRO_PERIOD_MS, INTRO_REDUCED_HOLD_MS } from './frame'
 
 ;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
 
@@ -30,11 +30,15 @@ function flushFrame(now: number) {
   act(() => callbacks.forEach((cb) => cb(now)))
 }
 
-function mount(lang: 'es' | 'en') {
+function mount(lang: 'es' | 'en', onDone?: () => void) {
   const host = document.createElement('div')
   const root = createRoot(host)
   roots.push(root)
-  act(() => root.render(createElement(I18nProvider, { lang }, createElement(Intro))))
+  act(() =>
+    root.render(
+      createElement(I18nProvider, { lang }, createElement(Intro, onDone ? { onDone } : {})),
+    ),
+  )
   return host
 }
 
@@ -113,5 +117,65 @@ describe('Intro', () => {
     expect(frames.size).toBe(1)
     for (const root of roots.splice(0)) act(() => root.unmount())
     expect(frames.size).toBe(0)
+  })
+
+  describe('played once', () => {
+    it('ends with the lockup on screen and calls onDone once, not before', () => {
+      const onDone = vi.fn()
+      const host = mount('es', onDone)
+      const opacity = () =>
+        Number(host.querySelector<HTMLElement>('[data-part="wordmark"]')?.style.opacity)
+
+      flushFrame(1000)
+      flushFrame(1000 + INTRO_END_MS - 100)
+      expect(onDone).not.toHaveBeenCalled()
+
+      flushFrame(1000 + INTRO_END_MS)
+      expect(onDone).toHaveBeenCalledTimes(1)
+      expect(opacity()).toBe(1)
+
+      flushFrame(1000 + INTRO_PERIOD_MS * 2)
+      expect(onDone).toHaveBeenCalledTimes(1)
+      expect(opacity()).toBe(1)
+    })
+
+    it('can be skipped with a tap, only once', () => {
+      const onDone = vi.fn()
+      const host = mount('en', onDone)
+      const skip = host.querySelector<HTMLButtonElement>('[data-part="intro-skip"]')
+      expect(skip?.getAttribute('aria-label')).toBe('Skip the intro')
+
+      act(() => skip?.click())
+      act(() => skip?.click())
+      expect(onDone).toHaveBeenCalledTimes(1)
+
+      flushFrame(1000)
+      flushFrame(1000 + INTRO_END_MS)
+      expect(onDone).toHaveBeenCalledTimes(1)
+    })
+
+    it('has the skip button in Spanish too', () => {
+      const host = mount('es', () => undefined)
+      expect(host.querySelector('[data-part="intro-skip"]')?.getAttribute('aria-label')).toBe(
+        'Saltar la introducción',
+      )
+    })
+
+    it('shows the still lockup for a moment under reduced motion, then moves on', () => {
+      stubReducedMotion(true)
+      const onDone = vi.fn()
+      mount('es', onDone)
+
+      flushFrame(500)
+      flushFrame(500 + INTRO_REDUCED_HOLD_MS - 1)
+      expect(onDone).not.toHaveBeenCalled()
+      flushFrame(500 + INTRO_REDUCED_HOLD_MS)
+      expect(onDone).toHaveBeenCalledTimes(1)
+    })
+
+    it('does not offer a skip button when it just loops', () => {
+      const host = mount('es')
+      expect(host.querySelector('[data-part="intro-skip"]')).toBeNull()
+    })
   })
 })

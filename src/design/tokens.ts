@@ -25,6 +25,8 @@ export const color = {
   hardwareBlack: '#000000',
   bezelMetal: '#9A9C9A',
   bezelShadow: 'rgba(31, 58, 43, 0.25)',
+  cellShadow: 'rgba(31, 58, 43, 0.18)',
+  rippleLight: 'rgba(237, 217, 180, 0.35)',
   glassHighlight: 'rgba(255, 255, 255, 0.55)',
   glassClear: 'rgba(255, 255, 255, 0)',
 } as const

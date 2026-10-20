@@ -32,3 +32,10 @@ button {
   font: inherit;
   color: inherit;
 }
+
+/* Keyboard focus is always visible (components with their own ring opt out). */
+button:focus-visible,
+[role='button']:focus-visible {
+  outline: 3px solid var(--af-color-bronze);
+  outline-offset: 2px;
+}
