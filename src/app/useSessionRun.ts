@@ -38,6 +38,12 @@ export interface UseSessionRunOptions {
   feedback?: Feedback
   /** Holds the session: no frames, no counting and no sound until it is released. */
   paused?: boolean
+  /**
+   * Repetitions that end the run. Once that many are done the counters start over and
+   * `onGoal` gets what was counted, so a routine can go on to its next set.
+   */
+  repsGoal?: number
+  onGoal?: (counted: SessionStats) => void
 }
 
 const EMPTY_VIEW: SessionView = {
@@ -76,6 +82,8 @@ export function useSessionRun({
   kit,
   feedback,
   paused = false,
+  repsGoal,
+  onGoal,
 }: UseSessionRunOptions): UseSessionRun {
   const angleState = useAngle(kit ? { kit } : {})
   const { angle, status } = angleState
@@ -83,6 +91,7 @@ export function useSessionRun({
   const angleRef = useRef<number | null>(angle)
   const configRef = useRef(config)
   const feedbackRef = useRef(feedback)
+  const goalRef = useRef({ repsGoal, onGoal })
   const runRef = useRef<SessionRunState>(createSessionRunState())
   const [view, setView] = useState<SessionView>(EMPTY_VIEW)
 
@@ -90,6 +99,7 @@ export function useSessionRun({
     angleRef.current = angle
     configRef.current = config
     feedbackRef.current = feedback
+    goalRef.current = { repsGoal, onGoal }
   })
 
   useEffect(() => {
@@ -106,8 +116,16 @@ export function useSessionRun({
         const step = stepSessionRun(runRef.current, { angle: current, tMs: now }, configRef.current)
         runRef.current = step.state
         feedbackRef.current?.tick({ zone: step.zone, angle: current, tMs: now })
-        const next = viewOf(runRef.current)
-        setView((previous) => (sameView(previous, next) ? previous : next))
+        const goal = goalRef.current
+        if (goal.repsGoal !== undefined && runRef.current.rep.reps.length >= goal.repsGoal) {
+          const counted = sessionStats(runRef.current)
+          runRef.current = createSessionRunState()
+          setView(EMPTY_VIEW)
+          goal.onGoal?.(counted)
+        } else {
+          const next = viewOf(runRef.current)
+          setView((previous) => (sameView(previous, next) ? previous : next))
+        }
       }
       handle = requestAnimationFrame(tick)
     }
