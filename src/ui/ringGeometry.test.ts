@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { geometry } from '../design/tokens'
-import { RING_CENTER, RING_TOP_Y, clampAngle, ringGeometry } from './ringGeometry'
+import { RING_CENTER, RING_TOP_Y, clampAngle, painBandGeometry, ringGeometry } from './ringGeometry'
 
 describe('ringGeometry', () => {
   it('paints nothing at 0 degrees and a quarter of the ring at 90', () => {
@@ -43,5 +43,32 @@ describe('ringGeometry', () => {
     expect(clampAngle(200)).toBe(180)
     expect(ringGeometry(-5)).toEqual(ringGeometry(0))
     expect(ringGeometry(400)).toEqual(ringGeometry(180))
+  })
+})
+
+describe('painBandGeometry', () => {
+  it('matches the sheet for 70 to 110 degrees', () => {
+    const band = painBandGeometry({ from: 70, to: 110 }, 0)
+    expect(band.dashArray).toBe('114.49 1030.44')
+    expect(band.dashOffset).toBeCloseTo(-200.36, 2)
+  })
+
+  it('has not been reached while the arm is below the band', () => {
+    expect(painBandGeometry({ from: 70, to: 110 }, 40).reached).toBe(0)
+    expect(painBandGeometry({ from: 70, to: 110 }, 70).reached).toBe(0)
+  })
+
+  it('counts the part of the band the arm has covered', () => {
+    expect(painBandGeometry({ from: 70, to: 110 }, 90).reached).toBe(20)
+  })
+
+  it('stops counting at the end of the band', () => {
+    expect(painBandGeometry({ from: 70, to: 110 }, 150).reached).toBe(40)
+  })
+
+  it('keeps a band that runs past the ring inside it', () => {
+    const band = painBandGeometry({ from: 150, to: 200 }, 180)
+    expect(band.dashArray).toBe(`${((30 * 1030.44) / 360).toFixed(2)} 1030.44`)
+    expect(band.reached).toBe(30)
   })
 })

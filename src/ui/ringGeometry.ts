@@ -1,6 +1,6 @@
 import { ANGLE_MAX_DEG, ANGLE_MIN_DEG } from '../domain/constants'
 import { geometry } from '../design/tokens'
-import type { Zone } from '../domain/zones'
+import type { PainArc, Zone } from '../domain/zones'
 
 const CENTER = geometry.screenSize / 2
 const TOP = CENTER - geometry.ringRadius
@@ -38,4 +38,26 @@ export function targetRadius(zone: Zone | null | undefined): number {
   if (zone === 'target') return 14
   if (zone === 'near') return 11
   return 9
+}
+
+export interface PainBandGeometry {
+  /** stroke-dasharray that paints `to - from` degrees of the ring and leaves the rest bare. */
+  dashArray: string
+  /** stroke-dashoffset that moves the painted piece to `from`, clockwise from the top. */
+  dashOffset: number
+  /** Degrees of the band the arm has already covered, 0 when it has not reached it. */
+  reached: number
+}
+
+/** Sheet 04: the painful band is a piece of the ring from `from` to `to`. */
+export function painBandGeometry(arc: PainArc, angle: number): PainBandGeometry {
+  const from = clampAngle(arc.from)
+  const to = clampAngle(arc.to)
+  const perDegree = geometry.ringCircumference / 360
+  const length = Math.max(0, to - from) * perDegree
+  return {
+    dashArray: `${length.toFixed(2)} ${geometry.ringCircumference}`,
+    dashOffset: -from * perDegree,
+    reached: Math.max(0, Math.min(clampAngle(angle), to) - from),
+  }
 }
