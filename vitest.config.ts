@@ -10,6 +10,9 @@ export default defineConfig({
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],
       exclude: ['src/**/*.test.{ts,tsx}', 'src/main.tsx'],
+      thresholds: {
+        'src/domain/**': { statements: 90, branches: 90, functions: 90, lines: 90 },
+      },
     },
   },
 })
