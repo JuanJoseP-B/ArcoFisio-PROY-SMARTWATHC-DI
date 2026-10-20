@@ -2,7 +2,7 @@
 
 > Archivo vivo. Se actualiza en **cada commit que cambie el estado del repo** (etapa, estructura, comandos, decisiones). Ver la regla en [`CLAUDE.md`](CLAUDE.md). Detalle completo del comportamiento: [`docs/spec.md`](docs/spec.md). Detalle visual y de movimiento: [`docs/design-reference/`](docs/design-reference/).
 
-_Última actualización: 2026-10-20 · etapa 4 aprobada y mezclada en `develop` (`v0.4.0`) · etapa 5 en curso en `feature/05-motion-and-intro`._
+_Última actualización: 2026-10-20 · rama `feature/05-motion-and-intro` · etapa 5 terminada, pendiente de aprobación (etapas 0–4 mezcladas, `v0.4.0`)._
 
 ## Qué es
 
@@ -28,7 +28,7 @@ Vite 8 · React 18.3 · TypeScript estricto · Vitest 5 · ESLint · Prettier. C
 | `npm run test`                             | Vitest, una pasada (también `test:watch`, `test:coverage`)             |
 | `npm run lint` · `format` · `format:check` | ESLint · Prettier                                                      |
 
-Parámetros de URL: `?sim=1` activa el simulador de ángulo (sin teléfono) · `?probe=1` muestra la pantalla temporal de prueba del sensor (se retira al avanzar de etapa).
+Parámetros de URL: `?sim=1` activa el simulador de ángulo (sin teléfono) · `?probe=1` muestra la pantalla temporal de prueba del sensor (se retira en la etapa 6). Sin parámetros se ve la intro en bucle.
 
 ## Arquitectura (`src/`)
 
@@ -68,7 +68,7 @@ Cada etapa = rama `feature/NN-nombre` → `develop` con `merge --no-ff` **solo c
 | 13  | `feature/13-i18n`                | Español e inglés completos                                                             | Pendiente                                                                                                                                           |
 | 14  | `feature/14-qa-release`          | Calidad y lanzamiento (`v1.0.0`; el usuario hace merge a `main` y despliega en Vercel) | Pendiente                                                                                                                                           |
 
-Commits en `develop` tras la etapa 4: 120 aprox. (ya supera la meta R4 de más de 100; el spec apunta a ~150) (meta R4: más de 100; el spec apunta a ~150).
+Commits en `develop` tras la etapa 4: 122 (ya supera la meta R4 de más de 100; el spec apunta a ~150) (meta R4: más de 100; el spec apunta a ~150).
 
 ## Cómo trabajar (resumen de las reglas)
 
@@ -87,8 +87,11 @@ Commits en `develop` tras la etapa 4: 120 aprox. (ya supera la meta R4 de más d
 - **Pendientes de decisión (spec §11):** color propio de `overshoot` (hoy `#A3392D`), objetivo por defecto 90° de abducción.
 - `docs/design-reference/captures/` contiene `BRIEF.md` y `referencias/` como referencia visual.
 - Las carpetas `coverage/` y `dist/` están ignoradas por Git.
+- **Movimiento:** continuo con `requestAnimationFrame` (`useFrameClock`) y matemática pura testeable; entradas con CSS keyframes. La intro con `prefers-reduced-motion` muestra el lockup final con un solo fundido y no programa frames.
+- **Tests de hooks:** sin testing-library; se monta con `createRoot` + `act` y se simulan `matchMedia` y `requestAnimationFrame` con `vi.stubGlobal`. `useAngle` no admite SSR (`renderToString`).
 
 ## Registro de cambios de este archivo
 
 - 2026-10-20: creación. Refleja etapas 0–4.
 - 2026-10-20: etapa 4 aprobada, mezclada y etiquetada `v0.4.0`; arranca la etapa 5.
+- 2026-10-20: etapa 5 terminada (movimiento, transición radial, intro). Pendiente de aprobación.
