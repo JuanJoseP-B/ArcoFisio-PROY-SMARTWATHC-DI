@@ -1,0 +1,11 @@
+.terracotta {
+  fill: var(--af-color-terracotta);
+}
+
+.surface {
+  fill: var(--af-color-surface);
+}
+
+.turquoise {
+  fill: var(--af-color-turquoise);
+}
