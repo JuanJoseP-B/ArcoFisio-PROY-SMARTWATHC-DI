@@ -26,4 +26,21 @@ export const en: Record<MessageKey, string> = {
   'sensor.simHint': 'To try it without a sensor open the app with ?sim=1',
 
   'sim.angle': 'Simulated angle',
+
+  'face.open': 'Open apps',
+  'launcher.label': 'Apps',
+  'launcher.measure': 'Measure',
+  'launcher.session': 'Session',
+  'launcher.routines': 'Routines',
+  'launcher.summary': 'Summary',
+  'launcher.pain': 'Pain',
+  'launcher.guide': 'AI Guide',
+  'launcher.settings': 'Settings',
+
+  'nav.back': 'Back',
+  'mode.title': 'Exercise',
+  'mode.abduction': 'Abduction',
+  'mode.flexion': 'Flexion',
+  'soon.note': 'Coming soon',
+  'intro.skip': 'Skip the intro',
 }
