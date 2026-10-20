@@ -14,6 +14,7 @@ describe('buildCssVariables', () => {
     expect(vars['--af-space-4']).toBe('16px')
     expect(vars['--af-type-hero-size']).toBe('72px')
     expect(vars['--af-dur-standard']).toBe('300ms')
+    expect(vars['--af-color-cell-shadow']).toBe('rgba(31, 58, 43, 0.18)')
     expect(vars['--af-scene-buckskin']).toBe('#D9C3A0')
     expect(vars['--af-pulse-slow']).toBe('700ms')
     expect(vars['--af-pulse-fast']).toBe('300ms')
