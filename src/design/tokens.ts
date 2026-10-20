@@ -73,3 +73,19 @@ export const typography = {
 } as const
 
 export type TypeStyle = keyof typeof typography
+
+export const duration = {
+  instant: 90,
+  quick: 180,
+  standard: 300,
+  emphasis: 500,
+  ambient: 1600,
+} as const
+
+export const easing = {
+  standard: 'cubic-bezier(0.2, 0, 0, 1)',
+  enter: 'cubic-bezier(0.05, 0.7, 0.1, 1)',
+  exit: 'cubic-bezier(0.3, 0, 0.8, 0.15)',
+  wheel: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+  honeycomb: 'cubic-bezier(0.34, 1.35, 0.64, 1)',
+} as const
