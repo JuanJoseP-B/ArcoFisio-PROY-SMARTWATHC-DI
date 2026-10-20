@@ -6,10 +6,10 @@ import { Intro } from '../intro/Intro'
 import { Launcher } from '../launcher/Launcher'
 import { Measure } from '../measure/Measure'
 import { ModeSelect } from '../mode/ModeSelect'
+import { PlayerScreen } from '../player/PlayerScreen'
 import { Placeholder } from '../placeholder/Placeholder'
 import { LanguageSelect } from '../setup/LanguageSelect'
 import { SensorSetup } from '../setup/SensorSetup'
-import { SessionScreen } from '../session/SessionScreen'
 import type { Route } from './stack'
 import { useNav } from './useNav'
 
@@ -45,7 +45,7 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'counts':
       return <Counts exercise={route.exercise ?? 'abduction'} />
     case 'session':
-      return <SessionScreen routineId={route.routineId} />
+      return <PlayerScreen routineId={route.routineId} />
     case 'measure':
       return <Measure />
     case 'routines':
