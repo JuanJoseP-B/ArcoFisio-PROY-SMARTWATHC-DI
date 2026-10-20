@@ -24,4 +24,6 @@ export const en: Record<MessageKey, string> = {
   'sensor.enable': 'Enable sensor',
   'sensor.calibrate': 'Arm down',
   'sensor.simHint': 'To try it without a sensor open the app with ?sim=1',
+
+  'sim.angle': 'Simulated angle',
 }

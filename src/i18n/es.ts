@@ -22,6 +22,8 @@ export const es = {
   'sensor.enable': 'Activar sensor',
   'sensor.calibrate': 'Brazo abajo',
   'sensor.simHint': 'Para ensayar sin sensor abre la app con ?sim=1',
+
+  'sim.angle': 'Ángulo simulado',
 } as const
 
 export type MessageKey = keyof typeof es
