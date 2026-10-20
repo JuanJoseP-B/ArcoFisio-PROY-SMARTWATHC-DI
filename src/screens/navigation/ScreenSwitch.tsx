@@ -3,6 +3,7 @@ import { Counts } from '../config/Counts'
 import { Face } from '../face/Face'
 import { Intro } from '../intro/Intro'
 import { Launcher } from '../launcher/Launcher'
+import { Measure } from '../measure/Measure'
 import { ModeSelect } from '../mode/ModeSelect'
 import { Placeholder } from '../placeholder/Placeholder'
 import { SessionScreen } from '../session/SessionScreen'
@@ -14,8 +15,8 @@ interface ScreenSwitchProps {
 }
 
 /**
- * Which screen each route shows. The apps a later stage builds (Measure, Routines, Summary,
- * Pain, AI Guide, Settings) show a placeholder until then.
+ * Which screen each route shows. The apps a later stage builds (Routines, Summary, Pain, AI
+ * Guide, Settings) show a placeholder until then.
  */
 export function ScreenSwitch({ route }: ScreenSwitchProps) {
   const nav = useNav()
@@ -36,7 +37,7 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'session':
       return <SessionScreen routineId={route.routineId} />
     case 'measure':
-      return <Placeholder title="launcher.measure" />
+      return <Measure />
     case 'routines':
       return <Placeholder title="launcher.routines" />
     case 'summary':

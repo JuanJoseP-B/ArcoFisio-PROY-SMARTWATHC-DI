@@ -106,7 +106,6 @@ describe('NavHost: start', () => {
 
 describe('NavHost: every app opens from the launcher and the way back always works', () => {
   const APPS = [
-    ['measure', 'Medir'],
     ['routines', 'Rutinas'],
     ['summary', 'Resumen'],
     ['pain', 'Dolor'],
@@ -192,6 +191,22 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     start(host, click)
     expect(part('session')).not.toBeNull()
     expect(host.textContent).toContain('Flexión personalizada')
+  })
+
+  it('Measure: opens from the launcher and returns with the back button and with Escape', () => {
+    const { part, host, click, escape } = mount(FACE)
+
+    click(part('face'))
+    click(host.querySelector('[data-cell="measure"]'))
+    expect(part('measure')).not.toBeNull()
+    expect(part('placeholder')).toBeNull()
+
+    click(part('back-button'))
+    expect(part('hex-launcher')).not.toBeNull()
+
+    click(host.querySelector('[data-cell="measure"]'))
+    escape()
+    expect(part('hex-launcher')).not.toBeNull()
   })
 
   it('works the same in English', () => {
