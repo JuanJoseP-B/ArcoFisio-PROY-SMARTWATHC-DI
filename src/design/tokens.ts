@@ -56,3 +56,20 @@ export const space = {
 export const safeDiameter = geometry.screenSize - 2 * geometry.safeMargin
 export const bezelDiameter = geometry.screenSize + 2 * geometry.bezelPadding
 export const watchExtent = bezelDiameter + 2 * geometry.bezelRing
+
+export const fontFamily = {
+  sans: '"Roboto Flex", system-ui, sans-serif',
+  brand: 'Cinzel, serif',
+} as const
+
+export const typography = {
+  hero: { size: 72, lineHeight: 72, weight: 600 },
+  display: { size: 44, lineHeight: 48, weight: 500 },
+  title: { size: 20, lineHeight: 24, weight: 600 },
+  body: { size: 16, lineHeight: 20, weight: 400 },
+  button: { size: 15, lineHeight: 20, weight: 600 },
+  label: { size: 13, lineHeight: 16, weight: 500 },
+  caption: { size: 11, lineHeight: 14, weight: 500 },
+} as const
+
+export type TypeStyle = keyof typeof typography
