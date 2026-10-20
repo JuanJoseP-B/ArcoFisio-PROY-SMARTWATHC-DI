@@ -2,7 +2,7 @@
 
 > Archivo vivo. Se actualiza en **cada commit que cambie el estado del repo** (etapa, estructura, comandos, decisiones). Ver la regla en [`CLAUDE.md`](CLAUDE.md). Detalle completo del comportamiento: [`docs/spec.md`](docs/spec.md). Detalle visual y de movimiento: [`docs/design-reference/`](docs/design-reference/).
 
-_Última actualización: 2026-10-20 · etapas 0–8 mezcladas en `develop` (`v0.8.0`) · etapa 9 terminada en `feature/09-config-and-measure`, esperando aprobación._
+_Última actualización: 2026-10-20 · etapas 0–9 mezcladas en `develop` (`v0.9.0`) · etapa 10 por empezar._
 
 ## Qué es
 
@@ -60,7 +60,7 @@ Cada etapa = rama `feature/NN-nombre` → `develop` con `merge --no-ff` **solo c
 | 6   | `feature/06-goniometer-session`  | Goniómetro en vivo y pantalla Sesión                                                   | Mezclada · `v0.6.0` (33 commits, 417 tests)                                                                           |
 | 7   | `feature/07-feedback-engine`     | Audio y vibración                                                                      | Mezclada · `v0.7.0` (26 commits, 489 tests)                                                                           |
 | 8   | `feature/08-navigation-launcher` | Navegación, cara del reloj, launcher                                                   | Mezclada · `v0.8.0` (43 commits)                                                                                      |
-| 9   | `feature/09-config-and-measure`  | Rueda de ángulo, configuración, calibración, primera ejecución                         | Terminada, **esperando aprobación** (25 commits, 715 tests)                                                           |
+| 9   | `feature/09-config-and-measure`  | Rueda de ángulo, configuración, calibración, primera ejecución                         | Mezclada · `v0.9.0` (25 commits, 715 tests). El permiso del sensor en iOS real queda a cargo del usuario              |
 | 10  | `feature/10-routines`            | Biblioteca, detalle, constructor, reproductor, descanso                                | Pendiente                                                                                                             |
 | 11  | `feature/11-pain-arc-and-guide`  | Arco doloroso y Guía IA (reglas locales)                                               | Pendiente                                                                                                             |
 | 12  | `feature/12-summary-history`     | Resumen e historial                                                                    | Pendiente                                                                                                             |
@@ -110,3 +110,4 @@ Commits en `develop` tras la etapa 7: 207 (la meta R4 de más de 100 ya se cumpl
 - 2026-10-20: corregidas las filas 4–5 de la tabla de etapas (estaban desactualizadas) y documentados i18n, Sesión y los nuevos parámetros de URL.
 - 2026-10-20: etapa 8 terminada (navegación por pila, cara, launcher, selector de modo, placeholders); se retiran los parámetros de URL interinos.
 - 2026-10-20: etapa 8 aprobada, mezclada y etiquetada `v0.8.0`; arranca la etapa 9 (rueda, configuración, Medir rango y primera ejecución).
+- 2026-10-20: etapa 9 aprobada, mezclada y etiquetada `v0.9.0`; arranca la etapa 10 (rutinas y descanso).
