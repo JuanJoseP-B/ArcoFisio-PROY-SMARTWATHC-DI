@@ -1,0 +1,53 @@
+.library {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/*
+ * The list scrolls inside the circle. The padding keeps the first card under the back button and
+ * lets the last one rise clear of the rim; the mask fades the cards the circle cuts off.
+ */
+.list {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 90px 0 84px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  /* The page turns touch gestures off; this list takes the vertical ones back. */
+  touch-action: pan-y;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 70px,
+    var(--af-color-ink) 104px,
+    var(--af-color-ink) calc(100% - 70px),
+    transparent calc(100% - 26px)
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 70px,
+    var(--af-color-ink) 104px,
+    var(--af-color-ink) calc(100% - 70px),
+    transparent calc(100% - 26px)
+  );
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+.title {
+  flex: none;
+  margin: 0 0 4px;
+  font-size: var(--af-type-title-size);
+  line-height: var(--af-type-title-line);
+  font-weight: var(--af-type-title-weight);
+  color: var(--af-color-ink);
+}

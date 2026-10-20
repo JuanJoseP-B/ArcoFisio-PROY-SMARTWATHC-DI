@@ -69,6 +69,23 @@ export const en: Record<MessageKey, string> = {
   'done.max': 'Max {n}°',
   'done.exit': 'Exit',
 
+  'library.new': 'New routine',
+  'routine.summary': '{sets}×{reps} · {target}°',
+  'routine.edit': 'Edit',
+  'routine.painWarning': 'Target is inside the painful arc',
+  'routine.missing': 'Routine not found',
+
+  'builder.titleNew': 'New routine',
+  'builder.titleEdit': 'Edit routine',
+  'builder.name': 'Name',
+  'builder.previous': 'Previous',
+  'builder.save': 'Save',
+  'builder.delete': 'Delete',
+  'builder.confirmDelete': 'Delete this routine?',
+  'builder.confirmYes': 'Yes, delete',
+  'builder.cancel': 'Cancel',
+  'builder.autoName': '{exercise} {target}°',
+
   'measure.title': 'Measure range',
   'measure.enable': 'Turn on the motion sensor',
   'measure.calibrate': 'Let your arm hang still',

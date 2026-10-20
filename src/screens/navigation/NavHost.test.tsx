@@ -159,7 +159,6 @@ describe('NavHost: first run', () => {
 
 describe('NavHost: every app opens from the launcher and the way back always works', () => {
   const APPS = [
-    ['routines', 'Rutinas'],
     ['summary', 'Resumen'],
     ['pain', 'Dolor'],
     ['guide', 'Guía IA'],
@@ -187,6 +186,22 @@ describe('NavHost: every app opens from the launcher and the way back always wor
       expect(part('face')).not.toBeNull()
     })
   }
+
+  it('Rutinas: opens the library, and the way back works with the button and with Escape', () => {
+    const { part, host, click, escape } = mount(FACE)
+
+    click(part('face'))
+    click(host.querySelector('[data-cell="routines"]'))
+    expect(part('library')).not.toBeNull()
+    expect(part('placeholder')).toBeNull()
+
+    click(part('back-button'))
+    expect(part('hex-launcher')).not.toBeNull()
+
+    click(host.querySelector('[data-cell="routines"]'))
+    escape()
+    expect(part('hex-launcher')).not.toBeNull()
+  })
 
   const start = (host: HTMLElement, click: (el: Element | null) => void) => {
     click(host.querySelector('[data-part="confirm-button"]'))

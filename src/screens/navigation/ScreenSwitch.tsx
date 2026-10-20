@@ -3,6 +3,7 @@ import { Config } from '../config/Config'
 import { Counts } from '../config/Counts'
 import { Face } from '../face/Face'
 import { Intro } from '../intro/Intro'
+import { Library } from '../library/Library'
 import { Launcher } from '../launcher/Launcher'
 import { Measure } from '../measure/Measure'
 import { ModeSelect } from '../mode/ModeSelect'
@@ -49,6 +50,9 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'measure':
       return <Measure />
     case 'routines':
+      return <Library />
+    case 'routine':
+    case 'builder':
       return <Placeholder title="launcher.routines" />
     case 'summary':
       return <Placeholder title="launcher.summary" />

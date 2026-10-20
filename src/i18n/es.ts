@@ -67,6 +67,23 @@ export const es = {
   'done.max': 'Máximo {n}°',
   'done.exit': 'Salir',
 
+  'library.new': 'Nueva rutina',
+  'routine.summary': '{sets}×{reps} · {target}°',
+  'routine.edit': 'Editar',
+  'routine.painWarning': 'Objetivo dentro del arco doloroso',
+  'routine.missing': 'Rutina no encontrada',
+
+  'builder.titleNew': 'Nueva rutina',
+  'builder.titleEdit': 'Editar rutina',
+  'builder.name': 'Nombre',
+  'builder.previous': 'Anterior',
+  'builder.save': 'Guardar',
+  'builder.delete': 'Eliminar',
+  'builder.confirmDelete': '¿Eliminar esta rutina?',
+  'builder.confirmYes': 'Sí, eliminar',
+  'builder.cancel': 'Cancelar',
+  'builder.autoName': '{exercise} {target}°',
+
   'measure.title': 'Medir rango',
   'measure.enable': 'Activa el sensor de movimiento',
   'measure.calibrate': 'Deja el brazo colgando y quieto',
