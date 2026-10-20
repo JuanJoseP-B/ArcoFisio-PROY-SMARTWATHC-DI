@@ -1,0 +1,124 @@
+.fb {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.fly {
+  animation: fly 1200ms var(--af-ease-standard) infinite;
+}
+
+.buzz {
+  animation: buzz 130ms linear infinite;
+}
+
+.shake {
+  animation: shake 900ms ease-in-out infinite;
+}
+
+.droop {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: droop 900ms ease-in-out infinite;
+}
+
+.breathe {
+  animation: breathe var(--af-dur-ambient) ease-in-out infinite;
+}
+
+@keyframes fly {
+  0% {
+    transform: translateX(-3px);
+    opacity: 1;
+  }
+
+  60% {
+    transform: translateX(6px);
+    opacity: 0;
+  }
+
+  61% {
+    transform: translateX(-3px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(-3px);
+    opacity: 1;
+  }
+}
+
+@keyframes buzz {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(1.2px);
+  }
+
+  75% {
+    transform: translateX(-1.2px);
+  }
+}
+
+@keyframes shake {
+  0%,
+  40%,
+  100% {
+    transform: rotate(0);
+  }
+
+  10% {
+    transform: rotate(-8deg);
+  }
+
+  20% {
+    transform: rotate(7deg);
+  }
+
+  30% {
+    transform: rotate(-4deg);
+  }
+}
+
+@keyframes droop {
+  0%,
+  100% {
+    transform: rotate(18deg);
+  }
+
+  50% {
+    transform: rotate(26deg);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(0.86);
+  }
+
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+/* Reduced motion: the icons stay still in their resting pose. */
+@media (prefers-reduced-motion: reduce) {
+  .fly,
+  .buzz,
+  .shake,
+  .droop,
+  .breathe {
+    animation: none;
+  }
+
+  .droop {
+    transform: rotate(18deg);
+  }
+
+  .breathe {
+    transform: scale(0.95);
+  }
+}
