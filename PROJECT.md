@@ -2,7 +2,7 @@
 
 > Archivo vivo. Se actualiza en **cada commit que cambie el estado del repo** (etapa, estructura, comandos, decisiones). Ver la regla en [`CLAUDE.md`](CLAUDE.md). Detalle completo del comportamiento: [`docs/spec.md`](docs/spec.md). Detalle visual y de movimiento: [`docs/design-reference/`](docs/design-reference/).
 
-_Última actualización: 2026-10-20 · etapas 0–6 mezcladas en `develop` (`v0.6.0`) · etapa 7 terminada en `feature/07-feedback-engine`, pendiente de aprobación._
+_Última actualización: 2026-10-20 · etapas 0–7 mezcladas en `develop` (`v0.7.0`) · etapa 8 en curso en `feature/08-navigation-launcher`._
 
 ## Qué es
 
@@ -49,25 +49,25 @@ Parámetros de URL: `?sim=1` activa el simulador de ángulo (sin teléfono) y mu
 
 Cada etapa = rama `feature/NN-nombre` → `develop` con `merge --no-ff` **solo con "aprobado" del usuario** → tag `v0.N.0`. `main` solo lo toca el usuario al final.
 
-| #   | Rama                             | Tema                                                                                   | Estado                                                                                                                                                                                 |
-| --- | -------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0   | `feature/00-bootstrap`           | Repo, reglas, scripts                                                                  | Mezclada · `v0.0.0`                                                                                                                                                                    |
-| 1   | `feature/01-design-foundations`  | Tokens, marco, escala                                                                  | Mezclada · `v0.1.0`                                                                                                                                                                    |
-| 2   | `feature/02-domain-core`         | Dominio puro                                                                           | Mezclada · `v0.2.0`                                                                                                                                                                    |
-| 3   | `feature/03-data-layer`          | Capa de datos                                                                          | Mezclada · `v0.3.0`                                                                                                                                                                    |
-| 4   | `feature/04-sensors`             | Sensor de inclinación                                                                  | Mezclada · `v0.4.0` (27 commits). La validación en teléfono real (±3° contra transportador) queda a cargo del usuario                                                                  |
-| 5   | `feature/05-motion-and-intro`    | Utilidades de movimiento, transición radial, intro (lámina 01)                         | Mezclada · `v0.5.0` (20 commits)                                                                                                                                                       |
-| 6   | `feature/06-goniometer-session`  | Goniómetro en vivo y pantalla Sesión                                                   | Mezclada · `v0.6.0` (33 commits, 417 tests)                                                                                                                                            |
-| 7   | `feature/07-feedback-engine`     | Audio y vibración                                                                      | **Terminada (25 commits, 489 tests verdes); esperando "aprobado"**. Se prueba con `?session=1` (teléfono) o `?session=1&sim=1` (computador): al mover el brazo suena y vibra cada zona |
-| 8   | `feature/08-navigation-launcher` | Navegación, cara del reloj, launcher                                                   | Pendiente                                                                                                                                                                              |
-| 9   | `feature/09-config-and-measure`  | Rueda de ángulo, configuración, calibración, primera ejecución                         | Pendiente                                                                                                                                                                              |
-| 10  | `feature/10-routines`            | Biblioteca, detalle, constructor, reproductor, descanso                                | Pendiente                                                                                                                                                                              |
-| 11  | `feature/11-pain-arc-and-guide`  | Arco doloroso y Guía IA (reglas locales)                                               | Pendiente                                                                                                                                                                              |
-| 12  | `feature/12-summary-history`     | Resumen e historial                                                                    | Pendiente                                                                                                                                                                              |
-| 13  | `feature/13-i18n`                | Español e inglés completos                                                             | Pendiente                                                                                                                                                                              |
-| 14  | `feature/14-qa-release`          | Calidad y lanzamiento (`v1.0.0`; el usuario hace merge a `main` y despliega en Vercel) | Pendiente                                                                                                                                                                              |
+| #   | Rama                             | Tema                                                                                   | Estado                                                                                                                |
+| --- | -------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| 0   | `feature/00-bootstrap`           | Repo, reglas, scripts                                                                  | Mezclada · `v0.0.0`                                                                                                   |
+| 1   | `feature/01-design-foundations`  | Tokens, marco, escala                                                                  | Mezclada · `v0.1.0`                                                                                                   |
+| 2   | `feature/02-domain-core`         | Dominio puro                                                                           | Mezclada · `v0.2.0`                                                                                                   |
+| 3   | `feature/03-data-layer`          | Capa de datos                                                                          | Mezclada · `v0.3.0`                                                                                                   |
+| 4   | `feature/04-sensors`             | Sensor de inclinación                                                                  | Mezclada · `v0.4.0` (27 commits). La validación en teléfono real (±3° contra transportador) queda a cargo del usuario |
+| 5   | `feature/05-motion-and-intro`    | Utilidades de movimiento, transición radial, intro (lámina 01)                         | Mezclada · `v0.5.0` (20 commits)                                                                                      |
+| 6   | `feature/06-goniometer-session`  | Goniómetro en vivo y pantalla Sesión                                                   | Mezclada · `v0.6.0` (33 commits, 417 tests)                                                                           |
+| 7   | `feature/07-feedback-engine`     | Audio y vibración                                                                      | Mezclada · `v0.7.0` (26 commits, 489 tests)                                                                           |
+| 8   | `feature/08-navigation-launcher` | Navegación, cara del reloj, launcher                                                   | **En curso**                                                                                                          |
+| 9   | `feature/09-config-and-measure`  | Rueda de ángulo, configuración, calibración, primera ejecución                         | Pendiente                                                                                                             |
+| 10  | `feature/10-routines`            | Biblioteca, detalle, constructor, reproductor, descanso                                | Pendiente                                                                                                             |
+| 11  | `feature/11-pain-arc-and-guide`  | Arco doloroso y Guía IA (reglas locales)                                               | Pendiente                                                                                                             |
+| 12  | `feature/12-summary-history`     | Resumen e historial                                                                    | Pendiente                                                                                                             |
+| 13  | `feature/13-i18n`                | Español e inglés completos                                                             | Pendiente                                                                                                             |
+| 14  | `feature/14-qa-release`          | Calidad y lanzamiento (`v1.0.0`; el usuario hace merge a `main` y despliega en Vercel) | Pendiente                                                                                                             |
 
-Commits en `develop` tras la etapa 6: 179 (la meta R4 de más de 100 ya se cumple; el spec apunta a ~150).
+Commits en `develop` tras la etapa 7: 207 (la meta R4 de más de 100 ya se cumple; el spec apunta a ~150).
 
 ## Cómo trabajar (resumen de las reglas)
 
@@ -100,5 +100,5 @@ Commits en `develop` tras la etapa 6: 179 (la meta R4 de más de 100 ya se cumpl
 - 2026-10-20: etapa 4 aprobada, mezclada y etiquetada `v0.4.0`; arranca la etapa 5.
 - 2026-10-20: etapa 5 aprobada, mezclada y etiquetada `v0.5.0`; arranca la etapa 6.
 - 2026-10-20: etapa 6 aprobada, mezclada y etiquetada `v0.6.0`; arranca la etapa 7.
-- 2026-10-20: etapa 7 terminada (audio, vibración, halo y parpadeo). Pendiente de aprobación.
+- 2026-10-20: etapa 7 aprobada, mezclada y etiquetada `v0.7.0`; arranca la etapa 8.
 - 2026-10-20: corregidas las filas 4–5 de la tabla de etapas (estaban desactualizadas) y documentados i18n, Sesión y los nuevos parámetros de URL.
