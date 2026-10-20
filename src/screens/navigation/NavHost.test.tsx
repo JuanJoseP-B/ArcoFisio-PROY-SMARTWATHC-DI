@@ -158,29 +158,25 @@ describe('NavHost: first run', () => {
 })
 
 describe('NavHost: every app opens from the launcher and the way back always works', () => {
-  const APPS = [['settings', 'Ajustes']] as const
+  it('Ajustes: opens, shows its name and returns with the back button and with Escape', () => {
+    const { part, host, click, escape } = mount(FACE)
 
-  for (const [cell, title] of APPS) {
-    it(`${title}: opens, shows its name and returns with the back button and with Escape`, () => {
-      const { part, host, click, escape } = mount(FACE)
+    click(part('face'))
+    expect(part('hex-launcher')).not.toBeNull()
 
-      click(part('face'))
-      expect(part('hex-launcher')).not.toBeNull()
+    click(host.querySelector('[data-cell="settings"]'))
+    expect(part('settings')?.querySelector('h1')?.textContent).toBe('Ajustes')
 
-      click(host.querySelector(`[data-cell="${cell}"]`))
-      expect(part('placeholder')?.querySelector('h1')?.textContent).toBe(title)
+    click(part('back-button'))
+    expect(part('hex-launcher')).not.toBeNull()
 
-      click(part('back-button'))
-      expect(part('hex-launcher')).not.toBeNull()
+    click(host.querySelector('[data-cell="settings"]'))
+    escape()
+    expect(part('hex-launcher')).not.toBeNull()
 
-      click(host.querySelector(`[data-cell="${cell}"]`))
-      escape()
-      expect(part('hex-launcher')).not.toBeNull()
-
-      escape()
-      expect(part('face')).not.toBeNull()
-    })
-  }
+    escape()
+    expect(part('face')).not.toBeNull()
+  })
 
   it('Dolor: opens the painful arc screen, and the way back works with the button and with Escape', () => {
     const { part, host, click, escape } = mount(FACE)
@@ -188,7 +184,6 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     click(part('face'))
     click(host.querySelector('[data-cell="pain"]'))
     expect(part('pain')).not.toBeNull()
-    expect(part('placeholder')).toBeNull()
 
     click(part('back-button'))
     expect(part('hex-launcher')).not.toBeNull()
@@ -207,7 +202,6 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     click(part('face'))
     click(host.querySelector('[data-cell="summary"]'))
     expect(part('summary')).not.toBeNull()
-    expect(part('placeholder')).toBeNull()
 
     click(host.querySelector('[data-part="icon-button"][data-icon="back"]'))
     expect(part('hex-launcher')).not.toBeNull()
@@ -226,7 +220,6 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     click(part('face'))
     click(host.querySelector('[data-cell="guide"]'))
     expect(part('guide')).not.toBeNull()
-    expect(part('placeholder')).toBeNull()
 
     click(host.querySelector('[data-part="icon-button"][data-icon="back"]'))
     expect(part('hex-launcher')).not.toBeNull()
@@ -245,7 +238,6 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     click(part('face'))
     click(host.querySelector('[data-cell="routines"]'))
     expect(part('library')).not.toBeNull()
-    expect(part('placeholder')).toBeNull()
 
     click(part('back-button'))
     expect(part('hex-launcher')).not.toBeNull()
@@ -348,7 +340,6 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     click(part('face'))
     click(host.querySelector('[data-cell="measure"]'))
     expect(part('measure')).not.toBeNull()
-    expect(part('placeholder')).toBeNull()
 
     click(part('back-button'))
     expect(part('hex-launcher')).not.toBeNull()
@@ -390,8 +381,8 @@ describe('NavHost: swipe back', () => {
     surface.getBoundingClientRect = () => ({ width: 384 }) as DOMRect
 
     click(part('face'))
-    click(host.querySelector('[data-cell="settings"]'))
-    expect(part('placeholder')).not.toBeNull()
+    click(host.querySelector('[data-cell="guide"]'))
+    expect(part('guide')).not.toBeNull()
 
     swipe(surface, 100, 240)
     expect(part('hex-launcher')).not.toBeNull()
