@@ -13,3 +13,5 @@ export const HOLD_MS = 1000
 export const REP_RETURN_MARGIN_DEG = 30
 export const REP_RETURN_FLOOR_DEG = 5
 export const REP_START_HYSTERESIS_DEG = 5
+
+export const MIN_PAIN_ARC_DEG = 5
