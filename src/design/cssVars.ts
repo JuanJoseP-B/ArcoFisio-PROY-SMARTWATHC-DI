@@ -7,6 +7,7 @@ import {
   safeDiameter,
   space,
   typography,
+  watchExtent,
 } from './tokens'
 
 const kebab = (name: string) =>
@@ -24,6 +25,7 @@ export function buildCssVariables(): Record<string, string> {
     vars[`--af-${kebab(name)}`] = name === 'ringCircumference' ? String(value) : px(value)
   }
   vars['--af-safe-diameter'] = px(safeDiameter)
+  vars['--af-watch-extent'] = px(watchExtent)
 
   for (const [name, value] of Object.entries(space)) vars[`--af-space-${name.slice(1)}`] = px(value)
 

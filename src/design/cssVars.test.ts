@@ -9,6 +9,7 @@ describe('buildCssVariables', () => {
     expect(vars['--af-color-zone-pain-tint']).toBe('#F4D3C8')
     expect(vars['--af-screen-size']).toBe('384px')
     expect(vars['--af-safe-diameter']).toBe('328px')
+    expect(vars['--af-watch-extent']).toBe('414px')
     expect(vars['--af-ring-circumference']).toBe('1030.44')
     expect(vars['--af-space-4']).toBe('16px')
     expect(vars['--af-type-hero-size']).toBe('72px')
