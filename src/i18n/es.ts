@@ -9,6 +9,7 @@ export const es = {
   'zone.overshoot': 'Te pasaste',
   'zone.pain': 'Dolor',
   'zone.rest': 'Descanso',
+  'zone.painRange': 'Dolor · {from}–{to}°',
 
   'session.reps': 'Repeticiones',
   'session.progress': '{done} de {total}',
@@ -93,6 +94,17 @@ export const es = {
   'measure.max': 'Máximo {n}°',
   'measure.reset': 'Reiniciar máximo',
   'measure.recalibrate': 'Calibrar de nuevo',
+
+  'pain.title': 'Arco doloroso',
+  'pain.start': 'Empieza el dolor',
+  'pain.end': 'Termina el dolor',
+  'pain.hintStart': 'Mueve el brazo hasta donde empieza el dolor',
+  'pain.hintEnd': 'Sigue hasta donde termina el dolor',
+  'pain.tooNarrow': 'Muy corto. Mueve más el brazo',
+  'pain.none': 'Sin arco marcado',
+  'pain.clear': 'Borrar arco',
+  'pain.cancel': 'Cancelar marca',
+  'pain.clean': 'Sin dolor',
 
   'setup.language': 'Idioma',
   'setup.ready': 'Sensor listo',

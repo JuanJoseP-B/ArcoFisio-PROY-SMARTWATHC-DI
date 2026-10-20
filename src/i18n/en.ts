@@ -11,6 +11,7 @@ export const en: Record<MessageKey, string> = {
   'zone.overshoot': 'Too far',
   'zone.pain': 'Pain',
   'zone.rest': 'Rest',
+  'zone.painRange': 'Pain · {from}–{to}°',
 
   'session.reps': 'Repetitions',
   'session.progress': '{done} of {total}',
@@ -95,6 +96,17 @@ export const en: Record<MessageKey, string> = {
   'measure.max': 'Maximum {n}°',
   'measure.reset': 'Reset maximum',
   'measure.recalibrate': 'Calibrate again',
+
+  'pain.title': 'Painful arc',
+  'pain.start': 'Pain starts',
+  'pain.end': 'Pain ends',
+  'pain.hintStart': 'Move your arm to where the pain starts',
+  'pain.hintEnd': 'Keep going to where the pain ends',
+  'pain.tooNarrow': 'Too short. Move your arm more',
+  'pain.none': 'No arc set',
+  'pain.clear': 'Clear arc',
+  'pain.cancel': 'Cancel mark',
+  'pain.clean': 'No pain',
 
   'setup.language': 'Language',
   'setup.ready': 'Sensor ready',
