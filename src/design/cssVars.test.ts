@@ -14,6 +14,7 @@ describe('buildCssVariables', () => {
     expect(vars['--af-space-4']).toBe('16px')
     expect(vars['--af-type-hero-size']).toBe('72px')
     expect(vars['--af-dur-standard']).toBe('300ms')
+    expect(vars['--af-scene-buckskin']).toBe('#D9C3A0')
     expect(vars['--af-ease-enter']).toBe('cubic-bezier(0.05, 0.7, 0.1, 1)')
   })
 

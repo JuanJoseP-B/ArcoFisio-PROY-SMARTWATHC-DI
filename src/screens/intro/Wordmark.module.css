@@ -1,0 +1,41 @@
+.wordmark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--af-screen-size);
+  height: var(--af-screen-size);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--af-space-1);
+  padding-bottom: 20px;
+  font-family: var(--af-font-brand);
+}
+
+.arco {
+  font-size: 52px;
+  line-height: 56px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding-left: 0.1em;
+  color: var(--af-color-surface);
+}
+
+.fisio {
+  font-size: 26px;
+  line-height: 30px;
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  padding-left: 0.42em;
+  color: var(--af-color-gold);
+}
+
+.tagline {
+  margin-top: var(--af-space-1);
+  font-family: var(--af-font-sans);
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-scene-buckskin);
+}

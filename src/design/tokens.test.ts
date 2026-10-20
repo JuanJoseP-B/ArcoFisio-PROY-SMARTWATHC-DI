@@ -5,6 +5,7 @@ import {
   duration,
   geometry,
   safeDiameter,
+  sceneColor,
   typography,
   watchExtent,
 } from './tokens'
@@ -22,6 +23,18 @@ describe('color tokens', () => {
     for (const value of Object.values(color)) {
       expect(value).toMatch(/^(#[0-9A-F]{6}|rgba\(\d+, \d+, \d+, [\d.]+\))$/)
     }
+  })
+})
+
+describe('scene colors', () => {
+  it('holds the intro illustration palette from the brief', () => {
+    expect(sceneColor.skin).toBe('#8A5233')
+    expect(sceneColor.skyTop).toBe('#D98A3A')
+    expect(sceneColor.sun).toBe('#FBF0D2')
+  })
+
+  it('holds only valid hex values', () => {
+    for (const value of Object.values(sceneColor)) expect(value).toMatch(/^#[0-9A-F]{6}$/)
   })
 })
 

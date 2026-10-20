@@ -31,6 +31,27 @@ export const color = {
 
 export type ColorToken = keyof typeof color
 
+/** Colors of the intro illustration (archer, prairie, sky). Used by the intro only. */
+export const sceneColor = {
+  skyTop: '#D98A3A',
+  skyMid: '#EDBE72',
+  skyBottom: '#F6DFAE',
+  sun: '#FBF0D2',
+  sunHalo: '#F8E7BE',
+  hillFar: '#B5803F',
+  hillNear: '#9C6B2E',
+  skin: '#8A5233',
+  hair: '#1E140E',
+  buckskin: '#D9C3A0',
+  buckskinShade: '#C9AE86',
+  blanket: '#A6402A',
+  wood: '#5A3A1E',
+  feather: '#F3E9D8',
+  featherTip: '#2A1C12',
+} as const
+
+export type SceneColorToken = keyof typeof sceneColor
+
 export const geometry = {
   screenSize: 384,
   bezelPadding: 12,
