@@ -85,6 +85,14 @@ describe('I18nProvider', () => {
       act(() => root.unmount())
     })
 
+    it('keeps the page language in step with the chosen one', () => {
+      const { button, unmount } = mount('es')
+      expect(document.documentElement.lang).toBe('es')
+      act(() => button.click())
+      expect(document.documentElement.lang).toBe('en')
+      unmount()
+    })
+
     it('ignores the request when there is no provider', () => {
       function Lone() {
         const { lang, setLang } = useI18n()
