@@ -71,6 +71,36 @@ describe('GoniometerRing stylesheet', () => {
   })
 })
 
+describe('GoniometerRing feedback visuals', () => {
+  const css = readFileSync(join(__dirname, 'GoniometerRing.module.css'), 'utf8')
+
+  it('draws a halo circle on the ring radius for the pulse', () => {
+    const html = render(70, 90, 'approach')
+    expect(html).toContain('data-part="halo"')
+    expect(html.indexOf('data-part="halo"')).toBeLessThan(html.indexOf('data-part="arc"'))
+  })
+
+  it('beats the halo with the same periods as the sound: 700 ms far, 300 ms near', () => {
+    expect(css).toMatch(/data-zone='approach'\] \.halo \{\s*animation: halo var\(--af-pulse-slow\)/)
+    expect(css).toMatch(/data-zone='near'\] \.halo \{[^}]*animation: halo var\(--af-pulse-fast\)/)
+  })
+
+  it('blinks the red arc continuously past the target', () => {
+    expect(css).toMatch(
+      /data-zone='overshoot'\] \.arc \{\s*animation: blink 700ms [a-z-]+ infinite/,
+    )
+    expect(css).toContain('@keyframes blink')
+  })
+
+  it('shows no halo outside the approach zones and stops all pulsing under reduced motion', () => {
+    expect(css).not.toMatch(/data-zone='(far|target|pain|rest)'\] \.halo/)
+    const reduced = css.slice(css.indexOf('prefers-reduced-motion'))
+    expect(reduced).toContain('animation: none')
+    expect(reduced).toContain('.halo')
+    expect(reduced).toContain("data-zone='overshoot'] .arc")
+  })
+})
+
 describe('FeatherFan', () => {
   it('draws nine faint feathers', () => {
     const html = renderToString(<FeatherFan />)
