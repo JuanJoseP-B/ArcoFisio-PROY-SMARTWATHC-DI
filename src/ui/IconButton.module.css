@@ -1,0 +1,32 @@
+.button {
+  width: var(--af-touch-min);
+  height: var(--af-touch-min);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--af-color-surface);
+  color: var(--af-color-ink);
+  cursor: pointer;
+  transition:
+    transform var(--af-dur-instant),
+    opacity var(--af-dur-instant);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button:active:not(:disabled) {
+    transition: none;
+    transform: none;
+  }
+}
