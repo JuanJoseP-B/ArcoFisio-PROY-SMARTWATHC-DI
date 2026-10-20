@@ -1,0 +1,37 @@
+.back {
+  position: absolute;
+  left: 50%;
+  width: var(--af-touch-min);
+  height: var(--af-touch-min);
+  margin-left: calc(var(--af-touch-min) / -2);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--af-color-surface);
+  color: var(--af-color-ink);
+  cursor: pointer;
+  transition: transform var(--af-dur-instant);
+}
+
+.back:active {
+  transform: scale(0.92);
+}
+
+/* Inside the 328 px safe circle: 34 px from the top edge, or 34 px from the bottom edge. */
+.top {
+  top: 34px;
+}
+
+.bottom {
+  bottom: 34px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back,
+  .back:active {
+    transition: none;
+    transform: none;
+  }
+}
