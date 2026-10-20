@@ -2,7 +2,7 @@
 
 > Archivo vivo. Se actualiza en **cada commit que cambie el estado del repo** (etapa, estructura, comandos, decisiones). Ver la regla en [`CLAUDE.md`](CLAUDE.md). Detalle completo del comportamiento: [`docs/spec.md`](docs/spec.md). Detalle visual y de movimiento: [`docs/design-reference/`](docs/design-reference/).
 
-_Última actualización: 2026-10-20 · rama `feature/05-motion-and-intro` · etapa 5 terminada, pendiente de aprobación (etapas 0–4 mezcladas, `v0.4.0`)._
+_Última actualización: 2026-10-20 · etapas 0–5 aprobadas y mezcladas en `develop` (`v0.5.0`) · etapa 6 en curso en `feature/06-goniometer-session`._
 
 ## Qué es
 
@@ -68,7 +68,7 @@ Cada etapa = rama `feature/NN-nombre` → `develop` con `merge --no-ff` **solo c
 | 13  | `feature/13-i18n`                | Español e inglés completos                                                             | Pendiente                                                                                                                                           |
 | 14  | `feature/14-qa-release`          | Calidad y lanzamiento (`v1.0.0`; el usuario hace merge a `main` y despliega en Vercel) | Pendiente                                                                                                                                           |
 
-Commits en `develop` tras la etapa 4: 122 (ya supera la meta R4 de más de 100; el spec apunta a ~150) (meta R4: más de 100; el spec apunta a ~150).
+Commits en `develop` tras la etapa 5: 144 (ya supera la meta R4 de más de 100; el spec apunta a ~150) (meta R4: más de 100; el spec apunta a ~150).
 
 ## Cómo trabajar (resumen de las reglas)
 
@@ -94,4 +94,4 @@ Commits en `develop` tras la etapa 4: 122 (ya supera la meta R4 de más de 100; 
 
 - 2026-10-20: creación. Refleja etapas 0–4.
 - 2026-10-20: etapa 4 aprobada, mezclada y etiquetada `v0.4.0`; arranca la etapa 5.
-- 2026-10-20: etapa 5 terminada (movimiento, transición radial, intro). Pendiente de aprobación.
+- 2026-10-20: etapa 5 aprobada, mezclada y etiquetada `v0.5.0`; arranca la etapa 6.
