@@ -151,7 +151,6 @@ export const es = {
   'lang.es': 'Español',
   'lang.en': 'English',
 
-  'soon.note': 'Próximamente',
   'intro.skip': 'Saltar la introducción',
 } as const
 

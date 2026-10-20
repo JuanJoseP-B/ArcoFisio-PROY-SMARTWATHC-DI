@@ -153,6 +153,5 @@ export const en: Record<MessageKey, string> = {
   'lang.es': 'Español',
   'lang.en': 'English',
 
-  'soon.note': 'Coming soon',
   'intro.skip': 'Skip the intro',
 }
