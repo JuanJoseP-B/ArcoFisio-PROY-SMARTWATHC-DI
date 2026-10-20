@@ -1,21 +1,36 @@
 import { act, createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { App } from './App'
 import { getFeedback } from './feedback'
+import { PRESS_DELAY_MS } from './ui/pressTiming'
 
 ;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
 
 const open = (search: string) => window.history.replaceState(null, '', `/${search}`)
 
-afterEach(() => open(''))
+beforeEach(() => {
+  vi.useFakeTimers()
+})
+
+afterEach(() => {
+  open('')
+  vi.useRealTimers()
+})
 
 function mount() {
   const host = document.createElement('div')
+  document.body.appendChild(host)
   const root = createRoot(host)
   act(() => root.render(createElement(App)))
-  return { host, root }
+  const part = (name: string) => host.querySelector<HTMLElement>(`[data-part="${name}"]`)
+  const click = (el: Element | null) => act(() => (el as HTMLElement | null)?.click())
+  const unmount = () => {
+    act(() => root.unmount())
+    host.remove()
+  }
+  return { host, part, click, unmount }
 }
 
 describe('App', () => {
@@ -28,40 +43,40 @@ describe('App', () => {
     expect(html).not.toContain('data-part="simulator-panel"')
   })
 
-  it('opens the live session with ?session=1 and shows the simulator with ?sim=1', () => {
-    open('?session=1&sim=1')
-    const { host, root } = mount()
+  it('goes from the intro to the face, the launcher, the exercise selector and a live session', () => {
+    open('?sim=1')
+    const { host, part, click, unmount } = mount()
 
-    expect(host.querySelector('[data-part="session"]')).not.toBeNull()
-    expect(host.querySelector('[data-part="intro"]')).toBeNull()
-    expect(host.querySelector('[data-part="simulator-panel"]')).not.toBeNull()
-    expect(host.querySelector('[data-part="goniometer-ring"]')).not.toBeNull()
-    act(() => root.unmount())
+    click(part('intro-skip'))
+    expect(part('face')).not.toBeNull()
+    click(part('face'))
+    click(host.querySelector('[data-cell="session"]'))
+    expect(part('mode-select')).not.toBeNull()
+
+    click(host.querySelectorAll('[data-part="pill-button"]')[0] ?? null)
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
+    expect(part('session')).not.toBeNull()
+    expect(part('goniometer-ring')).not.toBeNull()
+    unmount()
   })
 
-  it('picks the routine named by ?routine= and falls back to the first one', () => {
-    open('?session=1&sim=1&routine=builtin-flexion-150')
-    const named = mount()
-    expect(named.host.querySelector('[data-part="session"]')?.textContent).toMatch(/150°/)
-    act(() => named.root.unmount())
+  it('shows the simulator only with ?sim=1 and keeps it out of the watch circle', () => {
+    const plain = mount()
+    expect(plain.part('simulator-panel')).toBeNull()
+    plain.unmount()
 
-    open('?session=1&sim=1&routine=does-not-exist')
-    const fallback = mount()
-    expect(fallback.host.querySelector('[data-part="session"]')?.textContent).toMatch(/90°/)
-    act(() => fallback.root.unmount())
-  })
-
-  it('keeps the simulator control out of the watch circle', () => {
-    open('?session=1&sim=1')
-    const { host, root } = mount()
-    const screen = host.querySelector('[data-part="screen"]')
-    const panel = host.querySelector('[data-part="simulator-panel"]')
-    expect(screen?.contains(panel)).toBe(false)
-    act(() => root.unmount())
+    open('?sim=1')
+    const sim = mount()
+    const panel = sim.part('simulator-panel')
+    expect(panel).not.toBeNull()
+    expect(sim.part('screen')?.contains(panel)).toBe(false)
+    sim.unmount()
   })
 
   it('unlocks the audio on the first touch of the page', async () => {
-    const { root } = mount()
+    const { unmount } = mount()
     expect(getFeedback().audio.state).toBe('locked')
 
     // jsdom has no Web Audio, so the attempt ends as "unsupported": it did try on the gesture.
@@ -69,6 +84,6 @@ describe('App', () => {
       document.dispatchEvent(new Event('pointerdown'))
     })
     expect(getFeedback().audio.state).toBe('unsupported')
-    act(() => root.unmount())
+    unmount()
   })
 })
