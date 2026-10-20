@@ -1,0 +1,109 @@
+.fb {
+  transform-box: fill-box;
+}
+
+/* The target takes the hit: it shrinks, springs past its size and settles. */
+.target {
+  transform-origin: center;
+  animation: target 5s both;
+}
+
+@keyframes target {
+  0%,
+  18% {
+    transform: scale(1);
+  }
+
+  21% {
+    transform: scale(0.92);
+  }
+
+  26% {
+    transform: scale(1.05);
+  }
+
+  30%,
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* The arrow comes in from the left, lands at 18 % and quivers. It stays on the target. */
+.fly {
+  transform-origin: right center;
+  animation: fly 5s both;
+}
+
+@keyframes fly {
+  0% {
+    transform: translateX(-300px);
+    opacity: 0;
+  }
+
+  4% {
+    opacity: 1;
+    transform: translateX(-300px);
+  }
+
+  18% {
+    transform: translateX(0) rotate(0);
+  }
+
+  22% {
+    transform: rotate(-7deg);
+  }
+
+  26% {
+    transform: rotate(5deg);
+  }
+
+  30% {
+    transform: rotate(-2deg);
+  }
+
+  34%,
+  100% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+.wave {
+  transform-origin: center;
+  animation: wave 5s var(--af-ease-enter) both;
+}
+
+.second {
+  animation-delay: 150ms;
+}
+
+@keyframes wave {
+  0%,
+  18% {
+    transform: scale(1);
+    opacity: 0;
+  }
+
+  19% {
+    opacity: 0.8;
+  }
+
+  50%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Still hit: the arrow already on the target and no rings. */
+@media (prefers-reduced-motion: reduce) {
+  .target,
+  .fly,
+  .wave {
+    animation: none;
+  }
+
+  .wave {
+    display: none;
+  }
+}
