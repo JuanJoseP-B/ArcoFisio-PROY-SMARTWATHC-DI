@@ -36,6 +36,8 @@ export interface UseSessionRunOptions {
   kit?: SensorKit
   /** Sound and vibration driven by the same frame tick; stopped when readings stop. */
   feedback?: Feedback
+  /** Holds the session: no frames, no counting and no sound until it is released. */
+  paused?: boolean
 }
 
 const EMPTY_VIEW: SessionView = {
@@ -69,7 +71,12 @@ const sameView = (a: SessionView, b: SessionView): boolean =>
  * repetition machine with the latest angle. Ticking every frame (not only when the angle
  * changes) lets a steady hold on the target reach its 1 s.
  */
-export function useSessionRun({ config, kit, feedback }: UseSessionRunOptions): UseSessionRun {
+export function useSessionRun({
+  config,
+  kit,
+  feedback,
+  paused = false,
+}: UseSessionRunOptions): UseSessionRun {
   const angleState = useAngle(kit ? { kit } : {})
   const { angle, status } = angleState
 
@@ -86,7 +93,7 @@ export function useSessionRun({ config, kit, feedback }: UseSessionRunOptions): 
   })
 
   useEffect(() => {
-    if (status !== 'live') {
+    if (status !== 'live' || paused) {
       runRef.current = pauseSessionRun(runRef.current)
       feedbackRef.current?.stop()
       return undefined
@@ -109,7 +116,7 @@ export function useSessionRun({ config, kit, feedback }: UseSessionRunOptions): 
       cancelAnimationFrame(handle)
       feedbackRef.current?.stop()
     }
-  }, [status])
+  }, [status, paused])
 
   const stats = useCallback(() => sessionStats(runRef.current), [])
   const reset = useCallback(() => {
@@ -117,5 +124,11 @@ export function useSessionRun({ config, kit, feedback }: UseSessionRunOptions): 
     setView(EMPTY_VIEW)
   }, [])
 
-  return { ...angleState, zone: status === 'live' ? view.zone : null, view, stats, reset }
+  return {
+    ...angleState,
+    zone: status === 'live' && !paused ? view.zone : null,
+    view,
+    stats,
+    reset,
+  }
 }

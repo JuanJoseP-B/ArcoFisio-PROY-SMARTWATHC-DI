@@ -43,14 +43,15 @@ const config: SessionRunConfig = { target: 90, tolerance: 2, painArc: null }
 
 function mount(kit: ReturnType<typeof newKit>, cfg = config, feedback?: Feedback) {
   const latest: { current: UseSessionRun | null } = { current: null }
-  function Probe() {
-    latest.current = useSessionRun({ config: cfg, kit, ...(feedback ? { feedback } : {}) })
+  function Probe({ paused }: { paused: boolean }) {
+    latest.current = useSessionRun({ config: cfg, kit, paused, ...(feedback ? { feedback } : {}) })
     return null
   }
   const root = createRoot(document.createElement('div'))
   roots.push(root)
-  act(() => root.render(createElement(Probe)))
-  return { latest, root }
+  const show = (paused: boolean) => act(() => root.render(createElement(Probe, { paused })))
+  show(false)
+  return { latest, root, setPaused: show }
 }
 
 const moveTo = (kit: ReturnType<typeof newKit>, angle: number) =>
@@ -123,6 +124,37 @@ describe('useSessionRun', () => {
     expect(frames.size).toBe(0)
     act(() => root.unmount())
     roots.length = 0
+  })
+
+  it('holds still while paused: no frames, no zone, and a hold restarts on release', () => {
+    const kit = newKit()
+    const { latest, setPaused } = mount(kit)
+    moveTo(kit, 90)
+    flushFrame(100)
+    expect(latest.current?.view.hits).toBe(1)
+
+    setPaused(true)
+    expect(frames.size).toBe(0)
+    expect(latest.current?.zone).toBeNull()
+    expect(latest.current?.view.hits).toBe(1)
+
+    setPaused(false)
+    expect(frames.size).toBe(1)
+    flushFrame(5000)
+    expect(latest.current?.zone).toBe('target')
+    // The hold restarted on release, so the seconds spent paused did not count.
+    flushFrame(5500)
+    expect(latest.current?.stats().reps).toEqual([])
+  })
+
+  it('stops the feedback while paused', () => {
+    const kit = newKit()
+    const stop = vi.fn()
+    const feedback = { tick: vi.fn(), stop } as unknown as Feedback
+    const { setPaused } = mount(kit, config, feedback)
+    stop.mockClear()
+    setPaused(true)
+    expect(stop).toHaveBeenCalled()
   })
 
   it('resets the counters', () => {
