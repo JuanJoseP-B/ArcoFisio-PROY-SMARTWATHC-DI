@@ -8,6 +8,8 @@ export interface Nav {
   push(route: Route): void
   back(): void
   replace(route: Route): void
+  /** Drops the whole stack and starts over from one screen. */
+  reset(route: Route): void
 }
 
 export const NavContext = createContext<Nav | null>(null)
