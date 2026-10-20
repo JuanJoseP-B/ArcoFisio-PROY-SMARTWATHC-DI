@@ -10,6 +10,13 @@ const open = (search: string) => window.history.replaceState(null, '', `/${searc
 
 afterEach(() => open(''))
 
+function mount() {
+  const host = document.createElement('div')
+  const root = createRoot(host)
+  act(() => root.render(createElement(App)))
+  return { host, root }
+}
+
 describe('App', () => {
   it('opens on the intro inside the radial transition', () => {
     const html = renderToString(<App />)
@@ -17,16 +24,38 @@ describe('App', () => {
     expect(html).toContain('data-part="intro"')
     expect(html).toContain('ARCO')
     expect(html).toContain('FISIO')
+    expect(html).not.toContain('data-part="simulator-panel"')
   })
 
-  it('opens the sensor probe with ?probe=1 instead of the intro', () => {
-    open('?probe=1&sim=1')
-    const host = document.createElement('div')
-    const root = createRoot(host)
-    act(() => root.render(createElement(App)))
+  it('opens the live session with ?session=1 and shows the simulator with ?sim=1', () => {
+    open('?session=1&sim=1')
+    const { host, root } = mount()
 
-    expect(host.querySelector('[data-part="radial-transition"]')).not.toBeNull()
+    expect(host.querySelector('[data-part="session"]')).not.toBeNull()
     expect(host.querySelector('[data-part="intro"]')).toBeNull()
+    expect(host.querySelector('[data-part="simulator-panel"]')).not.toBeNull()
+    expect(host.querySelector('[data-part="goniometer-ring"]')).not.toBeNull()
+    act(() => root.unmount())
+  })
+
+  it('picks the routine named by ?routine= and falls back to the first one', () => {
+    open('?session=1&sim=1&routine=builtin-flexion-150')
+    const named = mount()
+    expect(named.host.querySelector('[data-part="session"]')?.textContent).toMatch(/150°/)
+    act(() => named.root.unmount())
+
+    open('?session=1&sim=1&routine=does-not-exist')
+    const fallback = mount()
+    expect(fallback.host.querySelector('[data-part="session"]')?.textContent).toMatch(/90°/)
+    act(() => fallback.root.unmount())
+  })
+
+  it('keeps the simulator control out of the watch circle', () => {
+    open('?session=1&sim=1')
+    const { host, root } = mount()
+    const screen = host.querySelector('[data-part="screen"]')
+    const panel = host.querySelector('[data-part="simulator-panel"]')
+    expect(screen?.contains(panel)).toBe(false)
     act(() => root.unmount())
   })
 })
