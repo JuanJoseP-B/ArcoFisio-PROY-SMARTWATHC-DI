@@ -30,3 +30,29 @@ export const color = {
 } as const
 
 export type ColorToken = keyof typeof color
+
+export const geometry = {
+  screenSize: 384,
+  bezelPadding: 12,
+  bezelRing: 3,
+  safeMargin: 28,
+  ringRadius: 164,
+  ringStroke: 14,
+  ringCircumference: 1030.44,
+  touchMin: 48,
+  radiusPill: 999,
+  radiusCard: 24,
+  radiusSm: 12,
+} as const
+
+export const space = {
+  s1: 4,
+  s2: 8,
+  s3: 12,
+  s4: 16,
+  s6: 24,
+} as const
+
+export const safeDiameter = geometry.screenSize - 2 * geometry.safeMargin
+export const bezelDiameter = geometry.screenSize + 2 * geometry.bezelPadding
+export const watchExtent = bezelDiameter + 2 * geometry.bezelRing
