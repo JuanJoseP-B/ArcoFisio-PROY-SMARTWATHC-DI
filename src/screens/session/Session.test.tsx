@@ -10,7 +10,8 @@ import { FakeStorage } from '../../data/testStorage'
 import type { PainArc } from '../../domain/zones'
 import type { Feedback } from '../../feedback/feedback'
 import { createSensorKit } from '../../sensors/kit'
-import { Session } from './Session'
+import { Session, SessionView } from './Session'
+import type { UseSessionRun } from '../../app/useSessionRun'
 
 ;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
 
@@ -210,5 +211,47 @@ describe('Session', () => {
     moveTo(kit, 90)
     expect(() => flushFrame(100)).not.toThrow()
     expect(chip(host)?.textContent).toBe('Objetivo alcanzado')
+  })
+
+  describe('SessionView', () => {
+    const fakeRun = (reps: number): UseSessionRun =>
+      ({
+        angle: 42,
+        status: 'live',
+        zone: 'far',
+        view: { zone: 'far', reps, hits: 0, overshoots: 0, painEntries: 0, maxAngle: 42 },
+      }) as unknown as UseSessionRun
+
+    const show = (caption?: string, reps = 4) => {
+      const host = document.createElement('div')
+      const root = createRoot(host)
+      roots.push(root)
+      act(() =>
+        root.render(
+          createElement(
+            I18nProvider,
+            { lang: 'es' },
+            createElement(SessionView, {
+              routine,
+              run: fakeRun(reps),
+              ...(caption ? { caption } : {}),
+            }),
+          ),
+        ),
+      )
+      return host
+    }
+
+    it('draws a run it is handed, without starting one of its own', () => {
+      const host = show(undefined, 4)
+      expect(reading(host)).toBe('42°')
+      expect(host.querySelector('[data-part="reps"]')?.textContent).toContain('4 de 10')
+      expect(host.querySelector('[data-part="set-caption"]')).toBeNull()
+    })
+
+    it('adds a line under the repetitions when given one', () => {
+      const host = show('Serie 2 de 3')
+      expect(host.querySelector('[data-part="set-caption"]')?.textContent).toBe('Serie 2 de 3')
+    })
   })
 })

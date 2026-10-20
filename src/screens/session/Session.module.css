@@ -43,3 +43,10 @@
   font-variant-numeric: tabular-nums;
   color: var(--af-color-ink);
 }
+
+.caption {
+  font-size: var(--af-type-caption-size);
+  line-height: var(--af-type-caption-line);
+  font-weight: var(--af-type-caption-weight);
+  color: var(--af-color-bronze);
+}
