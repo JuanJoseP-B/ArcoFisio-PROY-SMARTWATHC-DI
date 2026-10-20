@@ -1,8 +1,0 @@
-.brand {
-  margin: 0;
-  font-size: var(--af-type-display-size);
-  line-height: var(--af-type-display-line);
-  font-weight: var(--af-type-display-weight);
-  color: var(--af-color-ink);
-  text-align: center;
-}
