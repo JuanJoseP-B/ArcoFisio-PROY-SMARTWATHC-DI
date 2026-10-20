@@ -11,7 +11,7 @@ interface NavProviderProps {
   children?: ReactNode
 }
 
-/** Holds the screen stack and gives screens `push`, `back`, `replace` and `reset`. Escape goes back. */
+/** Holds the screen stack and gives screens `push`, `back`, `replace`, `reset` and `popTo`. Escape goes back. */
 export function NavProvider({ initial = initialNav, children }: NavProviderProps) {
   const [state, dispatch] = useReducer(navReducer, initial)
 
@@ -31,6 +31,7 @@ export function NavProvider({ initial = initialNav, children }: NavProviderProps
       back: () => dispatch({ type: 'back' }),
       replace: (route) => dispatch({ type: 'replace', route }),
       reset: (route) => dispatch({ type: 'reset', route }),
+      popTo: (id) => dispatch({ type: 'popTo', id }),
     }),
     [state],
   )
