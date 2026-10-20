@@ -1,0 +1,22 @@
+.steps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--af-space-3);
+  max-width: 232px;
+  text-align: center;
+}
+
+.message {
+  font-size: var(--af-type-body-size);
+  line-height: var(--af-type-body-line);
+  font-weight: var(--af-type-title-weight);
+  color: var(--af-color-ink);
+}
+
+.hint {
+  font-size: var(--af-type-caption-size);
+  line-height: var(--af-type-caption-line);
+  font-weight: var(--af-type-caption-weight);
+  color: var(--af-color-ink-muted);
+}

@@ -1,0 +1,69 @@
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 232px;
+  height: var(--af-touch-min);
+}
+
+.button {
+  width: var(--af-touch-min);
+  height: var(--af-touch-min);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--af-color-surface);
+  color: var(--af-color-ink);
+  cursor: pointer;
+  transition:
+    transform var(--af-dur-instant),
+    opacity var(--af-dur-instant);
+}
+
+.button svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.readout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--af-type-caption-size);
+  line-height: var(--af-type-caption-line);
+  font-weight: var(--af-type-caption-weight);
+  color: var(--af-color-ink-muted);
+}
+
+.value {
+  font-size: var(--af-type-title-size);
+  line-height: var(--af-type-title-line);
+  font-weight: var(--af-type-title-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button:active:not(:disabled) {
+    transition: none;
+    transform: none;
+  }
+}

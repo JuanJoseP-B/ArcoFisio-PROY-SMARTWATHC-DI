@@ -1,4 +1,3 @@
-import type { Exercise, Routine } from '../../data/types'
 import type { LauncherId } from '../../ui/hexLayout'
 import type { Route } from './stack'
 
@@ -15,12 +14,4 @@ export function routeForLauncher(id: LauncherId): Route {
     case 'settings':
       return { id }
   }
-}
-
-/** The first routine for an exercise (the built-in ones come first); null if there is none. */
-export function routineForExercise(
-  routines: readonly Routine[],
-  exercise: Exercise,
-): Routine | null {
-  return routines.find((routine) => routine.exercise === exercise) ?? null
 }

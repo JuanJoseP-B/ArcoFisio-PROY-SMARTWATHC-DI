@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import type { Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { I18nProvider } from '../../app/I18nProvider'
+import { getDataLayer } from '../../data'
 import { INTRO_END_MS } from '../intro/frame'
 import { PRESS_DELAY_MS } from '../../ui/pressTiming'
 import { NavHost } from './NavHost'
@@ -16,6 +17,7 @@ let frames = new Map<number, FrameRequestCallback>()
 let nextId = 1
 
 beforeEach(() => {
+  localStorage.clear()
   frames = new Map()
   nextId = 1
   vi.useFakeTimers()
@@ -73,6 +75,11 @@ function mount(initial?: NavState, lang: 'es' | 'en' = 'es') {
 const FACE: NavState = { stack: [{ id: 'face' }] }
 
 describe('NavHost: start', () => {
+  // Past the first run, the intro hands over to the face.
+  beforeEach(() => {
+    getDataLayer().settings.update({ firstRunDone: true })
+  })
+
   it('opens on the intro, and a tap hands over to the watch face', () => {
     const { part, click } = mount()
     expect(part('intro')).not.toBeNull()
@@ -103,9 +110,55 @@ describe('NavHost: start', () => {
   })
 })
 
+describe('NavHost: first run', () => {
+  const language = (host: HTMLElement) =>
+    [...host.querySelectorAll('[data-part="pill-button"]')] as HTMLButtonElement[]
+
+  it('leads from the intro to the language, then the sensor setup, then the launcher', () => {
+    const { part, host, click, escape } = mount()
+    click(part('intro-skip'))
+    expect(part('language-select')).not.toBeNull()
+    expect(part('face')).toBeNull()
+
+    click(language(host)[1] ?? null)
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
+    expect(part('sensor-setup')).not.toBeNull()
+    expect(getDataLayer().settings.get().firstRunDone).toBe(false)
+
+    click(host.querySelector('[data-part="pill-button"][data-variant="secondary"]:last-child'))
+    expect(part('hex-launcher')).not.toBeNull()
+    expect(getDataLayer().settings.get().firstRunDone).toBe(true)
+
+    escape()
+    expect(part('face')).not.toBeNull()
+    escape()
+    expect(part('face')).not.toBeNull()
+  })
+
+  it('goes back from the sensor setup to the language', () => {
+    const { part, host, click } = mount()
+    click(part('intro-skip'))
+    click(language(host)[0] ?? null)
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
+    click(part('back-button'))
+    expect(part('language-select')).not.toBeNull()
+  })
+
+  it('does not come back after it is done', () => {
+    getDataLayer().settings.update({ firstRunDone: true })
+    const { part, click } = mount()
+    click(part('intro-skip'))
+    expect(part('language-select')).toBeNull()
+    expect(part('face')).not.toBeNull()
+  })
+})
+
 describe('NavHost: every app opens from the launcher and the way back always works', () => {
   const APPS = [
-    ['measure', 'Medir'],
     ['routines', 'Rutinas'],
     ['summary', 'Resumen'],
     ['pain', 'Dolor'],
@@ -135,7 +188,15 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     })
   }
 
-  it('Session: launcher, exercise selector, live session, and all the way back', () => {
+  const start = (host: HTMLElement, click: (el: Element | null) => void) => {
+    click(host.querySelector('[data-part="confirm-button"]'))
+    click(host.querySelector('[data-part="pill-button"]'))
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
+  }
+
+  it('Session: launcher, exercise selector, configuration, live session, and all the way back', () => {
     const { part, host, click, escape } = mount(FACE)
 
     click(part('face'))
@@ -146,11 +207,24 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     act(() => {
       vi.advanceTimersByTime(PRESS_DELAY_MS)
     })
+    expect(part('config')?.dataset.exercise).toBe('abduction')
+    expect(part('angle-wheel')).not.toBeNull()
+
+    click(host.querySelector('[data-part="confirm-button"]'))
+    expect(part('counts')).not.toBeNull()
+    click(host.querySelector('[data-part="pill-button"]'))
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
     expect(part('session')).not.toBeNull()
     expect(part('back-button')?.dataset.placement).toBe('bottom')
-    expect(host.textContent).toContain('Abducción 90°')
+    expect(host.textContent).toContain('Abducción personalizada')
 
     click(part('back-button'))
+    expect(part('counts')).not.toBeNull()
+    escape()
+    expect(part('config')).not.toBeNull()
+    escape()
     expect(part('mode-select')).not.toBeNull()
     escape()
     expect(part('hex-launcher')).not.toBeNull()
@@ -158,7 +232,7 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     expect(part('face')).not.toBeNull()
   })
 
-  it('Session with flexion runs the flexion routine', () => {
+  it('Session with flexion runs the custom flexion routine', () => {
     const { part, host, click } = mount({
       stack: [{ id: 'face' }, { id: 'launcher' }, { id: 'mode' }],
     })
@@ -166,8 +240,26 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     act(() => {
       vi.advanceTimersByTime(PRESS_DELAY_MS)
     })
+    expect(part('config')?.dataset.exercise).toBe('flexion')
+    start(host, click)
     expect(part('session')).not.toBeNull()
-    expect(host.textContent).toContain('Flexión 150°')
+    expect(host.textContent).toContain('Flexión personalizada')
+  })
+
+  it('Measure: opens from the launcher and returns with the back button and with Escape', () => {
+    const { part, host, click, escape } = mount(FACE)
+
+    click(part('face'))
+    click(host.querySelector('[data-cell="measure"]'))
+    expect(part('measure')).not.toBeNull()
+    expect(part('placeholder')).toBeNull()
+
+    click(part('back-button'))
+    expect(part('hex-launcher')).not.toBeNull()
+
+    click(host.querySelector('[data-cell="measure"]'))
+    escape()
+    expect(part('hex-launcher')).not.toBeNull()
   })
 
   it('works the same in English', () => {

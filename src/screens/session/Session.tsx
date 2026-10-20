@@ -20,20 +20,22 @@ interface SessionProps {
   kit?: SensorKit
   /** Sound and vibration for the zones; the session is silent without it. */
   feedback?: Feedback
+  /** Opens Measure, offered when the sensor needs the person's attention. */
+  onMeasure?: () => void
 }
 
 /**
  * Live session: the goniometer follows the arm, the chip says which zone it is in and the
  * counter tracks repetitions. Keeps the screen awake while it is open.
  */
-export function Session({ routine, painArc = null, kit, feedback }: SessionProps) {
+export function Session({ routine, painArc = null, kit, feedback, onMeasure }: SessionProps) {
   const { t, lang } = useI18n()
   const run = useSessionRun({
     config: { target: routine.targetAngle, tolerance: routine.tolerance, painArc },
     ...(kit ? { kit } : {}),
     ...(feedback ? { feedback } : {}),
   })
-  const { angle, status, zone, view, actions } = run
+  const { angle, status, zone, view } = run
 
   useEffect(() => {
     const lock = createWakeLock()
@@ -55,7 +57,7 @@ export function Session({ routine, painArc = null, kit, feedback }: SessionProps
           {angle === null ? '--' : Math.round(angle)}°
         </div>
         {notice ? (
-          <SensorNotice notice={notice} actions={actions} />
+          <SensorNotice notice={notice} {...(onMeasure ? { onMeasure } : {})} />
         ) : zone ? (
           <ZoneChip zone={zone} label={t(`zone.${zone}`)} />
         ) : null}

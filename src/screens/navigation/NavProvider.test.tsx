@@ -46,6 +46,17 @@ describe('NavProvider', () => {
     expect(nav().canGoBack).toBe(false)
   })
 
+  it('resets to a single screen, so back has nowhere to go', () => {
+    const { nav } = mount({ stack: [{ id: 'face' }, { id: 'launcher' }, { id: 'mode' }] })
+    act(() => nav().reset({ id: 'face' }))
+    expect(nav().route.id).toBe('face')
+    expect(nav().canGoBack).toBe(false)
+
+    act(() => nav().push({ id: 'launcher' }))
+    act(() => nav().back())
+    expect(nav().route.id).toBe('face')
+  })
+
   it('goes back with the Escape key, and ignores other keys', () => {
     const { nav } = mount({ stack: [{ id: 'face' }, { id: 'launcher' }] })
     act(() => {

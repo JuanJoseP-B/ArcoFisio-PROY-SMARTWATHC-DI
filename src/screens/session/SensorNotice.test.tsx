@@ -3,25 +3,19 @@ import { createRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { describe, expect, it, vi } from 'vitest'
 import { I18nProvider } from '../../app/I18nProvider'
-import type { AngleActions } from '../../app/useAngle'
 import type { Notice } from './noticeFor'
 import { SensorNotice } from './SensorNotice'
 
 ;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
 
-const actions = (): AngleActions => ({
-  requestPermission: vi.fn(() => Promise.resolve('granted' as const)),
-  calibrate: vi.fn(() => Promise.resolve({ ok: true as const, gravityRef: [0, 0, 1] as const })),
-})
-
-const html = (notice: Notice, lang: 'es' | 'en') =>
+const html = (notice: Notice, lang: 'es' | 'en', onMeasure?: () => void) =>
   renderToString(
     <I18nProvider lang={lang}>
-      <SensorNotice notice={notice} actions={actions()} />
+      <SensorNotice notice={notice} {...(onMeasure ? { onMeasure } : {})} />
     </I18nProvider>,
   )
 
-function mount(notice: Notice, a: AngleActions) {
+function mount(notice: Notice, onMeasure: () => void) {
   const host = document.createElement('div')
   const root = createRoot(host)
   act(() =>
@@ -29,7 +23,7 @@ function mount(notice: Notice, a: AngleActions) {
       createElement(
         I18nProvider,
         { lang: 'es' },
-        createElement(SensorNotice, { notice, actions: a }),
+        createElement(SensorNotice, { notice, onMeasure }),
       ),
     ),
   )
@@ -49,33 +43,26 @@ describe('SensorNotice', () => {
     expect(html({ ...base, simHint: true }, 'en')).toContain('?sim=1')
   })
 
-  it('shows no button when there is no action', () => {
-    expect(html({ message: 'sensor.paused', action: null, simHint: false }, 'es')).not.toContain(
-      '<button',
-    )
+  it('shows no button when there is nothing the person can do', () => {
+    const notice: Notice = { message: 'sensor.paused', action: null, simHint: false }
+    expect(html(notice, 'es', () => undefined)).not.toContain('<button')
   })
 
-  it('requests sensor access from the enable button tap', () => {
-    const a = actions()
-    const { host, root } = mount({ message: 'sensor.noData', action: 'enable', simHint: false }, a)
-    const button = host.querySelector('button')
-    expect(button?.textContent).toBe('Activar sensor')
-    act(() => button?.click())
-    expect(a.requestPermission).toHaveBeenCalledTimes(1)
-    expect(a.calibrate).not.toHaveBeenCalled()
-    act(() => root.unmount())
+  it('shows no button when there is nowhere to send the person', () => {
+    const notice: Notice = { message: 'sensor.noData', action: 'enable', simHint: false }
+    expect(html(notice, 'es')).not.toContain('<button')
   })
 
-  it('starts the arm-down calibration from the calibrate button', () => {
-    const a = actions()
-    const { host, root } = mount(
-      { message: 'sensor.uncalibrated', action: 'calibrate', simHint: false },
-      a,
-    )
+  it.each([
+    ['enable', 'sensor.noData'],
+    ['calibrate', 'sensor.uncalibrated'],
+  ] as const)('opens Measure from the button when the action is %s', (action, message) => {
+    const onMeasure = vi.fn()
+    const { host, root } = mount({ message, action, simHint: false }, onMeasure)
     const button = host.querySelector('button')
-    expect(button?.textContent).toBe('Brazo abajo')
+    expect(button?.textContent).toBe('Medir')
     act(() => button?.click())
-    expect(a.calibrate).toHaveBeenCalledTimes(1)
+    expect(onMeasure).toHaveBeenCalledTimes(1)
     act(() => root.unmount())
   })
 })

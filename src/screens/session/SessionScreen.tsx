@@ -24,7 +24,12 @@ export function SessionScreen({ routineId }: SessionScreenProps) {
 
   return (
     <>
-      <Session routine={routine} painArc={data.painArc.get()} feedback={getFeedback()} />
+      <Session
+        routine={routine}
+        painArc={data.painArc.get()}
+        feedback={getFeedback()}
+        onMeasure={() => nav.push({ id: 'measure' })}
+      />
       <BackButton label={t('nav.back')} onBack={nav.back} placement="bottom" />
     </>
   )

@@ -16,7 +16,10 @@ export function App() {
   useEffect(() => installAudioUnlock(getFeedback().audio), [])
 
   return (
-    <I18nProvider lang={getDataLayer().settings.get().lang}>
+    <I18nProvider
+      lang={getDataLayer().settings.get().lang}
+      onLangChange={(lang) => getDataLayer().settings.update({ lang })}
+    >
       <NavProvider>
         <WatchStage>
           <WatchBezel>
