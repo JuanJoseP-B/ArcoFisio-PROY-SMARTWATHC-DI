@@ -1,0 +1,212 @@
+.btn {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--af-radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--af-font-sans);
+  font-size: var(--af-type-button-size);
+  line-height: var(--af-type-button-line);
+  font-weight: var(--af-type-button-weight);
+  cursor: pointer;
+  transition: transform var(--af-dur-instant);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.primary {
+  width: 232px;
+  height: 52px;
+  background: var(--af-color-ink);
+  color: var(--af-color-ink-on-primary);
+}
+
+.secondary {
+  width: 200px;
+  height: 48px;
+  background: transparent;
+  color: var(--af-color-bronze);
+  box-shadow: inset 0 0 0 2px var(--af-color-bronze);
+}
+
+.label {
+  position: relative;
+}
+
+.fletching {
+  stroke: var(--af-color-gold);
+}
+
+.shot {
+  stroke: var(--af-color-ink-on-primary);
+}
+
+.ripple {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border-radius: 50%;
+  background: var(--af-color-ripple-light);
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+}
+
+.trail {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--af-color-gold);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+/*
+ * Sheet 09 loops this 2.6 s cycle; here it plays once per press. The negative delay skips
+ * the idle first 8 % so the button answers the touch at once: it dips, the ripple spreads,
+ * the arrow draws back and flies out along a gold trail, then a new arrow returns.
+ */
+.pressed {
+  animation: press 2600ms 1 both;
+  animation-delay: -208ms;
+}
+
+.pressed .ripple {
+  animation: ripple 2600ms 1 both;
+  animation-delay: -208ms;
+}
+
+.pressed .trail {
+  animation: trail 2600ms 1 both;
+  animation-delay: -208ms;
+}
+
+.pressed .shot {
+  animation: shot 2600ms 1 both;
+  animation-delay: -208ms;
+}
+
+@keyframes press {
+  0%,
+  8% {
+    transform: scale(1);
+    background: var(--af-color-ink);
+  }
+
+  14% {
+    transform: scale(0.95);
+    background: var(--af-color-primary-soft);
+  }
+
+  22% {
+    transform: scale(1.02);
+  }
+
+  28%,
+  100% {
+    transform: scale(1);
+    background: var(--af-color-ink);
+  }
+}
+
+@keyframes shot {
+  0%,
+  8% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  16% {
+    transform: translateX(-6px);
+    opacity: 1;
+  }
+
+  30% {
+    transform: translateX(170px);
+    opacity: 1;
+  }
+
+  31% {
+    transform: translateX(-60px);
+    opacity: 0;
+  }
+
+  52% {
+    transform: translateX(-60px);
+    opacity: 0;
+  }
+
+  70%,
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes trail {
+  0%,
+  16% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  24% {
+    transform: scaleX(1);
+    opacity: 0.8;
+  }
+
+  40%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple {
+  0%,
+  12% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  14% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  40%,
+  100% {
+    transform: scale(14);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+
+  .btn:active {
+    transform: none;
+  }
+
+  .pressed,
+  .pressed .ripple,
+  .pressed .trail,
+  .pressed .shot {
+    animation: none;
+  }
+}
