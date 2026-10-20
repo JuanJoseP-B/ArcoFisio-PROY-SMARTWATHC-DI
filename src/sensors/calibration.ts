@@ -55,7 +55,6 @@ export function collectSamples(
 ): Promise<Vec3[]> {
   return new Promise((resolve) => {
     const samples: Vec3[] = []
-    let timer: ReturnType<typeof setTimeout> | undefined
     const finish = (): void => {
       clearTimeout(timer)
       unsubscribe()
@@ -65,7 +64,7 @@ export function collectSamples(
       samples.push(sample)
       if (samples.length >= count) finish()
     })
-    timer = setTimeout(finish, timeoutMs)
+    const timer = setTimeout(finish, timeoutMs)
   })
 }
 
