@@ -56,10 +56,10 @@ export const createRepetitionState = (): RepetitionState => ({
 })
 
 export function repetitionWindow(config: RepetitionConfig) {
-  const returnAngle = Math.min(
-    Math.max(config.target - REP_RETURN_MARGIN_DEG, REP_RETURN_FLOOR_DEG),
-    config.target / 2,
-  )
+  const returnAngle =
+    config.target >= 2 * REP_RETURN_FLOOR_DEG
+      ? Math.max(config.target - REP_RETURN_MARGIN_DEG, REP_RETURN_FLOOR_DEG)
+      : config.target / 2
   const startAngle = Math.max(
     Math.min(returnAngle + REP_START_HYSTERESIS_DEG, config.target - config.tolerance),
     returnAngle + 0.5,
