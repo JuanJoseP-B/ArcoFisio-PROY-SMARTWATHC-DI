@@ -14,7 +14,7 @@ export const isOnTarget = (angle: number, target: number, tolerance: number): bo
 export const isOvershoot = (angle: number, target: number, tolerance: number): boolean =>
   angle > target + tolerance
 
-const isInPainArc = (angle: number, painArc: PainArc | null): boolean =>
+export const isInPainArc = (angle: number, painArc: PainArc | null): boolean =>
   painArc !== null && angle >= painArc.from && angle <= painArc.to
 
 export function classifyZone(
