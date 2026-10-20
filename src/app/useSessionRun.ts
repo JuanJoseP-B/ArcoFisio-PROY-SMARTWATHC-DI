@@ -36,6 +36,14 @@ export interface UseSessionRunOptions {
   kit?: SensorKit
   /** Sound and vibration driven by the same frame tick; stopped when readings stop. */
   feedback?: Feedback
+  /** Holds the session: no frames, no counting and no sound until it is released. */
+  paused?: boolean
+  /**
+   * Repetitions that end the run. Once that many are done the counters start over and
+   * `onGoal` gets what was counted, so a routine can go on to its next set.
+   */
+  repsGoal?: number
+  onGoal?: (counted: SessionStats) => void
 }
 
 const EMPTY_VIEW: SessionView = {
@@ -69,13 +77,21 @@ const sameView = (a: SessionView, b: SessionView): boolean =>
  * repetition machine with the latest angle. Ticking every frame (not only when the angle
  * changes) lets a steady hold on the target reach its 1 s.
  */
-export function useSessionRun({ config, kit, feedback }: UseSessionRunOptions): UseSessionRun {
+export function useSessionRun({
+  config,
+  kit,
+  feedback,
+  paused = false,
+  repsGoal,
+  onGoal,
+}: UseSessionRunOptions): UseSessionRun {
   const angleState = useAngle(kit ? { kit } : {})
   const { angle, status } = angleState
 
   const angleRef = useRef<number | null>(angle)
   const configRef = useRef(config)
   const feedbackRef = useRef(feedback)
+  const goalRef = useRef({ repsGoal, onGoal })
   const runRef = useRef<SessionRunState>(createSessionRunState())
   const [view, setView] = useState<SessionView>(EMPTY_VIEW)
 
@@ -83,10 +99,11 @@ export function useSessionRun({ config, kit, feedback }: UseSessionRunOptions): 
     angleRef.current = angle
     configRef.current = config
     feedbackRef.current = feedback
+    goalRef.current = { repsGoal, onGoal }
   })
 
   useEffect(() => {
-    if (status !== 'live') {
+    if (status !== 'live' || paused) {
       runRef.current = pauseSessionRun(runRef.current)
       feedbackRef.current?.stop()
       return undefined
@@ -99,8 +116,16 @@ export function useSessionRun({ config, kit, feedback }: UseSessionRunOptions): 
         const step = stepSessionRun(runRef.current, { angle: current, tMs: now }, configRef.current)
         runRef.current = step.state
         feedbackRef.current?.tick({ zone: step.zone, angle: current, tMs: now })
-        const next = viewOf(runRef.current)
-        setView((previous) => (sameView(previous, next) ? previous : next))
+        const goal = goalRef.current
+        if (goal.repsGoal !== undefined && runRef.current.rep.reps.length >= goal.repsGoal) {
+          const counted = sessionStats(runRef.current)
+          runRef.current = createSessionRunState()
+          setView(EMPTY_VIEW)
+          goal.onGoal?.(counted)
+        } else {
+          const next = viewOf(runRef.current)
+          setView((previous) => (sameView(previous, next) ? previous : next))
+        }
       }
       handle = requestAnimationFrame(tick)
     }
@@ -109,7 +134,7 @@ export function useSessionRun({ config, kit, feedback }: UseSessionRunOptions): 
       cancelAnimationFrame(handle)
       feedbackRef.current?.stop()
     }
-  }, [status])
+  }, [status, paused])
 
   const stats = useCallback(() => sessionStats(runRef.current), [])
   const reset = useCallback(() => {
@@ -117,5 +142,11 @@ export function useSessionRun({ config, kit, feedback }: UseSessionRunOptions): 
     setView(EMPTY_VIEW)
   }, [])
 
-  return { ...angleState, zone: status === 'live' ? view.zone : null, view, stats, reset }
+  return {
+    ...angleState,
+    zone: status === 'live' && !paused ? view.zone : null,
+    view,
+    stats,
+    reset,
+  }
 }

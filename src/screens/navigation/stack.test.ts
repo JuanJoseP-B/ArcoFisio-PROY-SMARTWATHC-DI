@@ -65,6 +65,34 @@ describe('navReducer', () => {
     expect(ids(state)).toEqual(['face'])
   })
 
+  it('pops back to the nearest screen with an id, dropping what is above it', () => {
+    const state = run([
+      push({ id: 'launcher' }),
+      push({ id: 'routines' }),
+      push({ id: 'routine', routineId: 'a' }),
+      push({ id: 'builder', routineId: 'a' }),
+      { type: 'popTo', id: 'routines' },
+    ])
+    expect(ids(state)).toEqual(['intro', 'launcher', 'routines'])
+  })
+
+  it('pops to the topmost match when an id is on the stack twice', () => {
+    const state = run([
+      push({ id: 'routine', routineId: 'a' }),
+      push({ id: 'builder' }),
+      push({ id: 'routine', routineId: 'b' }),
+      push({ id: 'builder', routineId: 'b' }),
+      { type: 'popTo', id: 'routine' },
+    ])
+    expect(state.stack.at(-1)).toEqual({ id: 'routine', routineId: 'b' })
+    expect(state.stack).toHaveLength(4)
+  })
+
+  it('starts over from the screen when popping to one that is not on the stack', () => {
+    const state = run([push({ id: 'launcher' }), { type: 'popTo', id: 'routines' }])
+    expect(state.stack).toEqual([{ id: 'routines' }])
+  })
+
   it('never mutates the previous state', () => {
     const before = run([push({ id: 'launcher' })])
     const snapshot = [...before.stack]

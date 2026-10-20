@@ -159,7 +159,6 @@ describe('NavHost: first run', () => {
 
 describe('NavHost: every app opens from the launcher and the way back always works', () => {
   const APPS = [
-    ['routines', 'Rutinas'],
     ['summary', 'Resumen'],
     ['pain', 'Dolor'],
     ['guide', 'Guía IA'],
@@ -187,6 +186,22 @@ describe('NavHost: every app opens from the launcher and the way back always wor
       expect(part('face')).not.toBeNull()
     })
   }
+
+  it('Rutinas: opens the library, and the way back works with the button and with Escape', () => {
+    const { part, host, click, escape } = mount(FACE)
+
+    click(part('face'))
+    click(host.querySelector('[data-cell="routines"]'))
+    expect(part('library')).not.toBeNull()
+    expect(part('placeholder')).toBeNull()
+
+    click(part('back-button'))
+    expect(part('hex-launcher')).not.toBeNull()
+
+    click(host.querySelector('[data-cell="routines"]'))
+    escape()
+    expect(part('hex-launcher')).not.toBeNull()
+  })
 
   const start = (host: HTMLElement, click: (el: Element | null) => void) => {
     click(host.querySelector('[data-part="confirm-button"]'))
@@ -217,10 +232,10 @@ describe('NavHost: every app opens from the launcher and the way back always wor
       vi.advanceTimersByTime(PRESS_DELAY_MS)
     })
     expect(part('session')).not.toBeNull()
-    expect(part('back-button')?.dataset.placement).toBe('bottom')
+    expect(host.querySelector('[data-part="icon-button"][data-icon="pause"]')).not.toBeNull()
     expect(host.textContent).toContain('Abducción personalizada')
 
-    click(part('back-button'))
+    escape()
     expect(part('counts')).not.toBeNull()
     escape()
     expect(part('config')).not.toBeNull()
@@ -244,6 +259,32 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     start(host, click)
     expect(part('session')).not.toBeNull()
     expect(host.textContent).toContain('Flexión personalizada')
+  })
+
+  it('Session: finishing the workout lands on the launcher over the face', () => {
+    const { part, host, click, escape } = mount({
+      stack: [{ id: 'face' }, { id: 'launcher' }, { id: 'mode' }],
+    })
+    click(host.querySelectorAll('[data-part="pill-button"]')[0] ?? null)
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
+    start(host, click)
+
+    const icon = (name: string) =>
+      host.querySelector<HTMLButtonElement>(`[data-part="icon-button"][data-icon="${name}"]`)
+    click(icon('pause'))
+    expect(part('progress-view')).not.toBeNull()
+    click(icon('stop'))
+    expect(part('done-view')).not.toBeNull()
+
+    click(part('done-view')?.querySelector('button') ?? null)
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
+    expect(part('hex-launcher')).not.toBeNull()
+    escape()
+    expect(part('face')).not.toBeNull()
   })
 
   it('Measure: opens from the launcher and returns with the back button and with Escape', () => {

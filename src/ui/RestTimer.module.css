@@ -1,0 +1,200 @@
+.timer {
+  position: absolute;
+  inset: 0;
+}
+
+.layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.scene {
+  opacity: 0.16;
+}
+
+.sun {
+  fill: var(--af-color-gold);
+}
+
+.hillFar {
+  fill: var(--af-scene-hill-far);
+}
+
+.hillNear {
+  fill: var(--af-color-bronze);
+}
+
+.blade {
+  fill: none;
+  stroke: var(--af-color-bronze);
+  stroke-width: 2;
+}
+
+.halo {
+  fill: none;
+  stroke: var(--af-color-zone-rest-tint);
+  stroke-width: 28;
+  animation: rest-halo var(--af-dur-ambient) ease-in-out infinite;
+}
+
+.track {
+  fill: none;
+  stroke: var(--af-color-surface-sunken);
+  stroke-width: var(--af-ring-stroke);
+}
+
+.arc {
+  fill: none;
+  stroke: var(--af-color-zone-rest);
+  stroke-width: var(--af-ring-stroke);
+  stroke-linecap: round;
+  transition: stroke var(--af-dur-quick);
+}
+
+.timer[data-done='true'] .arc {
+  stroke: var(--af-color-zone-optimal);
+}
+
+.timer[data-done='true'] .halo {
+  animation: none;
+  opacity: 0;
+}
+
+.bow {
+  fill: none;
+  stroke: var(--af-color-ink);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.string {
+  fill: none;
+  stroke: var(--af-color-ink-muted);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  transform-origin: 0 140px;
+}
+
+.shaft {
+  stroke: var(--af-color-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.head {
+  fill: var(--af-color-ink);
+}
+
+/* Time is up: the string snaps back and wobbles, and the arrow leaves for the top. */
+.snap {
+  animation: rest-snap 600ms linear both;
+}
+
+.flying {
+  animation: rest-fly 600ms ease-in both;
+}
+
+.text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--af-space-1);
+  /* The sheet has 92 px; the player's buttons sit below, so the time is lifted 12 px. */
+  padding-bottom: 104px;
+}
+
+.label {
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-color-zone-rest);
+}
+
+.time {
+  font-size: var(--af-type-hero-size);
+  line-height: var(--af-type-hero-line);
+  font-weight: var(--af-type-hero-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink);
+}
+
+.timer[data-done='true'] .label {
+  color: var(--af-color-zone-optimal);
+}
+
+@keyframes rest-halo {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes rest-snap {
+  0% {
+    transform: scaleY(1);
+  }
+
+  25% {
+    transform: scaleY(0);
+  }
+
+  40% {
+    transform: scaleY(0.15);
+  }
+
+  55% {
+    transform: scaleY(-0.1);
+  }
+
+  70% {
+    transform: scaleY(0.06);
+  }
+
+  85% {
+    transform: scaleY(-0.03);
+  }
+
+  100% {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes rest-fly {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-260px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .halo {
+    animation: none;
+    opacity: 0.6;
+  }
+
+  .arc {
+    transition: none;
+  }
+
+  .snap,
+  .flying {
+    animation: none;
+  }
+
+  .flying {
+    opacity: 0;
+  }
+}

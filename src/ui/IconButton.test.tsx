@@ -30,12 +30,24 @@ describe('IconButton', () => {
   })
 
   it('has a different drawing for each icon', () => {
-    const drawings = (['back', 'reset', 'calibrate'] as IconName[]).map((icon) =>
+    const icons: IconName[] = [
+      'back',
+      'reset',
+      'calibrate',
+      'play',
+      'pause',
+      'next',
+      'stop',
+      'plus',
+      'edit',
+      'trash',
+    ]
+    const drawings = icons.map((icon) =>
       [...mount(icon, () => undefined).querySelectorAll('path')]
         .map((p) => p.getAttribute('d'))
         .join('|'),
     )
-    expect(new Set(drawings).size).toBe(3)
+    expect(new Set(drawings).size).toBe(icons.length)
   })
 
   it('presses', () => {

@@ -1,15 +1,18 @@
 import { getDataLayer } from '../../data'
+import { Builder } from '../builder/Builder'
 import { Config } from '../config/Config'
 import { Counts } from '../config/Counts'
 import { Face } from '../face/Face'
 import { Intro } from '../intro/Intro'
+import { Library } from '../library/Library'
 import { Launcher } from '../launcher/Launcher'
 import { Measure } from '../measure/Measure'
 import { ModeSelect } from '../mode/ModeSelect'
+import { PlayerScreen } from '../player/PlayerScreen'
+import { RoutineDetail } from '../routine/RoutineDetail'
 import { Placeholder } from '../placeholder/Placeholder'
 import { LanguageSelect } from '../setup/LanguageSelect'
 import { SensorSetup } from '../setup/SensorSetup'
-import { SessionScreen } from '../session/SessionScreen'
 import type { Route } from './stack'
 import { useNav } from './useNav'
 
@@ -45,11 +48,15 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'counts':
       return <Counts exercise={route.exercise ?? 'abduction'} />
     case 'session':
-      return <SessionScreen routineId={route.routineId} />
+      return <PlayerScreen routineId={route.routineId} />
     case 'measure':
       return <Measure />
     case 'routines':
-      return <Placeholder title="launcher.routines" />
+      return <Library />
+    case 'routine':
+      return <RoutineDetail routineId={route.routineId} />
+    case 'builder':
+      return <Builder routineId={route.routineId} />
     case 'summary':
       return <Placeholder title="launcher.summary" />
     case 'pain':

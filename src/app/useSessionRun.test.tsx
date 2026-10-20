@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createCalibrationRepo } from '../data/calibrationRepo'
 import { createStorage } from '../data/storage'
 import { FakeStorage } from '../data/testStorage'
-import type { SessionRunConfig } from '../domain/sessionRun'
+import type { SessionRunConfig, SessionStats } from '../domain/sessionRun'
 import type { Feedback } from '../feedback/feedback'
 import { createSensorKit } from '../sensors/kit'
 import type { UseSessionRun } from './useSessionRun'
@@ -41,16 +41,28 @@ afterEach(() => {
 const newKit = () => createSensorKit('sim', createCalibrationRepo(createStorage(new FakeStorage())))
 const config: SessionRunConfig = { target: 90, tolerance: 2, painArc: null }
 
-function mount(kit: ReturnType<typeof newKit>, cfg = config, feedback?: Feedback) {
+function mount(
+  kit: ReturnType<typeof newKit>,
+  cfg = config,
+  feedback?: Feedback,
+  goal?: { repsGoal: number; onGoal: (counted: SessionStats) => void },
+) {
   const latest: { current: UseSessionRun | null } = { current: null }
-  function Probe() {
-    latest.current = useSessionRun({ config: cfg, kit, ...(feedback ? { feedback } : {}) })
+  function Probe({ paused }: { paused: boolean }) {
+    latest.current = useSessionRun({
+      config: cfg,
+      kit,
+      paused,
+      ...(feedback ? { feedback } : {}),
+      ...(goal ?? {}),
+    })
     return null
   }
   const root = createRoot(document.createElement('div'))
   roots.push(root)
-  act(() => root.render(createElement(Probe)))
-  return { latest, root }
+  const show = (paused: boolean) => act(() => root.render(createElement(Probe, { paused })))
+  show(false)
+  return { latest, root, setPaused: show }
 }
 
 const moveTo = (kit: ReturnType<typeof newKit>, angle: number) =>
@@ -123,6 +135,70 @@ describe('useSessionRun', () => {
     expect(frames.size).toBe(0)
     act(() => root.unmount())
     roots.length = 0
+  })
+
+  it('holds still while paused: no frames, no zone, and a hold restarts on release', () => {
+    const kit = newKit()
+    const { latest, setPaused } = mount(kit)
+    moveTo(kit, 90)
+    flushFrame(100)
+    expect(latest.current?.view.hits).toBe(1)
+
+    setPaused(true)
+    expect(frames.size).toBe(0)
+    expect(latest.current?.zone).toBeNull()
+    expect(latest.current?.view.hits).toBe(1)
+
+    setPaused(false)
+    expect(frames.size).toBe(1)
+    flushFrame(5000)
+    expect(latest.current?.zone).toBe('target')
+    // The hold restarted on release, so the seconds spent paused did not count.
+    flushFrame(5500)
+    expect(latest.current?.stats().reps).toEqual([])
+  })
+
+  it('hands over what was counted and starts over once the repetition goal is reached', () => {
+    const kit = newKit()
+    const onGoal = vi.fn()
+    const { latest } = mount(kit, config, undefined, { repsGoal: 1, onGoal })
+
+    moveTo(kit, 90)
+    flushFrame(1000)
+    flushFrame(1500)
+    flushFrame(2100)
+    expect(onGoal).not.toHaveBeenCalled()
+
+    moveTo(kit, 5)
+    flushFrame(2200)
+    expect(onGoal).toHaveBeenCalledTimes(1)
+    expect(onGoal.mock.calls[0]?.[0]).toMatchObject({
+      hits: 1,
+      reps: [{ peak: expect.any(Number), held: true }],
+    })
+    expect(latest.current?.view.reps).toBe(0)
+    expect(latest.current?.stats().reps).toEqual([])
+  })
+
+  it('does not stop at a goal when none is given', () => {
+    const kit = newKit()
+    const { latest } = mount(kit)
+    moveTo(kit, 90)
+    flushFrame(1000)
+    flushFrame(2100)
+    moveTo(kit, 5)
+    flushFrame(2200)
+    expect(latest.current?.view.reps).toBe(1)
+  })
+
+  it('stops the feedback while paused', () => {
+    const kit = newKit()
+    const stop = vi.fn()
+    const feedback = { tick: vi.fn(), stop } as unknown as Feedback
+    const { setPaused } = mount(kit, config, feedback)
+    stop.mockClear()
+    setPaused(true)
+    expect(stop).toHaveBeenCalled()
   })
 
   it('resets the counters', () => {

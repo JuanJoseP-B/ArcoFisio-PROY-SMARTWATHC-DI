@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { classifyZone, isOnTarget, isOvershoot } from './zones'
+import { classifyZone, isInPainArc, isOnTarget, isOvershoot } from './zones'
 
 const T = 90
 const TOL = 2
@@ -72,5 +72,24 @@ describe('target helpers', () => {
     expect(isOnTarget(87.99, T, TOL)).toBe(false)
     expect(isOvershoot(92, T, TOL)).toBe(false)
     expect(isOvershoot(92.01, T, TOL)).toBe(true)
+  })
+})
+
+describe('isInPainArc', () => {
+  it('includes both ends of the arc', () => {
+    const arc = { from: 70, to: 110 }
+    expect(isInPainArc(70, arc)).toBe(true)
+    expect(isInPainArc(110, arc)).toBe(true)
+    expect(isInPainArc(90, arc)).toBe(true)
+  })
+
+  it('leaves out what is just outside it', () => {
+    const arc = { from: 70, to: 110 }
+    expect(isInPainArc(69.9, arc)).toBe(false)
+    expect(isInPainArc(110.1, arc)).toBe(false)
+  })
+
+  it('is never true without an arc', () => {
+    expect(isInPainArc(90, null)).toBe(false)
   })
 })

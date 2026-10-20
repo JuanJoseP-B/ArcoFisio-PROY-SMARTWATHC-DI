@@ -1,10 +1,5 @@
-import { useEffect } from 'react'
-import { useSessionRun } from '../../app/useSessionRun'
 import { useI18n } from '../../app/useI18n'
-import type { Feedback } from '../../feedback/feedback'
-import type { SensorKit } from '../../sensors/kit'
-import { createWakeLock } from '../../feedback/wakeLock'
-import type { PainArc } from '../../domain/zones'
+import type { UseSessionRun } from '../../app/useSessionRun'
 import type { Routine } from '../../data/types'
 import { FeatherFan } from '../../ui/FeatherFan'
 import { GoniometerRing } from '../../ui/GoniometerRing'
@@ -13,38 +8,19 @@ import { noticeFor } from './noticeFor'
 import { SensorNotice } from './SensorNotice'
 import styles from './Session.module.css'
 
-interface SessionProps {
+interface SessionViewProps {
   routine: Routine
-  painArc?: PainArc | null
-  /** Injected in tests; the app-wide sensor kit is used otherwise. */
-  kit?: SensorKit
-  /** Sound and vibration for the zones; the session is silent without it. */
-  feedback?: Feedback
+  run: UseSessionRun
   /** Opens Measure, offered when the sensor needs the person's attention. */
   onMeasure?: () => void
+  /** Already translated line under the repetitions, e.g. "Serie 2 de 3". */
+  caption?: string
 }
 
-/**
- * Live session: the goniometer follows the arm, the chip says which zone it is in and the
- * counter tracks repetitions. Keeps the screen awake while it is open.
- */
-export function Session({ routine, painArc = null, kit, feedback, onMeasure }: SessionProps) {
+/** What a live session shows: the goniometer, the zone chip and the repetition counter. */
+export function SessionView({ routine, run, onMeasure, caption }: SessionViewProps) {
   const { t, lang } = useI18n()
-  const run = useSessionRun({
-    config: { target: routine.targetAngle, tolerance: routine.tolerance, painArc },
-    ...(kit ? { kit } : {}),
-    ...(feedback ? { feedback } : {}),
-  })
   const { angle, status, zone, view } = run
-
-  useEffect(() => {
-    const lock = createWakeLock()
-    void lock.acquire()
-    return () => {
-      void lock.release()
-    }
-  }, [])
-
   const notice = noticeFor(status)
 
   return (
@@ -67,6 +43,11 @@ export function Session({ routine, painArc = null, kit, feedback, onMeasure }: S
             {t('session.progress', { done: view.reps, total: routine.reps })}
           </span>
         </div>
+        {caption ? (
+          <div className={styles.caption} data-part="set-caption">
+            {caption}
+          </div>
+        ) : null}
       </div>
     </div>
   )

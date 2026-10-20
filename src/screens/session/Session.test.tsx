@@ -10,11 +10,33 @@ import { FakeStorage } from '../../data/testStorage'
 import type { PainArc } from '../../domain/zones'
 import type { Feedback } from '../../feedback/feedback'
 import { createSensorKit } from '../../sensors/kit'
-import { Session } from './Session'
+import { useSessionRun } from '../../app/useSessionRun'
+import type { UseSessionRun } from '../../app/useSessionRun'
+import { useWakeLock } from '../../app/useWakeLock'
+import type { SensorKit } from '../../sensors/kit'
+import { SessionView } from './Session'
 
 ;(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
 
 const routine = SEED_ROUTINES[0]! // Abducción 90°, 10 reps
+
+interface LiveProps {
+  painArc: PainArc | null
+  kit: SensorKit
+  feedback?: Feedback
+  onMeasure?: () => void
+}
+
+/** What the player does around the view: drive it with a live run and keep the screen awake. */
+function Live({ painArc, kit, feedback, onMeasure }: LiveProps) {
+  const run = useSessionRun({
+    config: { target: routine.targetAngle, tolerance: routine.tolerance, painArc },
+    kit,
+    ...(feedback ? { feedback } : {}),
+  })
+  useWakeLock()
+  return createElement(SessionView, { routine, run, ...(onMeasure ? { onMeasure } : {}) })
+}
 const roots: Root[] = []
 let frames = new Map<number, FrameRequestCallback>()
 let nextId = 1
@@ -57,8 +79,7 @@ function mount(
       createElement(
         I18nProvider,
         { lang },
-        createElement(Session, {
-          routine,
+        createElement(Live, {
           painArc,
           kit,
           ...(feedback ? { feedback } : {}),
@@ -210,5 +231,47 @@ describe('Session', () => {
     moveTo(kit, 90)
     expect(() => flushFrame(100)).not.toThrow()
     expect(chip(host)?.textContent).toBe('Objetivo alcanzado')
+  })
+
+  describe('SessionView', () => {
+    const fakeRun = (reps: number): UseSessionRun =>
+      ({
+        angle: 42,
+        status: 'live',
+        zone: 'far',
+        view: { zone: 'far', reps, hits: 0, overshoots: 0, painEntries: 0, maxAngle: 42 },
+      }) as unknown as UseSessionRun
+
+    const show = (caption?: string, reps = 4) => {
+      const host = document.createElement('div')
+      const root = createRoot(host)
+      roots.push(root)
+      act(() =>
+        root.render(
+          createElement(
+            I18nProvider,
+            { lang: 'es' },
+            createElement(SessionView, {
+              routine,
+              run: fakeRun(reps),
+              ...(caption ? { caption } : {}),
+            }),
+          ),
+        ),
+      )
+      return host
+    }
+
+    it('draws a run it is handed, without starting one of its own', () => {
+      const host = show(undefined, 4)
+      expect(reading(host)).toBe('42°')
+      expect(host.querySelector('[data-part="reps"]')?.textContent).toContain('4 de 10')
+      expect(host.querySelector('[data-part="set-caption"]')).toBeNull()
+    })
+
+    it('adds a line under the repetitions when given one', () => {
+      const host = show('Serie 2 de 3')
+      expect(host.querySelector('[data-part="set-caption"]')?.textContent).toBe('Serie 2 de 3')
+    })
   })
 })

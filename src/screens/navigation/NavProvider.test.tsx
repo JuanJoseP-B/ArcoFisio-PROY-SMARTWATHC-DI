@@ -57,6 +57,24 @@ describe('NavProvider', () => {
     expect(nav().route.id).toBe('face')
   })
 
+  it('pops back to a screen further down', () => {
+    const { nav } = mount({
+      stack: [
+        { id: 'face' },
+        { id: 'launcher' },
+        { id: 'routines' },
+        { id: 'routine', routineId: 'a' },
+        { id: 'builder', routineId: 'a' },
+      ],
+    })
+    act(() => nav().popTo('routines'))
+    expect(nav().route.id).toBe('routines')
+    expect(nav().canGoBack).toBe(true)
+
+    act(() => nav().back())
+    expect(nav().route.id).toBe('launcher')
+  })
+
   it('goes back with the Escape key, and ignores other keys', () => {
     const { nav } = mount({ stack: [{ id: 'face' }, { id: 'launcher' }] })
     act(() => {

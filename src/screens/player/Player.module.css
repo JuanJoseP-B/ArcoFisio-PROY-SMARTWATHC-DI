@@ -1,0 +1,132 @@
+.player {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/* Inside the ring: the row sits 52 px above the bottom edge so no button touches the rim. */
+.actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 52px;
+  display: flex;
+  justify-content: center;
+  gap: var(--af-space-3);
+}
+
+/* The single pause button of a live set, where the back button sat before. */
+.dock {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 34px;
+  display: flex;
+  justify-content: center;
+}
+
+.progress,
+.rest {
+  position: absolute;
+  inset: 0;
+}
+
+.count {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--af-space-2);
+  padding-bottom: var(--af-space-6);
+}
+
+.countLabel {
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-color-ink-muted);
+}
+
+.countValue {
+  font-size: var(--af-type-hero-size);
+  line-height: var(--af-type-hero-line);
+  font-weight: var(--af-type-hero-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink);
+}
+
+.countTotal {
+  font-size: 32px;
+  color: var(--af-color-ink-muted);
+}
+
+.pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--af-space-1);
+}
+
+.pill {
+  height: 8px;
+  border-radius: var(--af-radius-pill);
+  background: var(--af-color-surface-sunken);
+  transition:
+    width var(--af-dur-standard) var(--af-ease-standard),
+    background-color var(--af-dur-standard);
+}
+
+.pill[data-state='done'] {
+  background: var(--af-color-ink);
+}
+
+.pill[data-state='active'] {
+  background: var(--af-color-gold);
+}
+
+.setLabel {
+  font-size: var(--af-type-caption-size);
+  line-height: var(--af-type-caption-line);
+  font-weight: var(--af-type-caption-weight);
+  color: var(--af-color-bronze);
+}
+
+.done {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--af-space-2);
+  padding-top: var(--af-space-4);
+}
+
+.doneTitle {
+  margin: 0 0 var(--af-space-2);
+  font-size: var(--af-type-title-size);
+  line-height: var(--af-type-title-line);
+  font-weight: var(--af-type-title-weight);
+  color: var(--af-color-ink);
+}
+
+.doneLine {
+  font-size: var(--af-type-body-size);
+  line-height: var(--af-type-body-line);
+  font-weight: var(--af-type-body-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--af-color-ink-muted);
+}
+
+.doneAction {
+  margin-top: var(--af-space-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill {
+    transition: none;
+  }
+}

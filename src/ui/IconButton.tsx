@@ -1,6 +1,7 @@
 import styles from './IconButton.module.css'
 
-export type IconName = 'back' | 'reset' | 'calibrate'
+export type IconName =
+  'back' | 'reset' | 'calibrate' | 'play' | 'pause' | 'next' | 'stop' | 'plus' | 'edit' | 'trash'
 
 interface IconButtonProps {
   icon: IconName
@@ -19,6 +20,19 @@ const PATHS: Record<IconName, string[]> = {
     'M4 12 L8 12',
     'M16 12 L20 12',
     'M12 9.5 A2.5 2.5 0 1 1 12 14.5 A2.5 2.5 0 1 1 12 9.5',
+  ],
+  play: ['M8 5 L19 12 L8 19 Z'],
+  pause: ['M8 5 L8 19', 'M16 5 L16 19'],
+  next: ['M5 5 L14 12 L5 19 Z', 'M19 5 L19 19'],
+  stop: ['M6 6 L18 6 L18 18 L6 18 Z'],
+  plus: ['M12 5 L12 19', 'M5 12 L19 12'],
+  edit: ['M4 20 L5 15 L16 4 L20 8 L9 19 Z', 'M13 7 L17 11'],
+  trash: [
+    'M5 7 L19 7',
+    'M10 7 L10 4 L14 4 L14 7',
+    'M7 7 L8 20 L16 20 L17 7',
+    'M10 11 L10 16',
+    'M14 11 L14 16',
   ],
 }
 

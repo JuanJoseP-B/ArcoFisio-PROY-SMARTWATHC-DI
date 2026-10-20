@@ -12,6 +12,8 @@ export type ScreenId =
   | 'session'
   | 'measure'
   | 'routines'
+  | 'routine'
+  | 'builder'
   | 'summary'
   | 'pain'
   | 'guide'
@@ -19,7 +21,7 @@ export type ScreenId =
 
 export interface Route {
   readonly id: ScreenId
-  /** Routine to run, for the session screen. */
+  /** Routine to show, run or edit: the detail, the session and the builder use it. */
   readonly routineId?: string
   /** Exercise being configured, for the config and counts screens. */
   readonly exercise?: Exercise
@@ -35,6 +37,7 @@ export type NavAction =
   | { type: 'back' }
   | { type: 'replace'; route: Route }
   | { type: 'reset'; route: Route }
+  | { type: 'popTo'; id: ScreenId }
 
 export const initialNav: NavState = { stack: [{ id: 'intro' }] }
 
@@ -55,7 +58,8 @@ export const routeKey = (route: Route): string => {
  * The watch has no URL: screens live on a stack. `push` opens a screen over the current one
  * (a repeated tap on the same target is ignored), `back` returns and does nothing at the
  * bottom, `replace` swaps the current screen (the intro hands over to the face this way, so
- * back never returns to it) and `reset` starts over from one screen.
+ * back never returns to it), `reset` starts over from one screen and `popTo` goes back to the
+ * nearest screen below with that id (or starts over from it when none is there).
  */
 export function navReducer(state: NavState, action: NavAction): NavState {
   switch (action.type) {
@@ -69,5 +73,11 @@ export function navReducer(state: NavState, action: NavAction): NavState {
       return { stack: [...state.stack.slice(0, -1), action.route] }
     case 'reset':
       return { stack: [action.route] }
+    case 'popTo': {
+      const index = state.stack.map((route) => route.id).lastIndexOf(action.id)
+      return index === -1
+        ? { stack: [{ id: action.id }] }
+        : { stack: state.stack.slice(0, index + 1) }
+    }
   }
 }

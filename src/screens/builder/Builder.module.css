@@ -1,0 +1,102 @@
+.builder {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/* Scrolls inside the circle like the library; the mask fades what the circle cuts off. */
+.list {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--af-space-2);
+  padding: 90px 0 84px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  /* The page turns touch gestures off; this list takes the vertical ones back. */
+  touch-action: pan-y;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 70px,
+    var(--af-color-ink) 104px,
+    var(--af-color-ink) calc(100% - 70px),
+    transparent calc(100% - 26px)
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 70px,
+    var(--af-color-ink) 104px,
+    var(--af-color-ink) calc(100% - 70px),
+    transparent calc(100% - 26px)
+  );
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+.list > * {
+  flex: none;
+}
+
+.title {
+  margin: 0 0 var(--af-space-1);
+  font-size: var(--af-type-title-size);
+  line-height: var(--af-type-title-line);
+  font-weight: var(--af-type-title-weight);
+  color: var(--af-color-ink);
+}
+
+.input {
+  box-sizing: border-box;
+  width: 232px;
+  height: var(--af-touch-min);
+  padding: 0 var(--af-space-4);
+  border: 0;
+  border-radius: var(--af-radius-pill);
+  background: var(--af-color-surface);
+  color: var(--af-color-ink);
+  font-family: var(--af-font-sans);
+  font-size: var(--af-type-body-size);
+  line-height: var(--af-type-body-line);
+  text-align: center;
+  /* The page turns text selection off, and iOS then refuses typing: this field takes it back. */
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.input::placeholder {
+  color: var(--af-color-ink-muted);
+}
+
+.input:focus-visible {
+  outline: 3px solid var(--af-color-bronze);
+  outline-offset: 2px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--af-space-2);
+  margin-top: var(--af-space-2);
+}
+
+.confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--af-space-2);
+}
+
+.question {
+  font-size: var(--af-type-label-size);
+  line-height: var(--af-type-label-line);
+  font-weight: var(--af-type-label-weight);
+  color: var(--af-color-zone-pain);
+}
