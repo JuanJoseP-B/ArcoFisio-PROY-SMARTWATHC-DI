@@ -5,6 +5,7 @@ import {
   fontFamily,
   geometry,
   safeDiameter,
+  sceneColor,
   space,
   typography,
   watchExtent,
@@ -20,6 +21,8 @@ export function buildCssVariables(): Record<string, string> {
   const vars: Record<string, string> = {}
 
   for (const [name, value] of Object.entries(color)) vars[`--af-color-${kebab(name)}`] = value
+
+  for (const [name, value] of Object.entries(sceneColor)) vars[`--af-scene-${kebab(name)}`] = value
 
   for (const [name, value] of Object.entries(geometry)) {
     vars[`--af-${kebab(name)}`] = name === 'ringCircumference' ? String(value) : px(value)
