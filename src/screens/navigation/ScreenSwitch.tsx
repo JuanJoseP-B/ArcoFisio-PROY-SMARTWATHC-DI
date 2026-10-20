@@ -27,6 +27,9 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
       return <Launcher />
     case 'mode':
       return <ModeSelect />
+    case 'config':
+    case 'counts':
+      return <Placeholder title="launcher.session" />
     case 'session':
       return <SessionScreen routineId={route.routineId} />
     case 'measure':

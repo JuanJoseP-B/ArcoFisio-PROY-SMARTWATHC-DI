@@ -80,10 +80,14 @@ describe('routes', () => {
       true,
     )
     expect(sameRoute({ id: 'session', routineId: 'x' }, { id: 'session' })).toBe(false)
+    expect(
+      sameRoute({ id: 'config', exercise: 'flexion' }, { id: 'config', exercise: 'abduction' }),
+    ).toBe(false)
   })
 
   it('builds a key that changes with the routine', () => {
     expect(routeKey({ id: 'launcher' })).toBe('launcher')
     expect(routeKey({ id: 'session', routineId: 'abc' })).toBe('session:abc')
+    expect(routeKey({ id: 'config', exercise: 'flexion' })).toBe('config:flexion')
   })
 })
