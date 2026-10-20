@@ -160,7 +160,6 @@ describe('NavHost: first run', () => {
 describe('NavHost: every app opens from the launcher and the way back always works', () => {
   const APPS = [
     ['summary', 'Resumen'],
-    ['guide', 'Guía IA'],
     ['settings', 'Ajustes'],
   ] as const
 
@@ -198,6 +197,25 @@ describe('NavHost: every app opens from the launcher and the way back always wor
     expect(part('hex-launcher')).not.toBeNull()
 
     click(host.querySelector('[data-cell="pain"]'))
+    escape()
+    expect(part('hex-launcher')).not.toBeNull()
+
+    escape()
+    expect(part('face')).not.toBeNull()
+  })
+
+  it('Guía IA: opens the guide, and the way back works with the button and with Escape', () => {
+    const { part, host, click, escape } = mount(FACE)
+
+    click(part('face'))
+    click(host.querySelector('[data-cell="guide"]'))
+    expect(part('guide')).not.toBeNull()
+    expect(part('placeholder')).toBeNull()
+
+    click(host.querySelector('[data-part="icon-button"][data-icon="back"]'))
+    expect(part('hex-launcher')).not.toBeNull()
+
+    click(host.querySelector('[data-cell="guide"]'))
     escape()
     expect(part('hex-launcher')).not.toBeNull()
 
@@ -324,9 +342,13 @@ describe('NavHost: every app opens from the launcher and the way back always wor
   it('works the same in English', () => {
     const { part, host, click } = mount(FACE, 'en')
     click(part('face'))
-    click(host.querySelector('[data-cell="guide"]'))
-    expect(part('placeholder')?.querySelector('h1')?.textContent).toBe('AI Guide')
+    click(host.querySelector('[data-cell="summary"]'))
+    expect(part('placeholder')?.querySelector('h1')?.textContent).toBe('Summary')
     expect(part('back-button')?.getAttribute('aria-label')).toBe('Back')
+    click(part('back-button'))
+
+    click(host.querySelector('[data-cell="guide"]'))
+    expect(part('guide')?.querySelector('h1')?.textContent).toBe('AI Guide')
   })
 })
 

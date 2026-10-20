@@ -3,6 +3,7 @@ import { Builder } from '../builder/Builder'
 import { Config } from '../config/Config'
 import { Counts } from '../config/Counts'
 import { Face } from '../face/Face'
+import { Guide } from '../guide/Guide'
 import { Intro } from '../intro/Intro'
 import { Library } from '../library/Library'
 import { Launcher } from '../launcher/Launcher'
@@ -25,8 +26,8 @@ interface ScreenSwitchProps {
 }
 
 /**
- * Which screen each route shows. The apps a later stage builds (Summary, AI Guide, Settings)
- * show a placeholder until then.
+ * Which screen each route shows. The apps a later stage builds (Summary, Settings) show a
+ * placeholder until then.
  */
 export function ScreenSwitch({ route }: ScreenSwitchProps) {
   const nav = useNav()
@@ -63,7 +64,7 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'pain':
       return <Pain />
     case 'guide':
-      return <Placeholder title="launcher.guide" />
+      return <Guide />
     case 'settings':
       return <Placeholder title="launcher.settings" />
   }
