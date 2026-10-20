@@ -1,0 +1,24 @@
+.screen {
+  position: relative;
+  width: var(--af-screen-size);
+  height: var(--af-screen-size);
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 38%,
+    var(--af-color-screen-gradient-inner) 0%,
+    var(--af-color-screen-gradient-outer) 100%
+  );
+}
+
+.safe {
+  position: absolute;
+  top: var(--af-safe-margin);
+  left: var(--af-safe-margin);
+  width: var(--af-safe-diameter);
+  height: var(--af-safe-diameter);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
