@@ -227,6 +227,87 @@ describe('App', () => {
     reopened.unmount()
   })
 
+  it('marks 70-110 as painful, warns in a session on entering it, and changes the guide with the saved data', () => {
+    open('?sim=1')
+    getDataLayer().settings.update({ lang: 'es', firstRunDone: true })
+
+    const openApp = () => {
+      const app = mount()
+      app.click(app.part('intro-skip'))
+      app.click(app.part('face'))
+      return app
+    }
+    const move = (angle: number) =>
+      act(() => {
+        for (let i = 0; i < 80; i += 1) getSensorKit().simulated?.setAngle(angle)
+      })
+    const wait = (ms: number) =>
+      act(() => {
+        vi.advanceTimersByTime(ms)
+      })
+    const guideTip = (app: ReturnType<typeof mount>) => app.part('guide-tip')?.textContent
+    const icon = (app: ReturnType<typeof mount>, name: string) =>
+      app.host.querySelector(`[data-part="icon-button"][data-icon="${name}"]`)
+
+    // With no sessions the guide invites the first one.
+    const before = openApp()
+    before.click(before.host.querySelector('[data-cell="guide"]'))
+    expect(before.part('guide')?.dataset.tip).toBe('first')
+    before.unmount()
+
+    // Mark the arc: pain starts at 70 degrees and ends at 110.
+    move(0)
+    wait(100)
+    const marking = openApp()
+    marking.click(marking.host.querySelector('[data-cell="pain"]'))
+    expect(marking.part('pain')?.dataset.mode).toBe('range')
+    move(70)
+    wait(100)
+    marking.click(marking.host.querySelector('[data-part="pill-button"]'))
+    move(110)
+    wait(100)
+    marking.click(marking.host.querySelector('[data-part="pill-button"]'))
+    expect(getDataLayer().painArc.get()).toEqual({ from: 70, to: 110 })
+    expect(marking.part('pain-note')?.textContent).toBe('Dolor · 70–110°')
+    marking.unmount()
+
+    // Reopened, a session shows the band and warns on entering the arc.
+    move(0)
+    wait(100)
+    const session = openApp()
+    session.click(session.host.querySelector('[data-cell="session"]'))
+    const pill = () => session.host.querySelector('[data-part="pill-button"]')
+    const pressPill = () => {
+      session.click(pill())
+      wait(PRESS_DELAY_MS)
+    }
+    pressPill()
+    session.click(session.part('confirm-button'))
+    pressPill()
+    expect(session.part('pain-band')).not.toBeNull()
+
+    move(60)
+    wait(100)
+    expect(session.part('zone-chip')?.textContent).not.toContain('Dolor')
+    move(80)
+    wait(100)
+    expect(session.part('zone-chip')?.textContent).toBe('Dolor · 70–110°')
+
+    // End the set early: the visit to the painful arc is kept with the session.
+    session.click(icon(session, 'pause'))
+    session.click(icon(session, 'stop'))
+    expect(session.part('done-view')).not.toBeNull()
+    expect(getDataLayer().sessions.last()?.painEntries).toBe(1)
+    session.unmount()
+
+    // The guide now speaks of the pain, not of the first session.
+    const after = openApp()
+    after.click(after.host.querySelector('[data-cell="guide"]'))
+    expect(after.part('guide')?.dataset.tip).toBe('pain')
+    expect(guideTip(after)).toBe('Entraste 1 vez al arco doloroso. Pasa más despacio por ahí.')
+    after.unmount()
+  })
+
   it('shows the simulator only with ?sim=1 and keeps it out of the watch circle', () => {
     const plain = mount()
     expect(plain.part('simulator-panel')).toBeNull()

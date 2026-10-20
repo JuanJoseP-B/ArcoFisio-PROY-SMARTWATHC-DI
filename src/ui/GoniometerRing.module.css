@@ -71,6 +71,44 @@
   stroke: var(--af-color-zone-rest);
 }
 
+/* Sheet 04: the painful band sits behind the ring, wider than it, and breathes. */
+.band {
+  fill: none;
+  stroke: var(--af-color-zone-pain-tint);
+  stroke-width: 30;
+  animation: band 1600ms ease-in-out infinite;
+}
+
+/* The piece of the band the arm has already crossed, painted over the arc. */
+.painReach {
+  fill: none;
+  stroke: var(--af-color-zone-pain);
+  stroke-width: var(--af-ring-stroke);
+}
+
+.painEdge {
+  stroke: var(--af-color-zone-pain);
+  stroke-width: 2;
+}
+
+/* In the band the knob turns red and trembles: sin(t / 28) * 1.6 degrees is a 176 ms beat. */
+.tremor {
+  transform-origin: 192px 192px;
+}
+
+.ring[data-zone='pain'] .knob {
+  fill: var(--af-color-zone-pain-tint);
+  stroke: var(--af-color-zone-pain);
+}
+
+.ring[data-zone='pain'] .chevron {
+  stroke: var(--af-color-zone-pain);
+}
+
+.ring[data-zone='pain'] .tremor {
+  animation: tremble 176ms ease-in-out infinite;
+}
+
 /* Visual pulse of the approach zones, beating with the sound: slow far, fast near. */
 .halo {
   fill: none;
@@ -94,6 +132,32 @@
 /* Past the target the red arc blinks continuously. */
 .ring[data-zone='overshoot'] .arc {
   animation: blink 700ms ease-in-out infinite;
+}
+
+@keyframes band {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes tremble {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(1.6deg);
+  }
+
+  75% {
+    transform: rotate(-1.6deg);
+  }
 }
 
 @keyframes halo {
@@ -122,7 +186,9 @@
 @media (prefers-reduced-motion: reduce) {
   .ring[data-zone='approach'] .halo,
   .ring[data-zone='near'] .halo,
-  .ring[data-zone='overshoot'] .arc {
+  .ring[data-zone='overshoot'] .arc,
+  .ring[data-zone='pain'] .tremor,
+  .band {
     animation: none;
   }
 }

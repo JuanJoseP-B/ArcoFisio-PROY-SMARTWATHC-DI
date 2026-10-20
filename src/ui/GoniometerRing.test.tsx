@@ -42,6 +42,13 @@ describe('GoniometerRing', () => {
     expect(render(250)).toContain('rotate(180.00 192 192)')
   })
 
+  it('leaves the target marker out when there is no target', () => {
+    expect(renderToString(<GoniometerRing angle={40} target={null} />)).not.toContain(
+      'data-part="target"',
+    )
+    expect(render(40)).toContain('data-part="target"')
+  })
+
   it('exposes the zone for styling', () => {
     expect(render(10, 90, 'overshoot')).toContain('data-zone="overshoot"')
     expect(render(10)).not.toContain('data-zone')
@@ -107,5 +114,55 @@ describe('FeatherFan', () => {
     expect(html.match(/M192 384 Q174 250/g)).toHaveLength(9)
     expect(html).toContain('opacity="0.11"')
     expect(html).toContain('aria-hidden="true"')
+  })
+})
+
+describe('GoniometerRing pain band', () => {
+  const css = readFileSync(join(__dirname, 'GoniometerRing.module.css'), 'utf8')
+  const withArc = (angle: number, zone: Parameters<typeof targetRadius>[0] = null) =>
+    renderToString(
+      <GoniometerRing angle={angle} target={90} zone={zone} painArc={{ from: 70, to: 110 }} />,
+    )
+
+  it('draws nothing for the pain without a saved arc', () => {
+    const html = render(90)
+    expect(html).not.toContain('data-part="pain-band"')
+    expect(html).not.toContain('data-part="pain-edge"')
+  })
+
+  it('draws the band from 70 to 110 degrees behind the ring', () => {
+    const html = withArc(0)
+    expect(html).toContain('stroke-dasharray="114.49 1030.44"')
+    expect(html).toContain('stroke-dashoffset="-200.36"')
+    expect(html.indexOf('data-part="pain-band"')).toBeLessThan(html.indexOf('data-part="arc"'))
+  })
+
+  it('marks both ends of the band', () => {
+    const html = withArc(0)
+    expect(html.match(/data-part="pain-edge"/g)).toHaveLength(2)
+    expect(html).toContain('rotate(70.00 192 192)')
+    expect(html).toContain('rotate(110.00 192 192)')
+  })
+
+  it('paints red over the part of the band the arm has crossed', () => {
+    expect(withArc(60)).not.toContain('data-part="pain-reach"')
+    const crossed = withArc(90)
+    expect(crossed).toContain('data-part="pain-reach"')
+    expect(crossed).toContain(`stroke-dasharray="${((20 * 1030.44) / 360).toFixed(2)} 1030.44"`)
+  })
+
+  it('lets the band breathe and the knob tremble inside it, but not with reduced motion', () => {
+    expect(css).toContain('animation: band 1600ms ease-in-out infinite')
+    expect(css).toContain(".ring[data-zone='pain'] .tremor")
+    expect(css).toContain('rotate(1.6deg)')
+    expect(css).toContain('rotate(-1.6deg)')
+    const reduced = css.slice(css.indexOf('prefers-reduced-motion'))
+    expect(reduced).toContain(".ring[data-zone='pain'] .tremor")
+    expect(reduced).toContain('.band')
+  })
+
+  it('turns the knob red in the pain zone', () => {
+    expect(withArc(80, 'pain')).toContain('data-zone="pain"')
+    expect(css).toMatch(/\.ring\[data-zone='pain'\] \.knob \{[^}]*zone-pain-tint/)
   })
 })

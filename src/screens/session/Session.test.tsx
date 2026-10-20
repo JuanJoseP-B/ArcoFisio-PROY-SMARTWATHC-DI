@@ -35,7 +35,7 @@ function Live({ painArc, kit, feedback, onMeasure }: LiveProps) {
     ...(feedback ? { feedback } : {}),
   })
   useWakeLock()
-  return createElement(SessionView, { routine, run, ...(onMeasure ? { onMeasure } : {}) })
+  return createElement(SessionView, { routine, run, painArc, ...(onMeasure ? { onMeasure } : {}) })
 }
 const roots: Root[] = []
 let frames = new Map<number, FrameRequestCallback>()
@@ -168,12 +168,38 @@ describe('Session', () => {
     expect(host.querySelector('[data-part="reps"]')?.textContent).toBe('Repeticiones1 de 10')
   })
 
-  it('warns when the arm enters the painful arc', () => {
+  it('warns when the arm enters the painful arc, naming its range', () => {
     const kit = newKit()
     const { host } = mount(kit, 'es', { from: 60, to: 80 })
     moveTo(kit, 70)
     flushFrame(100)
-    expect(chip(host)?.textContent).toBe('Dolor')
+    expect(chip(host)?.textContent).toBe('Dolor · 60–80°')
+    expect(ring(host)?.getAttribute('data-zone')).toBe('pain')
+  })
+
+  it('names the painful range in English too', () => {
+    const kit = newKit()
+    const { host } = mount(kit, 'en', { from: 70, to: 110 })
+    moveTo(kit, 75)
+    flushFrame(100)
+    expect(chip(host)?.textContent).toBe('Pain · 70–110°')
+  })
+
+  it('draws the saved painful arc as a band from the start, and none without one', () => {
+    const withArc = mount(newKit(), 'es', { from: 70, to: 110 })
+    expect(withArc.host.querySelector('[data-part="pain-band"]')).not.toBeNull()
+    expect(withArc.host.querySelectorAll('[data-part="pain-edge"]')).toHaveLength(2)
+
+    const without = mount(newKit())
+    expect(without.host.querySelector('[data-part="pain-band"]')).toBeNull()
+  })
+
+  it('keeps the plain words outside the painful arc', () => {
+    const kit = newKit()
+    const { host } = mount(kit, 'es', { from: 70, to: 110 })
+    moveTo(kit, 30)
+    flushFrame(100)
+    expect(chip(host)?.textContent).toBe('En camino')
   })
 
   it('replaces the chip with a notice and a way to Measure when calibration is missing', () => {

@@ -160,8 +160,6 @@ describe('NavHost: first run', () => {
 describe('NavHost: every app opens from the launcher and the way back always works', () => {
   const APPS = [
     ['summary', 'Resumen'],
-    ['pain', 'Dolor'],
-    ['guide', 'Guía IA'],
     ['settings', 'Ajustes'],
   ] as const
 
@@ -186,6 +184,44 @@ describe('NavHost: every app opens from the launcher and the way back always wor
       expect(part('face')).not.toBeNull()
     })
   }
+
+  it('Dolor: opens the painful arc screen, and the way back works with the button and with Escape', () => {
+    const { part, host, click, escape } = mount(FACE)
+
+    click(part('face'))
+    click(host.querySelector('[data-cell="pain"]'))
+    expect(part('pain')).not.toBeNull()
+    expect(part('placeholder')).toBeNull()
+
+    click(part('back-button'))
+    expect(part('hex-launcher')).not.toBeNull()
+
+    click(host.querySelector('[data-cell="pain"]'))
+    escape()
+    expect(part('hex-launcher')).not.toBeNull()
+
+    escape()
+    expect(part('face')).not.toBeNull()
+  })
+
+  it('Guía IA: opens the guide, and the way back works with the button and with Escape', () => {
+    const { part, host, click, escape } = mount(FACE)
+
+    click(part('face'))
+    click(host.querySelector('[data-cell="guide"]'))
+    expect(part('guide')).not.toBeNull()
+    expect(part('placeholder')).toBeNull()
+
+    click(host.querySelector('[data-part="icon-button"][data-icon="back"]'))
+    expect(part('hex-launcher')).not.toBeNull()
+
+    click(host.querySelector('[data-cell="guide"]'))
+    escape()
+    expect(part('hex-launcher')).not.toBeNull()
+
+    escape()
+    expect(part('face')).not.toBeNull()
+  })
 
   it('Rutinas: opens the library, and the way back works with the button and with Escape', () => {
     const { part, host, click, escape } = mount(FACE)
@@ -306,9 +342,13 @@ describe('NavHost: every app opens from the launcher and the way back always wor
   it('works the same in English', () => {
     const { part, host, click } = mount(FACE, 'en')
     click(part('face'))
-    click(host.querySelector('[data-cell="guide"]'))
-    expect(part('placeholder')?.querySelector('h1')?.textContent).toBe('AI Guide')
+    click(host.querySelector('[data-cell="summary"]'))
+    expect(part('placeholder')?.querySelector('h1')?.textContent).toBe('Summary')
     expect(part('back-button')?.getAttribute('aria-label')).toBe('Back')
+    click(part('back-button'))
+
+    click(host.querySelector('[data-cell="guide"]'))
+    expect(part('guide')?.querySelector('h1')?.textContent).toBe('AI Guide')
   })
 })
 
@@ -330,7 +370,7 @@ describe('NavHost: swipe back', () => {
     surface.getBoundingClientRect = () => ({ width: 384 }) as DOMRect
 
     click(part('face'))
-    click(host.querySelector('[data-cell="pain"]'))
+    click(host.querySelector('[data-cell="summary"]'))
     expect(part('placeholder')).not.toBeNull()
 
     swipe(surface, 100, 240)
