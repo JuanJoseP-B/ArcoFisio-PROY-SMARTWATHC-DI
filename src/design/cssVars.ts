@@ -10,6 +10,7 @@ import {
   typography,
   watchExtent,
 } from './tokens'
+import { PULSE_FAST_MS, PULSE_SLOW_MS } from '../feedback/cues'
 
 const kebab = (name: string) =>
   name.replace(/([a-z])(\d)/g, '$1-$2').replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)
@@ -41,6 +42,9 @@ export function buildCssVariables(): Record<string, string> {
   }
 
   for (const [name, value] of Object.entries(duration)) vars[`--af-dur-${name}`] = ms(value)
+  // The halo pulses with the sound: same two periods as the approach beeps.
+  vars['--af-pulse-slow'] = ms(PULSE_SLOW_MS)
+  vars['--af-pulse-fast'] = ms(PULSE_FAST_MS)
   for (const [name, value] of Object.entries(easing)) vars[`--af-ease-${name}`] = value
 
   return vars
