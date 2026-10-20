@@ -2,7 +2,7 @@
 
 > Archivo vivo. Se actualiza en **cada commit que cambie el estado del repo** (etapa, estructura, comandos, decisiones). Ver la regla en [`CLAUDE.md`](CLAUDE.md). Detalle completo del comportamiento: [`docs/spec.md`](docs/spec.md). Detalle visual y de movimiento: [`docs/design-reference/`](docs/design-reference/).
 
-_Última actualización: 2026-10-20 · etapas 0–9 mezcladas en `develop` (`v0.9.0`) · etapa 10 terminada en `feature/10-routines`, esperando aprobación._
+_Última actualización: 2026-10-20 · etapas 0–10 mezcladas en `develop` (`v0.10.0`) · etapa 11 en curso en `feature/11-pain-arc-and-guide`._
 
 ## Qué es
 
@@ -61,8 +61,8 @@ Cada etapa = rama `feature/NN-nombre` → `develop` con `merge --no-ff` **solo c
 | 7   | `feature/07-feedback-engine`     | Audio y vibración                                                                      | Mezclada · `v0.7.0` (26 commits, 489 tests)                                                                           |
 | 8   | `feature/08-navigation-launcher` | Navegación, cara del reloj, launcher                                                   | Mezclada · `v0.8.0` (43 commits)                                                                                      |
 | 9   | `feature/09-config-and-measure`  | Rueda de ángulo, configuración, calibración, primera ejecución                         | Mezclada · `v0.9.0` (25 commits, 715 tests). El permiso del sensor en iOS real queda a cargo del usuario              |
-| 10  | `feature/10-routines`            | Biblioteca, detalle, constructor, reproductor, descanso                                | Terminada, **esperando aprobación** (21 commits)                                                                      |
-| 11  | `feature/11-pain-arc-and-guide`  | Arco doloroso y Guía IA (reglas locales)                                               | Pendiente                                                                                                             |
+| 10  | `feature/10-routines`            | Biblioteca, detalle, constructor, reproductor, descanso                                | Mezclada · `v0.10.0` (21 commits)                                                                                     |
+| 11  | `feature/11-pain-arc-and-guide`  | Arco doloroso y Guía IA (reglas locales)                                               | En curso                                                                                                              |
 | 12  | `feature/12-summary-history`     | Resumen e historial                                                                    | Pendiente                                                                                                             |
 | 13  | `feature/13-i18n`                | Español e inglés completos                                                             | Pendiente                                                                                                             |
 | 14  | `feature/14-qa-release`          | Calidad y lanzamiento (`v1.0.0`; el usuario hace merge a `main` y despliega en Vercel) | Pendiente                                                                                                             |
@@ -115,3 +115,4 @@ Commits en `develop` tras la etapa 7: 207 (la meta R4 de más de 100 ya se cumpl
 - 2026-10-20: etapa 8 aprobada, mezclada y etiquetada `v0.8.0`; arranca la etapa 9 (rueda, configuración, Medir rango y primera ejecución).
 - 2026-10-20: etapa 9 aprobada, mezclada y etiquetada `v0.9.0`; arranca la etapa 10 (rutinas y descanso).
 - 2026-10-20: etapa 10 terminada (biblioteca, detalle, constructor, reproductor con descansos, progreso por pasos y temporizador); esperando aprobación.
+- 2026-10-20: etapa 10 aprobada, mezclada y etiquetada `v0.10.0`; arranca la etapa 11 (arco doloroso y Guía IA).
