@@ -36,3 +36,9 @@
   background: var(--af-color-zone-rest-tint);
   color: var(--af-color-zone-rest);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    transition: none;
+  }
+}
