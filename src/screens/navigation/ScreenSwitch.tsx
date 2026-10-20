@@ -1,3 +1,5 @@
+import { Config } from '../config/Config'
+import { Counts } from '../config/Counts'
 import { Face } from '../face/Face'
 import { Intro } from '../intro/Intro'
 import { Launcher } from '../launcher/Launcher'
@@ -28,8 +30,9 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'mode':
       return <ModeSelect />
     case 'config':
+      return <Config exercise={route.exercise ?? 'abduction'} />
     case 'counts':
-      return <Placeholder title="launcher.session" />
+      return <Counts exercise={route.exercise ?? 'abduction'} />
     case 'session':
       return <SessionScreen routineId={route.routineId} />
     case 'measure':
