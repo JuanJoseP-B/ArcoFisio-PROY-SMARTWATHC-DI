@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { App } from './App'
+import { getDataLayer } from './data'
 import { getFeedback } from './feedback'
 import { PRESS_DELAY_MS } from './ui/pressTiming'
 
@@ -46,6 +47,7 @@ describe('App', () => {
 
   it('goes from the intro to the face, the launcher, the exercise, its configuration and a live session', () => {
     open('?sim=1')
+    getDataLayer().settings.update({ firstRunDone: true })
     const { host, part, click, unmount } = mount()
 
     click(part('intro-skip'))

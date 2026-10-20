@@ -3,6 +3,8 @@ import type { Exercise } from '../../data/types'
 export type ScreenId =
   | 'intro'
   | 'face'
+  | 'language'
+  | 'setup'
   | 'launcher'
   | 'mode'
   | 'config'

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import type { Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { I18nProvider } from '../../app/I18nProvider'
+import { getDataLayer } from '../../data'
 import { INTRO_END_MS } from '../intro/frame'
 import { PRESS_DELAY_MS } from '../../ui/pressTiming'
 import { NavHost } from './NavHost'
@@ -74,6 +75,11 @@ function mount(initial?: NavState, lang: 'es' | 'en' = 'es') {
 const FACE: NavState = { stack: [{ id: 'face' }] }
 
 describe('NavHost: start', () => {
+  // Past the first run, the intro hands over to the face.
+  beforeEach(() => {
+    getDataLayer().settings.update({ firstRunDone: true })
+  })
+
   it('opens on the intro, and a tap hands over to the watch face', () => {
     const { part, click } = mount()
     expect(part('intro')).not.toBeNull()
@@ -101,6 +107,53 @@ describe('NavHost: start', () => {
   it('wraps every screen in the radial entrance', () => {
     const { part } = mount(FACE)
     expect(part('radial-transition')).not.toBeNull()
+  })
+})
+
+describe('NavHost: first run', () => {
+  const language = (host: HTMLElement) =>
+    [...host.querySelectorAll('[data-part="pill-button"]')] as HTMLButtonElement[]
+
+  it('leads from the intro to the language, then the sensor setup, then the launcher', () => {
+    const { part, host, click, escape } = mount()
+    click(part('intro-skip'))
+    expect(part('language-select')).not.toBeNull()
+    expect(part('face')).toBeNull()
+
+    click(language(host)[1] ?? null)
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
+    expect(part('sensor-setup')).not.toBeNull()
+    expect(getDataLayer().settings.get().firstRunDone).toBe(false)
+
+    click(host.querySelector('[data-part="pill-button"][data-variant="secondary"]:last-child'))
+    expect(part('hex-launcher')).not.toBeNull()
+    expect(getDataLayer().settings.get().firstRunDone).toBe(true)
+
+    escape()
+    expect(part('face')).not.toBeNull()
+    escape()
+    expect(part('face')).not.toBeNull()
+  })
+
+  it('goes back from the sensor setup to the language', () => {
+    const { part, host, click } = mount()
+    click(part('intro-skip'))
+    click(language(host)[0] ?? null)
+    act(() => {
+      vi.advanceTimersByTime(PRESS_DELAY_MS)
+    })
+    click(part('back-button'))
+    expect(part('language-select')).not.toBeNull()
+  })
+
+  it('does not come back after it is done', () => {
+    getDataLayer().settings.update({ firstRunDone: true })
+    const { part, click } = mount()
+    click(part('intro-skip'))
+    expect(part('language-select')).toBeNull()
+    expect(part('face')).not.toBeNull()
   })
 })
 

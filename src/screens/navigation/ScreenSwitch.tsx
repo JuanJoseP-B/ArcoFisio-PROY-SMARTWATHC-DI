@@ -1,3 +1,4 @@
+import { getDataLayer } from '../../data'
 import { Config } from '../config/Config'
 import { Counts } from '../config/Counts'
 import { Face } from '../face/Face'
@@ -6,9 +7,14 @@ import { Launcher } from '../launcher/Launcher'
 import { Measure } from '../measure/Measure'
 import { ModeSelect } from '../mode/ModeSelect'
 import { Placeholder } from '../placeholder/Placeholder'
+import { LanguageSelect } from '../setup/LanguageSelect'
+import { SensorSetup } from '../setup/SensorSetup'
 import { SessionScreen } from '../session/SessionScreen'
 import type { Route } from './stack'
 import { useNav } from './useNav'
+
+/** The very first time, the intro leads into choosing a language and setting up the sensor. */
+const firstRunDone = (): boolean => getDataLayer().settings.get().firstRunDone
 
 interface ScreenSwitchProps {
   route: Route
@@ -23,7 +29,11 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
 
   switch (route.id) {
     case 'intro':
-      return <Intro onDone={() => nav.replace({ id: 'face' })} />
+      return <Intro onDone={() => nav.replace({ id: firstRunDone() ? 'face' : 'language' })} />
+    case 'language':
+      return <LanguageSelect />
+    case 'setup':
+      return <SensorSetup />
     case 'face':
       return <Face />
     case 'launcher':
