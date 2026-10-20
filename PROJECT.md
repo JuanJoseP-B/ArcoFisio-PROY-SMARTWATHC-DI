@@ -2,7 +2,7 @@
 
 > Archivo vivo. Se actualiza en **cada commit que cambie el estado del repo** (etapa, estructura, comandos, decisiones). Ver la regla en [`CLAUDE.md`](CLAUDE.md). Detalle completo del comportamiento: [`docs/spec.md`](docs/spec.md). Detalle visual y de movimiento: [`docs/design-reference/`](docs/design-reference/).
 
-_Última actualización: 2026-10-20 · etapas 0–11 mezcladas en `develop` (`v0.11.0`) · etapa 12 terminada en `feature/12-summary-history`, esperando aprobación._
+_Última actualización: 2026-10-20 · etapas 0–12 mezcladas en `develop` (`v0.12.0`) · etapa 13 en curso en `feature/13-i18n`._
 
 ## Qué es
 
@@ -63,8 +63,8 @@ Cada etapa = rama `feature/NN-nombre` → `develop` con `merge --no-ff` **solo c
 | 9   | `feature/09-config-and-measure`  | Rueda de ángulo, configuración, calibración, primera ejecución                         | Mezclada · `v0.9.0` (25 commits, 715 tests). El permiso del sensor en iOS real queda a cargo del usuario              |
 | 10  | `feature/10-routines`            | Biblioteca, detalle, constructor, reproductor, descanso                                | Mezclada · `v0.10.0` (21 commits)                                                                                     |
 | 11  | `feature/11-pain-arc-and-guide`  | Arco doloroso y Guía IA (reglas locales)                                               | Mezclada · `v0.11.0` (16 commits, 938 tests)                                                                          |
-| 12  | `feature/12-summary-history`     | Resumen e historial                                                                    | Terminada, **esperando aprobación** (10 commits, 984 tests)                                                           |
-| 13  | `feature/13-i18n`                | Español e inglés completos                                                             | Pendiente                                                                                                             |
+| 12  | `feature/12-summary-history`     | Resumen e historial                                                                    | Mezclada · `v0.12.0` (11 commits, 984 tests)                                                                          |
+| 13  | `feature/13-i18n`                | Español e inglés completos                                                             | En curso                                                                                                              |
 | 14  | `feature/14-qa-release`          | Calidad y lanzamiento (`v1.0.0`; el usuario hace merge a `main` y despliega en Vercel) | Pendiente                                                                                                             |
 
 Commits en `develop` tras la etapa 7: 207 (la meta R4 de más de 100 ya se cumple; el spec apunta a ~150).
@@ -124,3 +124,4 @@ Commits en `develop` tras la etapa 7: 207 (la meta R4 de más de 100 ya se cumpl
 - 2026-10-20: etapa 11 terminada (arco doloroso, banda y aviso en la sesión, Guía IA con reglas locales); esperando aprobación.
 - 2026-10-20: etapa 11 aprobada, mezclada y etiquetada `v0.11.0`; arranca la etapa 12 (resumen e historial).
 - 2026-10-20: etapa 12 terminada (resumen con cambio de rango con signo, historial, fin de rutina en el resumen); esperando aprobación.
+- 2026-10-20: etapa 12 aprobada, mezclada y etiquetada `v0.12.0`; arranca la etapa 13 (español e inglés completos y pantalla de Ajustes).
