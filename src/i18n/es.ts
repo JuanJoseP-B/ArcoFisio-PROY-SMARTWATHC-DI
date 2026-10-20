@@ -134,13 +134,23 @@ export const es = {
   'history.title': 'Historial',
   'history.removed': 'Rutina eliminada',
 
+  'settings.sound': 'Sonido',
+  'settings.vibration': 'Vibración',
+  'settings.on': 'Activado',
+  'settings.off': 'Desactivado',
+  'settings.tolerance': 'Tolerancia',
+  'settings.toleranceValue': '±{n}°',
+  'settings.memoryOnly': 'Sin almacenamiento: los datos se pierden al cerrar',
+  'settings.erase': 'Borrar datos',
+  'settings.confirmErase': '¿Borrar todos los datos?',
+  'settings.confirmYes': 'Sí, borrar',
+
   'setup.language': 'Idioma',
   'setup.ready': 'Sensor listo',
   'setup.skip': 'Omitir',
   'lang.es': 'Español',
   'lang.en': 'English',
 
-  'soon.note': 'Próximamente',
   'intro.skip': 'Saltar la introducción',
 } as const
 

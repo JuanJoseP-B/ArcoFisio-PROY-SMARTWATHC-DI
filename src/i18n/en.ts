@@ -136,12 +136,22 @@ export const en: Record<MessageKey, string> = {
   'history.title': 'History',
   'history.removed': 'Routine removed',
 
+  'settings.sound': 'Sound',
+  'settings.vibration': 'Vibration',
+  'settings.on': 'On',
+  'settings.off': 'Off',
+  'settings.tolerance': 'Tolerance',
+  'settings.toleranceValue': '±{n}°',
+  'settings.memoryOnly': 'No storage: data is lost when closed',
+  'settings.erase': 'Erase data',
+  'settings.confirmErase': 'Erase all data?',
+  'settings.confirmYes': 'Yes, erase',
+
   'setup.language': 'Language',
   'setup.ready': 'Sensor ready',
   'setup.skip': 'Skip',
   'lang.es': 'Español',
   'lang.en': 'English',
 
-  'soon.note': 'Coming soon',
   'intro.skip': 'Skip the intro',
 }

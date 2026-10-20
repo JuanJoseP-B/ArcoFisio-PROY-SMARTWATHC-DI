@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Lang } from '../data/types'
 import { I18nContext, buildI18n } from './I18nContext'
@@ -22,6 +22,11 @@ export function I18nProvider({ lang: initial, onLangChange, children }: I18nProv
     },
     [lang, onLangChange],
   )
+
+  // Screen readers and the browser's own tools pick the voice and the hyphenation from this.
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
 
   const value = useMemo(() => buildI18n(lang, setLang), [lang, setLang])
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>

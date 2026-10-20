@@ -13,7 +13,7 @@ import { ModeSelect } from '../mode/ModeSelect'
 import { Pain } from '../pain/Pain'
 import { PlayerScreen } from '../player/PlayerScreen'
 import { RoutineDetail } from '../routine/RoutineDetail'
-import { Placeholder } from '../placeholder/Placeholder'
+import { Settings } from '../settings/Settings'
 import { Summary } from '../summary/Summary'
 import { LanguageSelect } from '../setup/LanguageSelect'
 import { SensorSetup } from '../setup/SensorSetup'
@@ -27,10 +27,7 @@ interface ScreenSwitchProps {
   route: Route
 }
 
-/**
- * Which screen each route shows. The app a later stage builds (Settings) shows a
- * placeholder until then.
- */
+/** Which screen each route shows. */
 export function ScreenSwitch({ route }: ScreenSwitchProps) {
   const nav = useNav()
 
@@ -70,6 +67,6 @@ export function ScreenSwitch({ route }: ScreenSwitchProps) {
     case 'guide':
       return <Guide />
     case 'settings':
-      return <Placeholder title="launcher.settings" />
+      return <Settings />
   }
 }
