@@ -6,6 +6,12 @@ export const INTRO_PERIOD_MS = 9000
 /** Loop position whose frame shows the finished brand lockup; used for reduced motion. */
 export const INTRO_BRAND_PROGRESS = 0.85
 
+/** Played once: it ends with the lockup on screen, just before the sheet's own fade-out. */
+export const INTRO_END_MS = 0.94 * INTRO_PERIOD_MS
+
+/** With reduced motion the finished lockup is shown this long, then the watch moves on. */
+export const INTRO_REDUCED_HOLD_MS = 1800
+
 export const INTRO_RING_DASH = 1068
 
 export interface GrassBlade {
