@@ -31,6 +31,13 @@ export function GoniometerRing({ angle, target, zone = null }: GoniometerRingPro
     >
       <circle className={styles.track} cx={RING_CENTER} cy={RING_CENTER} r={geometry.ringRadius} />
       <circle
+        className={styles.halo}
+        cx={RING_CENTER}
+        cy={RING_CENTER}
+        r={geometry.ringRadius}
+        data-part="halo"
+      />
+      <circle
         className={styles.arc}
         cx={RING_CENTER}
         cy={RING_CENTER}

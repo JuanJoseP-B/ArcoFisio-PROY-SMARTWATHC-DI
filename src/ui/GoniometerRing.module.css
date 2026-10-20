@@ -70,3 +70,59 @@
 .ring[data-zone='rest'] .arc {
   stroke: var(--af-color-zone-rest);
 }
+
+/* Visual pulse of the approach zones, beating with the sound: slow far, fast near. */
+.halo {
+  fill: none;
+  stroke: var(--af-color-gold);
+  stroke-width: var(--af-ring-stroke);
+  opacity: 0;
+  pointer-events: none;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.ring[data-zone='approach'] .halo {
+  animation: halo var(--af-pulse-slow) ease-out infinite;
+}
+
+.ring[data-zone='near'] .halo {
+  stroke: var(--af-color-bronze);
+  animation: halo var(--af-pulse-fast) ease-out infinite;
+}
+
+/* Past the target the red arc blinks continuously. */
+.ring[data-zone='overshoot'] .arc {
+  animation: blink 700ms ease-in-out infinite;
+}
+
+@keyframes halo {
+  from {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring[data-zone='approach'] .halo,
+  .ring[data-zone='near'] .halo,
+  .ring[data-zone='overshoot'] .arc {
+    animation: none;
+  }
+}
