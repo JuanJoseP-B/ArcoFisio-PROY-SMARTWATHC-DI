@@ -1,6 +1,6 @@
 /** Spanish dictionary. Its keys define `MessageKey`; `en.ts` must provide every one of them. */
 export const es = {
-  'intro.tagline': 'Cada grado cuenta',
+  'intro.tagline': 'tu hombro, a su ritmo',
 
   'zone.far': 'En camino',
   'zone.approach': 'Casi',
@@ -27,12 +27,12 @@ export const es = {
   'sim.angle': 'Ángulo simulado',
 
   'face.open': 'Abrir aplicaciones',
-  'launcher.label': 'Aplicaciones',
-  'launcher.measure': 'Medir',
-  'launcher.session': 'Sesión',
+  'launcher.label': 'Menú principal',
+  'launcher.measure': 'Medir rango',
+  'launcher.session': 'Sesión rápida',
   'launcher.routines': 'Rutinas',
   'launcher.summary': 'Resumen',
-  'launcher.pain': 'Dolor',
+  'launcher.pain': 'Arco doloroso',
   'launcher.guide': 'Guía IA',
   'launcher.settings': 'Ajustes',
 
@@ -152,6 +152,71 @@ export const es = {
   'lang.en': 'English',
 
   'intro.skip': 'Saltar la introducción',
+
+  'hipo.alt': 'Hipo, el caballito de mar de Arco Fisio',
+
+  'action.continue': 'Continuar',
+  'action.next': 'Siguiente',
+  'action.begin': 'Empezar',
+  'action.menu': 'Menú',
+  'action.open': 'Abrir',
+  'action.retry': 'Reintentar',
+  'action.connect': 'Conectar',
+
+  'welcome.greeting': 'Hola, soy Hipo.',
+  'welcome.line': 'Te acompaño a mover tu hombro con calma.',
+  'welcome.start': 'Comenzar',
+
+  'language.done': 'Listo',
+  'language.chosen': 'Idioma: {name}.',
+  'language.later': 'Puedes cambiarlo en Ajustes.',
+  'language.selected': 'Seleccionado',
+
+  'sensor.ask.title': 'Necesito tu sensor',
+  'sensor.ask.body': 'Mide la inclinación de tu brazo. Los datos se quedan en este dispositivo.',
+  'sensor.allow': 'Permitir',
+  'sensor.notNow': 'Ahora no',
+  'sensor.simulate': 'Usar ángulos simulados',
+  'sensor.denied.title': 'Permiso denegado',
+  'sensor.denied.body': 'Sin el sensor no puedo medir tu ángulo.',
+  'sensor.unavailable.title': 'Sensor no disponible',
+  'sensor.unavailable.body':
+    'Este dispositivo no tiene sensor de movimiento. Prueba en otro teléfono.',
+  'sensor.understood': 'Entendido',
+  'sensor.hang.title': 'Deja el brazo abajo',
+  'sensor.hang.body': 'Relajado y quieto. Esa posición será 0°.',
+  'sensor.hang.ready': 'Estoy listo',
+  'sensor.live': 'Lectura en vivo',
+  'sensor.simulated.label': 'Modo simulado',
+  'sensor.simulated.pill': 'Ángulos simulados',
+  'sensor.simulated.note': 'Los ángulos son simulados. Cámbialos con el control deslizante.',
+
+  'face.week': '{n} de {goal} sesiones esta semana',
+  'face.sensorOff': 'Sensor desconectado',
+  'face.sensorOffHint': 'Conéctalo para medir tu ángulo.',
+
+  'launcher.history': 'Historial',
+  'launcher.measure.hint': 'Calibra y mide tu rango',
+  'launcher.session.hint': 'Elige ejercicio y objetivo',
+  'launcher.routines.hint': 'Tus rutinas guardadas',
+  'launcher.pain.hint': 'Marca dónde empieza el dolor',
+  'launcher.history.hint': 'Tus sesiones anteriores',
+  'launcher.guide.hint': 'Consejos según tus datos',
+  'launcher.settings.hint': 'Sonido, vibración y más',
+  'launcher.unavailable': '{name}, no disponible sin sensor',
+  'launcher.noSensor': 'Sin sensor',
+  'launcher.noSensorHint': 'Medir, sesión y arco necesitan sensor',
+
+  'mode.abduction.hint': 'Brazo hacia el costado',
+  'mode.flexion.hint': 'Brazo hacia el frente',
+
+  'config.step': 'Paso {n} de {total}',
+  'config.targetDown': 'Bajar {n} grados',
+  'config.targetUp': 'Subir {n} grados',
+  'config.targetHint': 'El agua llegará hasta la marca fina',
+  'config.repsHint': 'Cuenta al sostener el objetivo 1 s',
+  'config.setsHint': 'Descansas entre una serie y otra',
+  'config.summary': '{exercise} · {target}° · {reps} × {sets}',
 } as const
 
 export type MessageKey = keyof typeof es
