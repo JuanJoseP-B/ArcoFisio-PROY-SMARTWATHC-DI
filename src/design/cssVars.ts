@@ -4,6 +4,13 @@ import {
   easing,
   fontFamily,
   geometry,
+  mareaColor,
+  mareaDuration,
+  mareaEasing,
+  mareaFont,
+  mareaGeometry,
+  mareaText,
+  mareaType,
   safeDiameter,
   sceneColor,
   space,
@@ -22,6 +29,28 @@ export function buildCssVariables(): Record<string, string> {
   const vars: Record<string, string> = {}
 
   for (const [name, value] of Object.entries(color)) vars[`--af-color-${kebab(name)}`] = value
+
+  for (const [name, value] of Object.entries(mareaColor)) {
+    vars[`--af-marea-${kebab(name)}`] = value
+  }
+
+  for (const [name, value] of Object.entries(mareaText)) vars[`--af-marea-text-${name}`] = value
+  for (const [name, value] of Object.entries(mareaFont)) vars[`--af-marea-font-${name}`] = value
+  for (const [name, style] of Object.entries(mareaType)) {
+    vars[`--af-marea-type-${kebab(name)}-size`] = px(style.size)
+    vars[`--af-marea-type-${kebab(name)}-line`] = String(style.lineHeight)
+    vars[`--af-marea-type-${kebab(name)}-weight`] = String(style.weight)
+    vars[`--af-marea-type-${kebab(name)}-tracking`] = `${style.tracking}em`
+  }
+  for (const [name, value] of Object.entries(mareaGeometry)) {
+    vars[`--af-marea-${kebab(name)}`] = name.endsWith('Opacity') ? String(value) : px(value)
+  }
+  for (const [name, value] of Object.entries(mareaDuration)) {
+    vars[`--af-marea-dur-${kebab(name)}`] = ms(value)
+  }
+  for (const [name, value] of Object.entries(mareaEasing)) {
+    vars[`--af-marea-ease-${kebab(name)}`] = value
+  }
 
   for (const [name, value] of Object.entries(sceneColor)) vars[`--af-scene-${kebab(name)}`] = value
 

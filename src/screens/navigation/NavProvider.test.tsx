@@ -88,6 +88,23 @@ describe('NavProvider', () => {
     expect(nav().route.id).toBe('face')
   })
 
+  it('goes back with Backspace, except while typing in a field', () => {
+    const { nav } = mount({ stack: [{ id: 'face' }, { id: 'launcher' }, { id: 'mode' }] })
+    const field = document.createElement('input')
+    field.type = 'text'
+    document.body.appendChild(field)
+    act(() => {
+      field.dispatchEvent(new KeyboardEvent('keydown', { key: 'Backspace', bubbles: true }))
+    })
+    expect(nav().route.id).toBe('mode')
+    field.remove()
+
+    act(() => {
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Backspace' }))
+    })
+    expect(nav().route.id).toBe('launcher')
+  })
+
   it('stops listening for Escape after unmount', () => {
     const { nav, root } = mount({ stack: [{ id: 'face' }, { id: 'launcher' }] })
     const before = nav().route.id

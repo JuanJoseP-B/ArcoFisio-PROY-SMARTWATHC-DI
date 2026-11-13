@@ -1,8 +1,82 @@
 <strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
-    <string id="AppName">ArcoFisioApp</string>
+    <!-- English. Base resources: also the fallback for watch languages without their own folder. Keep the ids in step with resources-spa/strings/strings.xml. -->
+    <string id="AppName">Arco Fisio</string>
 
-    <string id="prompt">Click the menu button</string>
+    <!-- Shared -->
+    <string id="DegreesFormat">$1$°</string>
+    <string id="DegreeSign">°</string>
+    <string id="NoValue">--</string>
 
-    <string id="menu_label_1">Item 1</string>
-    <string id="menu_label_2">Item 2</string>
+    <!-- Hints: what START or a tap does on the current screen -->
+    <string id="HintCalibrate">START or tap: calibrate</string>
+    <string id="HintMeasure">START or tap: measure</string>
+    <string id="HintRetry">START or tap: retry</string>
+    <string id="HintOptions">START or tap: options</string>
+    <string id="HintSwitchSource">START or tap: switch source</string>
+    <string id="HintTest">START or tap: test</string>
+    <string id="HintReady">START or tap: I'm ready</string>
+    <string id="HintMeasureRange">START or tap: measure range</string>
+    <string id="HintCancel">BACK: cancel</string>
+
+    <!-- Sensor status page (canvas 03) -->
+    <string id="StatusTitle">Sensor</string>
+    <string id="StatusReady">Sensor ready</string>
+    <string id="StatusStarting">Starting sensor</string>
+    <string id="StatusUnavailable">Sensor unavailable</string>
+    <string id="StatusLost">Signal lost</string>
+    <string id="StatusBodyStarting">Waiting for the first reading.</string>
+    <string id="StatusBodyNotCalibrated">Not calibrated yet.</string>
+    <string id="StatusBodyCalibrated">Calibrated. Waiting for the angle.</string>
+    <string id="StatusBodyLive">Live reading: $1$</string>
+    <string id="StatusBodyLost">No recent readings. No angle is shown.</string>
+    <string id="StatusBodyUnavailable">This watch is not sending motion readings.</string>
+
+    <!-- Live angle page (canvas 08, measure range) -->
+    <string id="LiveTitle">Live angle</string>
+    <string id="LiveMax">Maximum $1$</string>
+    <string id="LiveNoSignal">No signal</string>
+    <string id="LiveNotCalibrated">Calibrate first: arm down will be 0°.</string>
+    <string id="MenuTitle">Options</string>
+    <string id="MenuResetMax">Reset maximum</string>
+    <string id="MenuRecalibrate">Recalibrate</string>
+
+    <!-- Diagnostics page -->
+    <string id="DiagTitle">Diagnostics</string>
+    <string id="DiagSourceListener">Source: listener $1$ Hz</string>
+    <string id="DiagSourcePolling">Source: polling $1$ ms</string>
+    <string id="DiagCadence">Cadence: $1$ Hz</string>
+    <string id="DiagAge">Age: $1$ ms</string>
+    <string id="DiagLosses">Losses: $1$</string>
+    <string id="DiagRaw">mg: $1$ / $2$ / $3$</string>
+    <string id="DiagTimeSensor">Time: sensor</string>
+    <string id="DiagTimeEstimated">Time: estimated</string>
+    <string id="DiagTimeRead">Time: of the read</string>
+    <string id="DiagTimeUnknown">Time: --</string>
+
+    <!-- Tone and vibration page -->
+    <string id="FeedbackTitle">Tone and vibration</string>
+    <string id="FeedbackToneSupported">Tone: available</string>
+    <string id="FeedbackToneUnsupported">Tone: not available</string>
+    <string id="FeedbackToneMuted">(tones off on the watch)</string>
+    <string id="FeedbackVibrationSupported">Vibration: available</string>
+    <string id="FeedbackVibrationUnsupported">Vibration: not available</string>
+    <string id="FeedbackVibrationMuted">(vibration off on the watch)</string>
+    <string id="FeedbackLastNone">Nothing tested yet</string>
+    <string id="FeedbackLastTone">Tone requested</string>
+    <string id="FeedbackLastVibration">Vibration requested</string>
+    <string id="FeedbackLastRejected">The watch rejected the request</string>
+    <string id="MenuPlayTone">Play tone</string>
+    <string id="MenuVibrate">Vibrate</string>
+
+    <!-- Calibration steps (canvas 08) -->
+    <string id="CalTitle">Calibration</string>
+    <string id="CalInstruction">Let your arm hang down, relaxed.</string>
+    <string id="CalInstructionDetail">That position will be 0°.</string>
+    <string id="CalSeconds">$1$ s</string>
+    <string id="CalHoldStill">Hold still</string>
+    <string id="CalMoved">You moved. Starting over.</string>
+    <string id="CalNoSignal">No signal. Waiting for the sensor.</string>
+    <string id="CalDone">Calibrated</string>
+    <string id="CalDoneDetail">Arm down = 0°. Now raise your arm to measure your range.</string>
+    <string id="CalNotStored">Calibrated, but it could not be saved. It will be asked again next time.</string>
 </strings>

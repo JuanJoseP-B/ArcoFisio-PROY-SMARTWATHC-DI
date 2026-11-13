@@ -4,6 +4,11 @@ import {
   color,
   duration,
   geometry,
+  mareaColor,
+  mareaDuration,
+  mareaFont,
+  mareaText,
+  mareaType,
   safeDiameter,
   sceneColor,
   typography,
@@ -66,5 +71,24 @@ describe('typography and motion tokens', () => {
   it('orders durations from fastest to slowest', () => {
     const values = Object.values(duration)
     expect([...values].sort((a, b) => a - b)).toEqual(values)
+  })
+})
+
+describe('Marea tokens', () => {
+  it('never goes below 13 px on the watch and keeps figures out of the serif', () => {
+    for (const style of Object.values(mareaType)) expect(style.size).toBeGreaterThanOrEqual(13)
+    expect(mareaFont.sans).toContain('DM Sans')
+    expect(mareaFont.serif).toContain('Newsreader')
+  })
+
+  it('holds only valid hex values for the palette and the water text colors', () => {
+    for (const value of [...Object.values(mareaText), mareaColor.ink, mareaColor.paper]) {
+      expect(value).toMatch(/^#[0-9A-F]{6}$/)
+    }
+  })
+
+  it('keeps the loading animation within four seconds and the reduced one within 1.5 s', () => {
+    expect(mareaDuration.loading).toBeLessThanOrEqual(4000)
+    expect(mareaDuration.loadingReduced).toBeLessThanOrEqual(1500)
   })
 })

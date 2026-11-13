@@ -2,7 +2,7 @@ import type { MessageKey } from './es'
 
 /** English dictionary. Typing it as a full record makes a missing or extra key a compile error. */
 export const en: Record<MessageKey, string> = {
-  'intro.tagline': 'Every degree counts',
+  'intro.tagline': 'your shoulder, at its own pace',
 
   'zone.far': 'On the way',
   'zone.approach': 'Almost',
@@ -29,13 +29,13 @@ export const en: Record<MessageKey, string> = {
   'sim.angle': 'Simulated angle',
 
   'face.open': 'Open apps',
-  'launcher.label': 'Apps',
-  'launcher.measure': 'Measure',
-  'launcher.session': 'Session',
+  'launcher.label': 'Main menu',
+  'launcher.measure': 'Measure range',
+  'launcher.session': 'Quick session',
   'launcher.routines': 'Routines',
   'launcher.summary': 'Summary',
-  'launcher.pain': 'Pain',
-  'launcher.guide': 'AI Guide',
+  'launcher.pain': 'Pain arc',
+  'launcher.guide': 'AI guide',
   'launcher.settings': 'Settings',
 
   'nav.back': 'Back',
@@ -154,4 +154,68 @@ export const en: Record<MessageKey, string> = {
   'lang.en': 'English',
 
   'intro.skip': 'Skip the intro',
+
+  'hipo.alt': 'Hipo, the Arco Fisio seahorse',
+
+  'action.continue': 'Continue',
+  'action.next': 'Next',
+  'action.begin': 'Begin',
+  'action.menu': 'Menu',
+  'action.open': 'Open',
+  'action.retry': 'Try again',
+  'action.connect': 'Connect',
+
+  'welcome.greeting': "Hi, I'm Hipo.",
+  'welcome.line': "I'll keep you company while you move your shoulder, calmly.",
+  'welcome.start': 'Get started',
+
+  'language.done': 'Done',
+  'language.chosen': 'Language: {name}.',
+  'language.later': 'You can change it in Settings.',
+  'language.selected': 'Selected',
+
+  'sensor.ask.title': 'I need your sensor',
+  'sensor.ask.body': 'It measures how your arm tilts. Your data stays on this device.',
+  'sensor.allow': 'Allow',
+  'sensor.notNow': 'Not now',
+  'sensor.simulate': 'Use simulated angles',
+  'sensor.denied.title': 'Permission denied',
+  'sensor.denied.body': "Without the sensor I can't measure your angle.",
+  'sensor.unavailable.title': 'Sensor unavailable',
+  'sensor.unavailable.body': 'This device has no motion sensor. Try another phone.',
+  'sensor.understood': 'Got it',
+  'sensor.hang.title': 'Let your arm hang',
+  'sensor.hang.body': 'Relaxed and still. That position will be 0°.',
+  'sensor.hang.ready': "I'm ready",
+  'sensor.live': 'Live reading',
+  'sensor.simulated.label': 'Simulated mode',
+  'sensor.simulated.pill': 'Simulated angles',
+  'sensor.simulated.note': 'The angles are simulated. Change them with the slider.',
+
+  'face.week': '{n} of {goal} sessions this week',
+  'face.sensorOff': 'Sensor disconnected',
+  'face.sensorOffHint': 'Connect it to measure your angle.',
+
+  'launcher.history': 'History',
+  'launcher.measure.hint': 'Calibrate and measure your range',
+  'launcher.session.hint': 'Pick an exercise and a target',
+  'launcher.routines.hint': 'Your saved routines',
+  'launcher.pain.hint': 'Mark where the pain starts',
+  'launcher.history.hint': 'Your past sessions',
+  'launcher.guide.hint': 'Tips based on your data',
+  'launcher.settings.hint': 'Sound, vibration and more',
+  'launcher.unavailable': '{name}, unavailable without a sensor',
+  'launcher.noSensor': 'No sensor',
+  'launcher.noSensorHint': 'Measuring, sessions and the arc need a sensor',
+
+  'mode.abduction.hint': 'Arm out to the side',
+  'mode.flexion.hint': 'Arm out to the front',
+
+  'config.step': 'Step {n} of {total}',
+  'config.targetDown': 'Lower by {n} degrees',
+  'config.targetUp': 'Raise by {n} degrees',
+  'config.targetHint': 'The water will rise to the thin mark',
+  'config.repsHint': 'Counts when you hold the target for 1 s',
+  'config.setsHint': 'You rest between sets',
+  'config.summary': '{exercise} · {target}° · {reps} × {sets}',
 }

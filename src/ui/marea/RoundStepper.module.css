@@ -1,0 +1,36 @@
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--af-marea-stepper-button);
+  height: var(--af-marea-stepper-button);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--af-marea-accent-tint);
+  color: var(--af-marea-accent-dark);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.button:hover:not(:disabled) {
+  filter: brightness(0.94);
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.value {
+  min-width: 100px;
+  text-align: center;
+  color: var(--af-marea-ink);
+}

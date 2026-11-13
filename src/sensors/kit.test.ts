@@ -1,8 +1,16 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createCalibrationRepo } from '../data/calibrationRepo'
 import { createStorage } from '../data/storage'
 import { FakeStorage } from '../data/testStorage'
-import { createSensorKit, forgetCalibration, isSimRequested } from './kit'
+import {
+  createSensorKit,
+  enableSimulation,
+  forgetCalibration,
+  getSensorKit,
+  isSimRequested,
+  resetSensorKit,
+  subscribeSensorKit,
+} from './kit'
 
 const newStore = () => createCalibrationRepo(createStorage(new FakeStorage()))
 
@@ -86,5 +94,39 @@ describe('forgetCalibration', () => {
     expect(kit.tracker.getSnapshot().status).toBe('live')
     expect(kit.tracker.getSnapshot().angle).toBeCloseTo(0, 6)
     kit.tracker.stop()
+  })
+})
+
+describe('enableSimulation', () => {
+  beforeEach(() => {
+    localStorage.clear()
+    resetSensorKit()
+  })
+  afterEach(() => resetSensorKit())
+
+  it('starts on the phone sensor and switches to a simulator that is live at 0 degrees', () => {
+    const device = getSensorKit()
+    expect(device.mode).toBe('device')
+    enableSimulation()
+    const kit = getSensorKit()
+    expect(kit.mode).toBe('sim')
+    expect(kit).not.toBe(device)
+    kit.tracker.start()
+    expect(kit.tracker.getSnapshot()).toEqual({ angle: 0, status: 'live' })
+    kit.tracker.stop()
+  })
+
+  it('tells subscribers once and does nothing when it is already simulating', () => {
+    let calls = 0
+    const stop = subscribeSensorKit(() => {
+      calls += 1
+    })
+    enableSimulation()
+    enableSimulation()
+    expect(calls).toBe(1)
+    stop()
+    resetSensorKit()
+    enableSimulation()
+    expect(calls).toBe(1)
   })
 })

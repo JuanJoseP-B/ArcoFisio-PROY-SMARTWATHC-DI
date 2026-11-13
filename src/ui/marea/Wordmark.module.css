@@ -1,0 +1,17 @@
+.wordmark {
+  font-family: var(--af-marea-font-sans);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--af-marea-ink);
+  white-space: nowrap;
+}
+
+.fisio {
+  font-family: var(--af-marea-font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.12em;
+  letter-spacing: 0;
+  color: var(--af-marea-accent-dark);
+}

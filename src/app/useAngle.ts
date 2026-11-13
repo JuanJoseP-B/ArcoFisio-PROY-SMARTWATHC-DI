@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useSyncExternalStore } from 'react'
 import { calibrateAndSave } from '../sensors/calibrationFlow'
 import type { CalibrationResult } from '../sensors/calibration'
-import { getSensorKit } from '../sensors/kit'
 import type { SensorKit } from '../sensors/kit'
 import type { TrackerStatus } from '../sensors/tracker'
 import type { PermissionResult, SensorMode } from '../sensors/types'
 import { getDataLayer } from '../data'
+import { useSensorKit } from './useSensorKit'
 
 export interface UseAngleOptions {
   kit?: SensorKit
@@ -41,7 +41,8 @@ function retain(kit: SensorKit): () => void {
 
 export function useAngle(options: UseAngleOptions = {}): UseAngle {
   const { autoStart = true } = options
-  const kit = options.kit ?? getSensorKit()
+  const current = useSensorKit()
+  const kit = options.kit ?? current
   const { tracker } = kit
   const { angle, status } = useSyncExternalStore(tracker.subscribe, tracker.getSnapshot)
 

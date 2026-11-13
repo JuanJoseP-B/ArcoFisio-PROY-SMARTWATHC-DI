@@ -1,0 +1,92 @@
+.groupRow {
+  display: flex;
+  gap: 10px;
+}
+
+.groupColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.row,
+.card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+/* The input is invisible but stays focusable and operable by keyboard and screen reader. */
+.input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.box {
+  display: flex;
+  background: var(--af-marea-card);
+  box-shadow: 0 0 0 1.5px var(--af-marea-line);
+  color: var(--af-marea-ink);
+  font-family: var(--af-marea-font-sans);
+}
+
+.box[data-selected='true'] {
+  background: var(--af-marea-accent-tint);
+}
+
+.input:focus-visible + .box {
+  outline: var(--af-marea-focus-ring) solid var(--af-marea-accent-dark);
+  outline-offset: 3px;
+}
+
+/* A list row: 50 px or more, a 26 px radius, the name on the left and the check on the right. */
+.row .box {
+  align-items: center;
+  gap: 12px;
+  min-height: 50px;
+  padding: 6px 16px;
+  border-radius: var(--af-marea-list-row-radius);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.row .box[data-selected='true'] {
+  box-shadow: 0 0 0 2px var(--af-marea-accent);
+}
+
+.row .check {
+  margin-left: auto;
+  color: var(--af-marea-accent-dark);
+}
+
+/* A tall card with a picture, a name and one line of help. */
+.card .box {
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 136px;
+  padding: 12px 10px;
+  border-radius: var(--af-marea-option-radius);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.card .box[data-selected='true'] {
+  box-shadow: 0 0 0 3px var(--af-marea-accent);
+}
+
+.card .check {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  display: inline-flex;
+  color: var(--af-marea-accent-dark);
+}

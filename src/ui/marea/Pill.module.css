@@ -1,0 +1,32 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-family: var(--af-marea-font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.blue {
+  background: var(--af-marea-accent-tint);
+  color: var(--af-marea-accent-dark);
+}
+
+.mint {
+  background: var(--af-marea-mint-tint);
+  color: var(--af-marea-mint-dark);
+}
+
+.amber {
+  background: var(--af-marea-amber-tint);
+  color: var(--af-marea-amber-dark);
+}
+
+.rose {
+  background: var(--af-marea-rose-tint);
+  color: var(--af-marea-rose-dark);
+}

@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from './App'
 import { installCssVariables } from './design/cssVars'
+import './design/mareaFonts.css'
 import './design/global.css'
 
 installCssVariables()

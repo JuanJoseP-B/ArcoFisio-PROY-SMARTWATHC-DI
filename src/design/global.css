@@ -39,3 +39,19 @@ button:focus-visible,
   outline: 3px solid var(--af-color-bronze);
   outline-offset: 2px;
 }
+
+/*
+ * Marea theme (light). Screens 00-07 carry data-theme="marea"; the rest of the app keeps the
+ * v1 palette until its own phase. The focus ring is a 3 px ring in the dark accent.
+ */
+[data-theme='marea'] {
+  color: var(--af-marea-ink);
+  font-family: var(--af-marea-font-sans);
+}
+
+[data-theme='marea'] button:focus-visible,
+[data-theme='marea'] [role='button']:focus-visible,
+[data-theme='marea'] [role='radio']:focus-visible {
+  outline: var(--af-marea-focus-ring) solid var(--af-marea-accent-dark);
+  outline-offset: 3px;
+}

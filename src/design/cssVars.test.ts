@@ -6,6 +6,16 @@ describe('buildCssVariables', () => {
 
   it('exposes colors, geometry, type and motion under the --af- prefix', () => {
     expect(vars['--af-color-ink']).toBe('#1F3A2B')
+    expect(vars['--af-marea-background']).toBe('#EAF0F9')
+    expect(vars['--af-marea-accent-dark']).toBe('#2B45B8')
+    expect(vars['--af-marea-text-secondary']).toBe('#3F4B6B')
+    expect(vars['--af-marea-font-sans']).toContain('DM Sans')
+    expect(vars['--af-marea-type-big-size']).toBe('88px')
+    expect(vars['--af-marea-type-big-tracking']).toBe('-0.04em')
+    expect(vars['--af-marea-menu-button']).toBe('54px')
+    expect(vars['--af-marea-wave-front-opacity']).toBe('0.3')
+    expect(vars['--af-marea-dur-water-level']).toBe('600ms')
+    expect(vars['--af-marea-ease-water']).toBe('cubic-bezier(0.3, 0.7, 0.3, 1)')
     expect(vars['--af-color-zone-pain-tint']).toBe('#F4D3C8')
     expect(vars['--af-screen-size']).toBe('384px')
     expect(vars['--af-safe-diameter']).toBe('328px')

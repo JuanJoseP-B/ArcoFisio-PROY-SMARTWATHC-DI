@@ -33,6 +33,44 @@ export const color = {
 
 export type ColorToken = keyof typeof color
 
+/** Marea light palette from the v2 design handoff, separate during v1 migration. */
+export const mareaColor = {
+  background: '#EAF0F9',
+  paper: '#F7F9FD',
+  card: '#FFFFFF',
+  ink: '#0F1B3D',
+  inkSecondary: '#4B5878',
+  line: '#D3DCEF',
+  accent: '#4263EB',
+  accentDark: '#2B45B8',
+  accentTint: '#DCE4FF',
+  onAccent: '#FFFFFF',
+  mint: '#4FD1B5',
+  mintDark: '#0B6B58',
+  mintTint: '#D6F5EE',
+  onMint: '#06332B',
+  amber: '#FFB26B',
+  amberDark: '#8F4504',
+  amberTint: '#FFE9D2',
+  onAmber: '#3A1C00',
+  rose: '#F2668B',
+  roseDark: '#A3234B',
+  roseTint: '#FDE0E8',
+  onRose: '#3A0618',
+  water: '#4263EB',
+  shadow: 'rgba(15, 27, 61, 0.13)',
+} as const
+
+/**
+ * Text colors for lines drawn straight over the water, where two translucent layers lower the
+ * contrast of the handoff's `inkSecondary` (3.8:1) and `accentDark` (4.2:1). These two are
+ * slightly darker and reach 4.5:1 on the deepest water as well as on paper, card and tint.
+ */
+export const mareaText = {
+  secondary: '#3F4B6B',
+  link: '#2A40A8',
+} as const
+
 /** Colors of the intro illustration (archer, prairie, sky). Used by the intro only. */
 export const sceneColor = {
   skyTop: '#D98A3A',
@@ -111,4 +149,52 @@ export const easing = {
   exit: 'cubic-bezier(0.3, 0, 0.8, 0.15)',
   wheel: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
   honeycomb: 'cubic-bezier(0.34, 1.35, 0.64, 1)',
+} as const
+
+/** Marea fonts: DM Sans for data and actions, Newsreader italic for the guide's voice. Both are bundled, never fetched. */
+export const mareaFont = {
+  sans: '"DM Sans", system-ui, sans-serif',
+  serif: '"Newsreader", Georgia, serif',
+} as const
+
+/** Marea type scale (handoff 02). `tracking` is in em. Figures use DM Sans only. */
+export const mareaType = {
+  big: { size: 88, lineHeight: 1, weight: 700, tracking: -0.04 },
+  mid: { size: 48, lineHeight: 1, weight: 700, tracking: -0.03 },
+  title: { size: 21, lineHeight: 1.15, weight: 700, tracking: -0.01 },
+  message: { size: 25, lineHeight: 1.15, weight: 400, tracking: 0 },
+  label: { size: 13.5, lineHeight: 1.2, weight: 500, tracking: 0.1 },
+  sub: { size: 15, lineHeight: 1.35, weight: 500, tracking: 0 },
+  button: { size: 17, lineHeight: 1.2, weight: 700, tracking: 0 },
+} as const
+
+/** Marea sizes (handoff 02 and 03), in px of the 384 watch space. */
+export const mareaGeometry = {
+  touchMin: 48,
+  stepperButton: 56,
+  menuButton: 54,
+  menuRadius: 132,
+  safeColumn: 270,
+  listRowRadius: 26,
+  optionRadius: 28,
+  focusRing: 3,
+  waveBackOpacity: 0.16,
+  waveFrontOpacity: 0.3,
+} as const
+
+/** Marea motion (handoff 04), in ms. */
+export const mareaDuration = {
+  waterLevel: 600,
+  contentIn: 240,
+  reducedFade: 150,
+  loading: 3800,
+  loadingReduced: 1400,
+  waveFront: 8000,
+  waveBack: 13000,
+} as const
+
+export const mareaEasing = {
+  water: 'cubic-bezier(0.3, 0.7, 0.3, 1)',
+  emerge: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+  drop: 'cubic-bezier(0.5, 0, 0.9, 0.6)',
 } as const
