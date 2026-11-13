@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14 2 84 138" width="168" height="276" role="img" aria-label="Hipo, el caballito de mar de Arco Fisio">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M62 22l-4-11M70 20l2-12M77 25l9-9" stroke="#4263EB" stroke-width="4"/>
+    <path d="M62 42C46 56 42 80 56 98c10 12 6 28-8 32-12 3-18-9-8-14" stroke="#4263EB" stroke-width="15"/>
+    <path d="M62 42C46 56 42 80 56 98c10 12 6 28-8 32-12 3-18-9-8-14" stroke="#FFFFFF" stroke-width="15" stroke-dasharray="1.6 8" stroke-linecap="butt" opacity=".55"/>
+  </g>
+  <path d="M60 66C80 62 92 76 86 86 80 96 68 96 62 96Z" fill="#4263EB" opacity=".5"/>
+  <ellipse cx="66" cy="34" rx="16" ry="14" fill="#4263EB"/>
+  <rect x="24" y="33" width="38" height="9" rx="4.5" fill="#4263EB" transform="rotate(10 60 36)"/>
+  <circle cx="70" cy="31" r="3.6" fill="#FFFFFF"/>
+  <circle cx="70.8" cy="31.2" r="1.7" fill="#0F1B3D"/>
+</svg>
