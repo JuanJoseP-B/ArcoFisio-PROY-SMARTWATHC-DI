@@ -110,6 +110,11 @@ class LiveSession {
         return _interrupted;
     }
 
+    function pause() as Void {
+        _paused = true;
+        _run.pause();
+    }
+
     function resume() as Void {
         _paused = false;
     }

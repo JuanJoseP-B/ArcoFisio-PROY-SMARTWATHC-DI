@@ -26,6 +26,8 @@ class Workout {
     private var _set as Number = 1;
     private var _restLeftMs as Number = 0;
     private var _outcome as Number = OUTCOME_NONE;
+    private var _ended as Number = 0;
+    private var _skipped as Boolean = false;
     private var _totals as RunStats = new RunStats();
 
     function initialize(sets as Number, reps as Number, restSec as Number) {
@@ -66,10 +68,7 @@ class Workout {
 
     // Sets whose repetitions were all counted or that the person left.
     function setsEnded() as Number {
-        if (_phase == PHASE_SET) {
-            return _set - 1;
-        }
-        return _set;
+        return _ended;
     }
 
     // The set has all its repetitions.
@@ -85,10 +84,12 @@ class Workout {
             return;
         }
         _totals.merge(counted);
+        _ended += 1;
+        if (counted.repsCounted() < _reps) { _skipped = true; }
         if (_set >= _sets) {
             _phase = PHASE_DONE;
             _restLeftMs = 0;
-            _outcome = OUTCOME_COMPLETED;
+            _outcome = _skipped ? OUTCOME_STOPPED : OUTCOME_COMPLETED;
             return;
         }
         if (_restSec <= 0) {

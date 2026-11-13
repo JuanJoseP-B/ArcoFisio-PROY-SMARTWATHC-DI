@@ -74,6 +74,10 @@ class SensorReader {
         _lost = false;
         _timeSource = TIME_UNKNOWN;
         _cadence.reset();
+        if (BuildMode.SIMULATED) {
+            _listenerRegistered = true;
+            return;
+        }
         _listenerRegistered = registerListener();
         if (!_listenerRegistered) {
             // Without the listener only polling can deliver anything.
@@ -83,7 +87,7 @@ class SensorReader {
 
     function stop() as Void {
         _running = false;
-        if (_listenerRegistered) {
+        if (_listenerRegistered && !BuildMode.SIMULATED) {
             try {
                 Sensor.unregisterSensorDataListener();
             } catch (e) {
@@ -99,7 +103,7 @@ class SensorReader {
         if (!_running) {
             return;
         }
-        if (_source == SOURCE_POLLING) {
+        if (_source == SOURCE_POLLING && !BuildMode.SIMULATED) {
             poll(nowMs);
         }
         var last = _lastSampleMs;
@@ -238,7 +242,15 @@ class SensorReader {
         _cadence.addSamples(1, nowMs);
     }
 
+    function injectSimulation(vec as Array<Number>, captureMs as Number) as Void {
+        if (!BuildMode.SIMULATED && !Prefs.testNamespace) { return; }
+        _running = true;
+        emit(vec, captureMs);
+        _cadence.addSamples(1, captureMs);
+    }
+
     private function emit(vec as Array<Number>, captureMs as Number) as Void {
+        if (_lastSampleMs != null && captureMs <= (_lastSampleMs as Number)) { return; }
         _lastRaw = vec;
         _lastSampleMs = captureMs;
         _lost = false;

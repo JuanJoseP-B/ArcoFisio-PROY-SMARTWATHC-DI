@@ -38,6 +38,9 @@ module MenuModel {
         if (item == QUICK) {
             return FlowModel.SCREEN_EXERCISE;
         }
+        if (item == PAIN) {
+            return FlowModel.SCREEN_PAIN;
+        }
         if (item == SETTINGS) {
             return FlowModel.SCREEN_SETTINGS;
         }

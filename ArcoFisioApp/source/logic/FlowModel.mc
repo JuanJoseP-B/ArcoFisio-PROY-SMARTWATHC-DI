@@ -16,7 +16,12 @@ module FlowModel {
         SCREEN_SOON,
         SCREEN_SETTINGS,
         SCREEN_MEASURE,
-        SCREEN_DIAGNOSTICS
+        SCREEN_DIAGNOSTICS,
+        SCREEN_REST,
+        SCREEN_SUMMARY,
+        SCREEN_PAIN,
+        SCREEN_CALIBRATE,
+        SCREEN_SIMULATION
     }
 
     // Canvas 01: every opening shows the loading; the welcome is only for the

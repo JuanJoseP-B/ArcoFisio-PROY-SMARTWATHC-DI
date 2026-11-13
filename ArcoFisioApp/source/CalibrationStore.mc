@@ -12,7 +12,7 @@ module CalibrationStore {
     function load() as Array<Double>? {
         var stored = null;
         try {
-            stored = Application.Storage.getValue(KEY_GRAVITY_REF);
+            stored = Prefs.read(KEY_GRAVITY_REF);
         } catch (e) {
             return null;
         }
@@ -34,8 +34,7 @@ module CalibrationStore {
     // Saves the reference. Returns false when the watch could not store it.
     function save(gravityRef as Array<Double>) as Boolean {
         try {
-            Application.Storage.setValue(KEY_GRAVITY_REF, [gravityRef[0], gravityRef[1], gravityRef[2]]);
-            return true;
+            return Prefs.write(KEY_GRAVITY_REF, [gravityRef[0], gravityRef[1], gravityRef[2]]);
         } catch (e) {
             return false;
         }
