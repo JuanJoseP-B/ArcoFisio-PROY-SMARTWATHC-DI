@@ -140,3 +140,51 @@ export const easing = {
   wheel: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
   honeycomb: 'cubic-bezier(0.34, 1.35, 0.64, 1)',
 } as const
+
+/** Marea fonts: DM Sans for data and actions, Newsreader italic for the guide's voice. Both are bundled, never fetched. */
+export const mareaFont = {
+  sans: '"DM Sans", system-ui, sans-serif',
+  serif: '"Newsreader", Georgia, serif',
+} as const
+
+/** Marea type scale (handoff 02). `tracking` is in em. Figures use DM Sans only. */
+export const mareaType = {
+  big: { size: 88, lineHeight: 1, weight: 700, tracking: -0.04 },
+  mid: { size: 48, lineHeight: 1, weight: 700, tracking: -0.03 },
+  title: { size: 21, lineHeight: 1.15, weight: 700, tracking: -0.01 },
+  message: { size: 25, lineHeight: 1.15, weight: 400, tracking: 0 },
+  label: { size: 13.5, lineHeight: 1.2, weight: 500, tracking: 0.1 },
+  sub: { size: 15, lineHeight: 1.35, weight: 500, tracking: 0 },
+  button: { size: 17, lineHeight: 1.2, weight: 700, tracking: 0 },
+} as const
+
+/** Marea sizes (handoff 02 and 03), in px of the 384 watch space. */
+export const mareaGeometry = {
+  touchMin: 48,
+  stepperButton: 56,
+  menuButton: 54,
+  menuRadius: 132,
+  safeColumn: 270,
+  listRowRadius: 26,
+  optionRadius: 28,
+  focusRing: 3,
+  waveBackOpacity: 0.16,
+  waveFrontOpacity: 0.3,
+} as const
+
+/** Marea motion (handoff 04), in ms. */
+export const mareaDuration = {
+  waterLevel: 600,
+  contentIn: 240,
+  reducedFade: 150,
+  loading: 3800,
+  loadingReduced: 1400,
+  waveFront: 8000,
+  waveBack: 13000,
+} as const
+
+export const mareaEasing = {
+  water: 'cubic-bezier(0.3, 0.7, 0.3, 1)',
+  emerge: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+  drop: 'cubic-bezier(0.5, 0, 0.9, 0.6)',
+} as const
