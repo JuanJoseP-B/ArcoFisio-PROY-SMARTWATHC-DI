@@ -9,6 +9,7 @@ import {
   mareaEasing,
   mareaFont,
   mareaGeometry,
+  mareaText,
   mareaType,
   safeDiameter,
   sceneColor,
@@ -33,6 +34,7 @@ export function buildCssVariables(): Record<string, string> {
     vars[`--af-marea-${kebab(name)}`] = value
   }
 
+  for (const [name, value] of Object.entries(mareaText)) vars[`--af-marea-text-${name}`] = value
   for (const [name, value] of Object.entries(mareaFont)) vars[`--af-marea-font-${name}`] = value
   for (const [name, style] of Object.entries(mareaType)) {
     vars[`--af-marea-type-${kebab(name)}-size`] = px(style.size)

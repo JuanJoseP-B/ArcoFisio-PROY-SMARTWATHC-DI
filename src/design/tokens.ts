@@ -61,6 +61,16 @@ export const mareaColor = {
   shadow: 'rgba(15, 27, 61, 0.13)',
 } as const
 
+/**
+ * Text colors for lines drawn straight over the water, where two translucent layers lower the
+ * contrast of the handoff's `inkSecondary` (3.8:1) and `accentDark` (4.2:1). These two are
+ * slightly darker and reach 4.5:1 on the deepest water as well as on paper, card and tint.
+ */
+export const mareaText = {
+  secondary: '#3F4B6B',
+  link: '#2A40A8',
+} as const
+
 /** Colors of the intro illustration (archer, prairie, sky). Used by the intro only. */
 export const sceneColor = {
   skyTop: '#D98A3A',

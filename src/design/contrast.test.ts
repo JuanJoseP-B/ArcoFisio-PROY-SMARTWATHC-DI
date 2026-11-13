@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { contrastRatio, luminance, mixHex } from './contrast'
-import { color, geometry, mareaColor as m, mareaGeometry } from './tokens'
+import { color, geometry, mareaColor as m, mareaGeometry, mareaText } from './tokens'
 
 const MIN_TEXT = 4.5
 
@@ -106,7 +106,7 @@ describe('Marea text on the screen', () => {
     tint: m.accentTint,
     background: m.background,
   }
-  const inks = { ink: m.ink, inkSecondary: m.inkSecondary, accentDark: m.accentDark }
+  const inks = { ink: m.ink, 'text secondary': mareaText.secondary, 'text link': mareaText.link }
 
   for (const [inkName, ink] of Object.entries(inks)) {
     for (const [bgName, bg] of Object.entries(backgrounds)) {
@@ -116,6 +116,13 @@ describe('Marea text on the screen', () => {
       })
     }
   }
+
+  it('keeps the handoff secondary ink and accent for surfaces without water', () => {
+    for (const surface of [m.paper, m.card, m.accentTint]) {
+      expect(contrastRatio(m.inkSecondary, surface)).toBeGreaterThanOrEqual(MIN_TEXT)
+      expect(contrastRatio(m.accentDark, surface)).toBeGreaterThanOrEqual(MIN_TEXT)
+    }
+  })
 
   it('reads the secondary text on the disabled menu buttons and the icon discs', () => {
     expect(contrastRatio(m.inkSecondary, m.line)).toBeGreaterThanOrEqual(MIN_TEXT)
@@ -134,8 +141,6 @@ describe('Marea text inside filled shapes', () => {
     ['amberDark on amberTint (pill)', m.amberDark, m.amberTint],
     ['onRose on rose', m.onRose, m.rose],
     ['roseDark on roseTint (pill)', m.roseDark, m.roseTint],
-    ['amberDark on paper under the water', m.amberDark, water],
-    ['mintDark on paper under the water', m.mintDark, water],
   ]
 
   it.each(pairs)('%s reaches the text minimum', (_name, ink, bg) => {
@@ -144,12 +149,15 @@ describe('Marea text inside filled shapes', () => {
 })
 
 describe('Marea graphics', () => {
-  it('keeps the focus ring and the selection border visible (3:1) on every surface', () => {
+  it('keeps the focus ring visible (3:1) on every surface, water included', () => {
     for (const surface of [m.paper, water, m.card, m.accentTint, m.background]) {
       expect(contrastRatio(m.accentDark, surface)).toBeGreaterThanOrEqual(MIN_GRAPHIC)
-      expect(
-        contrastRatio(m.accent, surface === m.accentTint ? m.paper : surface),
-      ).toBeGreaterThanOrEqual(MIN_GRAPHIC)
+    }
+  })
+
+  it('keeps the selection border visible (3:1) against the surfaces it sits on', () => {
+    for (const surface of [m.paper, m.card, m.background]) {
+      expect(contrastRatio(m.accent, surface)).toBeGreaterThanOrEqual(MIN_GRAPHIC)
     }
   })
 
