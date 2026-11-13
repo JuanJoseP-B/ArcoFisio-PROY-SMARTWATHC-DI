@@ -1,27 +1,34 @@
 # v2 phase 03 · Sesión completa en Garmin
 
-Branch: `feature/03-v2-sesion-garmin` (worktree `phase03`). Spec: `docs/spec-v2.md` §4 fase 03. Reference: `arco-fisio-handoff/docs/05-pantallas.md` (canvas 08, 12, 13, 15, 16, 20), `03-geometria-del-reloj.md`, `06-comportamiento-y-datos.md`.
+Actualizado: 2026-11-13. Rama `feature/03-v2-sesion-garmin`, worktree `phase03`. Rigen `docs/spec-v2.md`, `PROJECT.md` y `docs/phase-02-03-review.md`.
 
-## Objective
-Completar en el Forerunner 165 una sesión de dos series: sesión en vivo con el dial Marea, avisos, descanso, resumen y guardado; terminar antes y recuperar una interrupción de lecturas.
+**Solo Garmin. La demo web y fase 04 están canceladas por el usuario, no aplazadas.** Después de completar/aprobar esta fase sigue 05.
 
-## Scope
-Garmin only (`ArcoFisioApp/`). Screens 08 (rango y calibración), 12 (arco doloroso), 13 (sesión en vivo), 15 (descanso), 16 (resumen), 20 (diálogos). Port of the v1 engine to Monkey C. Web adaptation stays deferred (spec v2 phase 04).
+## Objetivo y alcance
 
-## Constraints
-No loose colours (`Palette`). Texts es/en in `phase03.xml` (both languages in each resources folder). No `setInterval` equivalents beyond the single app timer. Pain-arc priority is a pending product decision: `EngineConfig.PAIN_RULE` is the single switch, default v1; tests cover both. Commits atomic, no attribution (R9). No merge: wait for «aprobado».
+Sesión de dos series en Forerunner 165: muestras con tiempo de captura, calibración/rango (08), arco (12), sesión Marea (13), descanso (15), resumen (16), diálogos (20), avisos y guardado. Terminación anticipada y recuperación de lecturas.
 
-## Tasks
-- [x] T1 Zones, RepEngine, SessionRun, RunStats, pain-rule switch + tests (bc07757)
-- [ ] T2 Workout (series, descanso, parar antes) + tests
-- [ ] T3 Pain arc marking model, session log, settings store + tests
-- [ ] T4 LiveSession (feeds the engine from tracker samples, sensor-loss pause) + tracker sample queue + tests
-- [ ] T5 Strings (es/en), dial, cues, live screen 13, rest 15
-- [ ] T6 Summary 16, dialogs 20, pain arc screen 12, range screen 08, navigation
-- [ ] T7 Build + unit tests + simulator check; PROJECT.md and handoff
+## Estado comprobado
 
-## Acceptance
-Compiles for `fr165` (normal and test); unit tests green; two-set session, early stop and sensor-loss recovery observed in the simulator (sensor injected) or documented as unverified.
+- [x] T1 Zonas, repeticiones, sesión, estadísticas y regla configurable de dolor (`bc07757`).
+- [x] T2 Series, descanso y terminación anticipada (`ad29998`).
+- [x] T3 Modelos de arco y registro, serialización y pruebas (`fb9bcf6`).
+- [x] T4 Modelo puro `LiveSession`, pruebas de dos series y pérdida de señal.
+- [x] Integración T4 (local, sin commit): cola de `ArmTracker` → `SessionCoordinator` → `LiveSession`, con pruebas en `tests/IntegrationTests.mc`.
+- [x] T5 (local, sin commit): textos, `LiveModel`, `Dial`, `Cues`, `Prefs`, vistas de sesión y descanso; el error de `LiveModel.mc:46` ya no existe. Avisos `Cues` no observados.
+- [~] T6 Resumen, diálogos de pausa/pérdida/terminar, guardado y fallo observados en simulador. Pendiente observar: rango, arco doloroso, pausa, terminar anticipado desde la sesión, Ajustes, es/en completo.
+- [ ] T7 Recompilar tras las últimas ediciones visuales, revisión visual es/en, reapertura de la app, decisiones de producto, documentación final y commits.
 
-## Route log
-T1 by a previous session. T2–T7: inline in the main chat (no subagents, by user request). Single writer.
+Snapshot confirmado `fb9bcf6`: 108/108. Estado local medido en 2026-11-13: compila normal/tests/simulación y **116/116 pasan** (corregida `menuItemsOpenTheirScreens`, añadidas 8 pruebas de integración). Después se editaron `Widgets.mc` (fuente de botones), `ScreensHome.mc` (descripción del menú) y cadenas es/en **sin recompilar**. Ver [handoff](../../docs/phase-03-handoff.md).
+
+No hay commits nuevos desde `fb9bcf6`: todo el trabajo anterior está sin confirmar en Git.
+
+## Decisiones pendientes
+
+Prioridad y conteo del dolor; mínimo del asistente (10° implementado, 0° especificado). No sustituir decisiones por supuestos. La regla histórica sigue predeterminada.
+
+## Aceptación
+
+Compilación para `fr165 -l 3 -w` normal/tests; modelos correctos; dos series, descanso, final anticipado y recuperación observados en UI con muestras sintéticas identificadas. Guardado/reapertura y errores comprobados. Validación real del sensor pendiente hasta contar con reloj.
+
+No iniciar una fase nueva ni hacer merge sin aprobación. No subagentes para este trabajo, conforme a la indicación previamente registrada en esta tarea.

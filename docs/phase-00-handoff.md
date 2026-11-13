@@ -1,5 +1,7 @@
 # Continuidad — Arco Fisio v2
 
+> Registro histórico de fase 00. Desde el 2026-11-13 el alcance es exclusivamente Garmin: la demo web fue cancelada. Las comprobaciones web de este registro describen trabajo pasado, no requisitos futuros. Ver [SPEC vigente](spec-v2.md).
+
 Fuente vigente: `docs/spec-v2.md`. `docs/spec.md` describe la versión web histórica. Este archivo debe actualizarse al terminar cada fase con lo realizado, las comprobaciones, las decisiones y lo pendiente.
 
 ## Fase 00 · Base reproducible — terminada e integrada en `develop`

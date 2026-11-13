@@ -1,62 +1,94 @@
-# Arco Fisio v2 · Especificación de la app Garmin y la demo web
+# Arco Fisio v2 · Especificación vigente — solo Garmin
 
-Estado: plan de implementación, 2026-11-12.
+Actualizado: 2026-11-13. Fuente de verdad del alcance, comportamiento y fases futuras.
 
-## 1. Resultado esperado
+## 0. Alcance confirmado y continuidad entre chats
 
-- **Garmin:** una aplicación Connect IQ de tipo `Watch App`, escrita en Monkey C para el Forerunner 165 estándar. Usa el sensor del reloj para calibrar, medir la inclinación, guiar una sesión y guardar sus resultados localmente. La entrega inicial se instala mediante un `.prg`.
-- **Portafolio:** una demo web en React y TypeScript basada en la app actual. Abre desde un enlace y permite completar el recorrido con ángulos simulados desde computador o celular, sin cuenta, reloj ni permiso de movimiento. El diseño definitivo del contenedor del portafolio se integra cuando esté disponible.
-- **Diseño compartido:** modo claro *Marea*, Hipo, dial circular con nivel de agua, muesca de objetivo y arco doloroso rayado. Español e inglés en ambas versiones. Portugués y modo oscuro quedan como ampliaciones.
+**El usuario canceló por completo la página web y la demo. El único producto que se desarrolla y entrega es la app nativa para Garmin Forerunner 165.** Esta decisión sustituye cualquier planificación anterior de demo, portafolio web, React, Vite, navegador, teléfono como sensor o despliegue en Vercel.
 
-El punto de partida visual es el [handoff de Claude Design](../arco-fisio-handoff/README.md), en particular sus [21 canvas](../arco-fisio-handoff/docs/05-pantallas.md) y la [geometría del dial](../arco-fisio-handoff/docs/03-geometria-del-reloj.md). El comportamiento de referencia es la web actual, etiquetada como `v1.0.0`, y su [spec histórico](spec.md). Cuando el handoff propone una regla diferente, se aplica el criterio de la sección 3.
+- No desarrollar, reparar, completar, probar como requisito de fase ni publicar una versión web. No crear una interfaz web para suplir la falta del reloj.
+- `src/`, los scripts npm y documentos web históricos permanecen como antecedentes. Su presencia no autoriza trabajo sobre ellos. No se pide borrarlos.
+- Los HTML/SVG del handoff son referencias para dibujar la interfaz nativa; no son otra aplicación por implementar.
+- Sin hardware: pruebas Monkey C, muestras sintéticas y simulador Connect IQ para `fr165`.
+- Mantener la numeración: **04 cancelada; después de 03 sigue 05**, luego 06 y 07. No reutilizar 04 para otro producto.
+- «Continúa», «haz la siguiente fase» o «termina el proyecto» se interpretan dentro de este alcance Garmin. Solo una instrucción explícita nueva del usuario puede reabrir la web.
+- Al iniciar un chat: leer `AGENTS.md`, `PROJECT.md`, este SPEC y el informe/handoff; comprobar rama, worktrees y cambios locales antes de concluir que falta una implementación.
 
-## 2. Estado de partida y arquitectura
+## 1. Producto y diseño
 
-| Parte | Estado observado | Decisión |
-|---|---|---|
-| `ArcoFisioApp/` | Plantilla Connect IQ con manifiesto `watch-app`, producto `fr165`, API mínima 5.2.0 y permisos aún sin declarar. | Reutilizar el proyecto generado. Separar la lectura del sensor, el motor, el almacenamiento y las vistas. |
-| Entorno Garmin | SDK activo 9.3.0 y perfil `fr165` presentes en Windows. | Confirmar compilación y arranque en el simulador como primera fase. |
-| Web en la raíz | Vite, React, TypeScript y simulador de ángulo existente con `?sim=1`. | Mantener la estructura y los puntos de entrada. Reutilizar el motor y los datos locales. Reconstruir los componentes visuales que cambien con *Marea*. |
-| Handoff | 21 canvas de referencia en modo claro. | Usar HTML, SVG y tokens como referencia. Dibujar los componentes equivalentes con gráficos nativos en Garmin y con CSS/SVG en la web. |
+Arco Fisio es un proyecto académico de Diseño de Interfaces para guiar ejercicios de hombro desde un **Forerunner 165 estándar**. Aplicación Connect IQ `watch-app`, Monkey C, producto `fr165`, API mínima declarada 5.2.0 y permiso `Sensor`. Entrega instalable: `.prg` firmado con la clave local no rastreada.
 
-Las dos implementaciones compartirán la **especificación, los ejemplos de entrada/salida y la semántica visual**. El motor TypeScript se reutiliza en la web y se porta a Monkey C donde haga falta. Las fuentes de ángulo entregan muestras con tiempo de captura al motor. Los avisos y el dibujo consumen los resultados del motor, de modo que una animación o un fotograma atrasado no determinen cuándo se cuenta una repetición. Garmin guardará sus datos con almacenamiento local de Connect IQ y la web seguirá usando `localStorage`. Cada historial pertenece a su instalación.
+Calibra una referencia de gravedad, mide inclinación desde la muñeca, muestra ángulo y estados de aproximación, registra repeticiones y series, administra descansos y guarda resultados en el reloj. No requiere servidor, cuentas, servicio externo de IA ni app de teléfono.
 
-## 3. Reglas y decisiones
+Identidad: **Marea claro**, Hipo, dial circular con agua, muesca de objetivo y banda rayada del arco doloroso. Español e inglés. Toque y botones físicos permiten las acciones principales. Color y sonido nunca son la única forma de comunicar un estado.
 
-| Tema | Criterio para v2 |
+Referencia visual: [handoff](../arco-fisio-handoff/README.md), [pantallas](../arco-fisio-handoff/docs/05-pantallas.md) y [geometría](../arco-fisio-handoff/docs/03-geometria-del-reloj.md). Adaptar tipografía y distribución a métricas reales de Connect IQ: ninguna instrucción esencial puede quedar cortada o superpuesta. Los planes web incluidos en el handoff están sustituidos por este SPEC.
+
+## 2. Arquitectura y estado de partida
+
+| Parte | Responsabilidad |
 |---|---|
-| Calibración y ángulo | Conservar la referencia de gravedad con el brazo abajo y el rango de 0° a 180°. En Garmin se mide desde la muñeca. Validar si la postura de brazo extendido permite una lectura suficientemente repetible y documentar las limitaciones observadas. El conteo visual de 3 s del canvas se acepta cuando esté conectado a una comprobación de estabilidad. |
-| Objetivo y tolerancia | Objetivo de 0° a 180° en pasos de 5°. Mantener ±2° por defecto y tolerancia configurable. Las muestras que quedan dentro de la tolerancia incluyen los límites. |
-| Repeticiones | En v1, sostener el objetivo 1 s marca el sostén. La repetición se registra al bajar hasta el umbral de retorno y puede quedar registrada como no sostenida. El contador que cierra la serie incluye esas repeticiones. Mantener ese comportamiento como referencia de paridad y distinguir «sostén logrado» de «repetición registrada» en la UI. |
-| Prioridad del arco doloroso | **Decisión pendiente de producto.** V1 evalúa primero objetivo y sobrepaso. El handoff da prioridad al arco y propone no contar dentro de él. Documentar ambos resultados con objetivo 90°, arco 70°–110° y lectura de 90°, y con objetivo 90°, arco 100°–125° y lectura de 106°. Mantener v1 como referencia para la comparación. Resolver qué aviso se muestra y cómo afecta el conteo antes de cerrar la sesión en vivo. |
-| Zonas de aproximación | Mantener las tres zonas internas de aproximación de v1. Se pueden presentar como una familia visual en el nuevo dial y conservar sus diferencias de feedback si el dispositivo las admite. |
-| Pérdida de lecturas | Pausar la sesión, conservar el avance en curso y reiniciar el sostén. Verificar que una muestra antigua no pueda completar el segundo de sostén. El tiempo para declarar pérdida se ajusta con la cadencia medida en el reloj. |
-| Series y descanso | Mantener el paso a descanso entre series, la opción de saltarlo y la terminación anticipada con sus resultados parciales. Distinguir «sesión completa» de «sesión terminada antes». |
-| Rutinas e historial | La primera versión de estas pantallas usa rutinas de un ejercicio y el historial actual. Mantener compatibilidad con los datos web existentes. Rutinas de varios bloques, metas semanales, filtros avanzados y detalle de dolor por repetición se evalúan después del flujo completo. |
-| Guía y ajustes | Reutilizar los consejos de reglas locales y mostrar el estado sin datos. Las nuevas sugerencias de objetivo o descanso del canvas requieren una decisión de producto. Confirmar antes de borrar datos. Mantener la semántica de borrado actual mientras no se acuerde conservar ajustes concretos. |
+| `SensorReader.mc` | Acelerómetro, tiempos de captura, disponibilidad y pérdida de señal. |
+| `ArmTracker.mc`, `AngleMath.mc`, `CalibrationHold.mc` | Gravedad de referencia, filtro, ángulo, estabilidad y muestras para el motor. |
+| `source/logic/` | Modelos puros: navegación, asistente, zonas, repeticiones, series, descanso, arco y registro. |
+| `source/ui/`, `Palette.mc` | Pantallas, controles, dibujos Marea y navegación nativa. |
+| `Prefs.mc`, `CalibrationStore.mc` | Persistencia con `Application.Storage`; tratar datos corruptos y fallos de escritura. |
+| `resources/`, `resources-spa/` | Recursos y textos es/en. |
+| `source/tests/` | Pruebas Monkey C en simulador. |
 
-Fuentes de comportamiento: [repeticiones](../src/domain/repetitions.ts), [zonas](../src/domain/zones.ts), [sesión](../src/domain/sessionRun.ts), [series y descanso](../src/domain/workout.ts) y [modelo de datos](../src/data/types.ts).
+Código activo: `ArcoFisioApp/`. Las muestras llegan al motor con su **tiempo de captura**. Un fotograma o animación no puede avanzar por sí solo una repetición. Los modelos puros no leen sensores ni el reloj del sistema; pantallas, avisos y guardado consumen sus resultados.
 
-## 4. Fases y criterios de aceptación
+Estado revisado: fase 02 integrada en `develop` mediante `47b11ac`; la carpeta principal permanece en su rama de fase 02. Fase 03 en otro worktree, rama `feature/03-v2-sesion-garmin`, motor confirmado hasta `fb9bcf6` y archivos locales incompletos. Consultar [PROJECT.md](../PROJECT.md) y [revisión](phase-02-03-review.md). La aceptación física de fase 01 sigue pendiente.
 
-Cada fase tiene una entrega que se puede revisar de forma independiente. Las fases web pueden avanzar mientras se coordina el préstamo del reloj. La prueba física de la fase 01 tiene prioridad cuando el reloj esté disponible.
+## 3. Reglas del comportamiento
 
-| Fase | Alcance y canvas | Se considera lista cuando… |
+| Tema | Regla |
+|---|---|
+| Calibración y lectura | Referencia «brazo abajo», lectura 0°–180°, cuenta de 3 s ligada a estabilidad. Movimiento reinicia la cuenta. Guardar referencia y avisar si falla. La inclinación de muñeca no equivale automáticamente al ángulo del hombro. |
+| Objetivo y tolerancia | Objetivo especificado 0°–180° en pasos de 5°; tolerancia predeterminada ±2°, límites inclusivos. El asistente actual parte de 10°: discrepancia pendiente de resolver explícitamente y probar en límites, especialmente 0°. No adaptar el requisito al código silenciosamente. |
+| Asistente rápido | Ejercicio, objetivo, repeticiones, series, descanso. Valores iniciales actuales: 90°, 10 repeticiones, 3 series, 30 s; límites implementados: 1–50 repeticiones, 1–10 series, 5–180 s en pasos de 5. Guardar/restaurar opciones válidas. |
+| Sostén y repetición | Sostener objetivo 1000 ms marca el sostén. Registrar repetición al retornar al umbral; puede ser no sostenida. Distinguir «sostén logrado» de «repetición registrada». Una muestra repetida o antigua no avanza el sostén. |
+| Aproximación | Conservar zonas lejos, aproximación y cerca; pueden compartir familia visual y mantener avisos distinguibles donde el dispositivo lo permita. |
+| Arco doloroso | **Decisión de producto pendiente antes de cerrar 03.** Regla histórica: objetivo/sobrepaso antes que dolor. Alternativa: dolor primero. `EngineConfig.PAIN_RULE` mantiene la histórica por defecto. Probar objetivo 90° con arco 70°–110° a 90°, y arco 100°–125° a 106°. La alternativa implementada impide sostén dentro del arco, pero sigue registrando repetición al retornar: no afirmar que elimina toda repetición dolorosa. Acordar aviso y conteo definitivos. |
+| Pérdida de lecturas | Pausar, conservar avance y reiniciar sostén en curso. No consumir muestras pendientes antiguas como nuevas al reanudar. Probar tanto modelo como conexión lector→cola→sesión. Ajustar tiempos con mediciones físicas. |
+| Series y descanso | Transición entre series, cuenta, salto de descanso y final anticipado con resultados parciales. Distinguir completada/detenida; comprobar salto de la última serie. |
+| Resumen y guardado | Máximo, repeticiones registradas/sostenidas, series y terminación. Comparación con signo o primera sesión. No anunciar guardado si falla `Application.Storage`. Historial exclusivo de la instalación Garmin. |
+| Rutinas | Un ejercicio en la primera entrega. Sin importación ni sincronización web. Varios bloques y metas semanales reales requieren ampliación explícita. |
+| Guía y ajustes | Consejos de reglas locales, estado sin datos, idioma, tolerancia, avisos y borrado confirmado. Nuevas sugerencias del handoff requieren decisión de producto. |
+
+El código histórico puede consultarse para entender fórmulas y ejemplos; no se exige mantener dos productos ni ejecutar pruebas web para aceptar Garmin. Este SPEC prevalece cuando difiera del comportamiento histórico.
+
+## 4. Fases y aceptación
+
+| Fase | Alcance Garmin | Aceptación |
 |---|---|---|
-| **00 · Base reproducible** | Revisar manifiesto y perfil `fr165`, comprobar la web v1, preparar la plantilla Monkey C y su configuración local. Excluir de Git la clave privada de firma y las salidas generadas antes de agregar archivos. | La plantilla compila y abre en el simulador del Forerunner 165, la web v1 abre con `?sim=1` y quedan documentados los comandos y el estado inicial. |
-| **01 · Sensor en el reloj** | Prototipo técnico del **03 y 08**. Declarar permiso de sensor, leer muestras con tiempos, calibrar y dibujar grados. Medir latencia, estabilidad, interrupciones y disponibilidad de tonos/vibración. | Se instala el `.prg` en el reloj real y se registran lecturas de referencia a 0°, 45°, 90° y por encima de 90°, con brazo extendido y repeticiones de la misma postura. Se documenta qué cambia al flexionar el codo o girar la muñeca y qué cadencia de lectura llega a la app. |
-| **02 · Identidad y navegación** | **00–07.** Tokens, Hipo, círculo, tipografía, botones y componentes de navegación. Entrada, idioma, estado del sensor, cara, menú y asistente de sesión. Garmin con toque y botones. Web con foco visible, teclado y movimiento reducido. | Se puede navegar desde inicio hasta preparar una sesión. Los textos en español e inglés, el foco y los controles caben en la zona útil del círculo en ambas versiones. |
-| **03 · Sesión completa en Garmin** | Completar **08, 12, 13, 15, 16 y 20**. Portar el motor, incorporar el dial *Marea*, arco doloroso, avisos, descanso, resumen y guardado. | Una sesión de dos series se completa en el reloj, incluido el descanso. Se puede terminar antes y recuperar una interrupción de lecturas. Se verifican el máximo, las repeticiones y el aviso de dolor con las reglas acordadas. |
-| **04 · Demo funcional de Marea** | Conectar los mismos recorridos de la fase 03 al motor web existente. Añadir control de ángulo accesible fuera del círculo y modo simulado explícito desde la entrada. | Una persona completa una sesión desde escritorio o celular, alcanza el objetivo, ve los avisos y llega al resumen sin conceder permisos. Los mismos ejemplos producen resultados equivalentes en ambos motores. |
-| **05 · Rutinas y reproductor** | **09–11 y 14.** Biblioteca, detalle, constructor de un ejercicio, selección y reproducción. | Se puede abrir una rutina incluida, guardar y editar una propia, iniciarla, pausar y continuar. El detalle avisa si el objetivo coincide con el arco según la regla acordada. |
-| **06 · Historial, guía y ajustes** | **17–19** y estados restantes de **20**. Historial local, comparación, guía, tolerancia, avisos, idioma y borrado confirmado. | El historial y los ajustes se conservan tras reabrir. Se revisan los estados sin datos, primera sesión, cancelación de borrado y fallo de guardado. |
-| **07 · Entrega y portafolio** | Revisar el flujo en reloj real, escritorio y celular. Preparar `.prg` para el modelo, instrucciones de instalación y enlace de la demo. Integrar la presentación visual del portafolio cuando se comparta. | El paquete se instala y abre en el Forerunner 165. El enlace público abre la demo en modo simulado y una persona puede terminar la sesión desde un navegador móvil o de escritorio. El portafolio identifica qué parte está simulada y muestra evidencia del reloj real. |
+| **00 · Base reproducible** | Manifiesto, perfil, SDK, firma local y plantilla. Integrada. | Compila y abre en simulador; comandos documentados; clave y salidas fuera de Git. Comprobaciones web antiguas son historia, no requisitos vigentes. |
+| **01 · Sensor** | Prototipo de canvas 03 y 08: leer, calibrar, medir y diagnosticar. | Instalar en reloj y registrar referencias 0°, 45°, 90° y >90°, repetibilidad, postura, cadencia, latencia, interrupciones y avisos. Sigue abierta hasta prueba física. |
+| **02 · Identidad y navegación** | Canvas 00–07: carga, bienvenida, idioma, sensor, cara, menú, ejercicio, asistente. | Recorrido hasta preparar sesión con toque y botones; es/en legibles dentro del círculo. Compilación, tests y revisión visual. Corregir superposiciones y textos esenciales truncados. |
+| **03 · Sesión completa** | Canvas 08, 12, 13, 15, 16 y 20: motor conectado a muestras, dial, arco, avisos, descanso, resumen y persistencia. | Dos series con descanso; final anticipado; pérdida/recuperación; máximos y conteo correctos; guardado y errores visibles. Modelos con muestras sintéticas y recorrido integrado observado en simulador. Validación física identificada aparte como pendiente. |
+| **04 · CANCELADA** | Antigua demo web, cancelada por el usuario el 2026-11-13. | **No implementar, reactivar ni convertir en requisito de otra fase.** |
+| **05 · Rutinas y reproductor** | Canvas 09–11 y 14: biblioteca, detalle, constructor de un ejercicio, selección, pausa y reproducción Garmin. | Abrir incluida; guardar/editar propia; iniciar, pausar y continuar; advertir coincidencia con arco según regla acordada. Reutilizar motor de 03. |
+| **06 · Historial, guía y ajustes** | Canvas 17–19 y diálogos restantes del 20. | Historial/ajustes sobreviven al reinicio; comparación, primera sesión, sin datos, cancelación de borrado y fallo de almacenamiento. |
+| **07 · Entrega Garmin** | `.prg` para `fr165`, instalación y evidencia. | Instalar y completar recorrido en reloj físico; legibilidad en movimiento, toque, botones, sensor y avisos. Documentar resultados y limitaciones. Sin página, alojamiento, enlace de demo ni portafolio web. |
 
-**Corte mínimo de entrega:** fases 00–04 y publicación del recorrido principal en la fase 07. Las fases 05 y 06 completan el alcance de los canvas. Si el reloj solo está disponible por un periodo corto, aprovechar el préstamo para instalar y medir desde la fase 01 y reservar una segunda prueba para la sesión completa.
+**Orden:** terminar pendientes de 02 y 03; después 05, 06 y 07. Aprovechar préstamo del reloj para validación física de 01 y sesión. Avanzar en lógica/pantallas sin hardware; no declarar validación física por resultados del simulador.
 
-## 5. Verificación y seguimiento
+**Corte mínimo:** fases 00–03 y empaquetado/verificación física de 07. Las fases 05 y 06 completan funciones restantes. La fase 04 no forma parte de ninguna entrega.
 
-- **Paridad del motor.** Usar secuencias de ángulo y tiempo comunes para comprobar sostén de 999 ms y 1000 ms, retorno, sobrepaso, intersección con el arco, pausa sin muestras, salto de descanso y final anticipado. Incluir la primera sesión y comparaciones positivas, negativas y sin cambio.
-- **Garmin.** Usar el simulador para navegar y comprobar el diseño. En el reloj físico comprobar el sensor, la respuesta de los avisos, la legibilidad en movimiento y el funcionamiento de toque y botones. Si la lectura desde la muñeca no resulta repetible, registrar la postura y las limitaciones antes de definir el alcance de la sesión guiada.
-- **Web.** Comprobar foco, teclado, tacto, movimiento reducido, textos de ambos idiomas y persistencia de datos. Señalar el modo simulado y evitar que el sonido sea indispensable para entender un estado.
-- **Flujo del repositorio.** Trabajar desde `develop` en una rama por fase, con la convención `feature/NN-nombre` existente y numeración que no choque con v1. Revisión del usuario al cerrar cada fase antes de mezclar a `develop`. Mantener los commits atómicos y actualizar `PROJECT.md` con el estado y las decisiones aceptadas. La primera implementación empieza en la fase 00.
+## 5. Trabajo sin smartwatch
+
+1. Compilar código **actual**, incluidos cambios locales, normal y tests con `monkeyc -d fr165 -l 3 -w`. [Comandos](phase-01-handoff.md). Diferenciar resultado de un commit del trabajo sin confirmar.
+2. Ejecutar Monkey C con `monkeydo ... fr165 /t`, simulador previamente abierto. Los modelos puros no necesitan sensor.
+3. Secuencias deterministas `(ángulo, tiempo)`: 999/1000 ms, retorno, sobrepaso, arco, muestras repetidas, pausas, recuperación, dos series, descanso, saltos y final anticipado.
+4. Para recorrido completo, conectar muestras sintéticas **solo de desarrollo/pruebas** al mismo flujo del sensor; indicar que son simuladas, permitir interrupción/reanudación y evitar guardarlas como mediciones reales. El paquete normal usa el sensor del reloj y no inventa lecturas cuando falta.
+5. Revisar pantallas en simulador `fr165`: textos es/en, tamaños, contraste, foco por botones, toque, volver/cancelar, límites y diálogos. Los tests del motor no sustituyen revisión visual.
+6. Cuando haya reloj, ejecutar [plan físico](sensor-test-plan.md) y [registro](phase-01-device-record.md). Solo allí se validan precisión/repetibilidad, latencia, percepción de avisos y legibilidad en movimiento.
+
+## 6. Continuidad, ramas y cierre
+
+- Usar `git worktree list`: no concluir que 03 no existe por ver una pantalla provisional en 02.
+- Una rama por fase con convención existente `feature/NN-v2-...`; preservar cambios locales y trabajar en el worktree correcto. No mezclar ramas solo para actualizar documentación.
+- Actualizar `PROJECT.md`, handoff/informe y tareas al cambiar estado. Separar implementado, compilado, probado por modelos, observado en simulador y validado físicamente.
+- Commits atómicos en inglés, sin atribución. No heredar metas artificiales de número de commits del plan web.
+- Cierre con revisión del usuario; merge a `develop` solo tras «aprobado». `main` lo integra el usuario. Esta revisión no autoriza comenzar otra fase.
+- Si se pide una fase cancelada, explicar cancelación y señalar la fase Garmin pendiente. Los documentos archivados no reabren la web.

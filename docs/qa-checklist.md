@@ -1,5 +1,7 @@
 # Lista de verificación de calidad y de la demostración
 
+> **QA web histórica, archivada desde 2026-11-13.** La demo está cancelada; esta lista no es un requisito de entrega ni trabajo pendiente. Para Garmin usar [SPEC vigente](spec-v2.md) y [plan del sensor](sensor-test-plan.md).
+
 Se completa a mano en cada teléfono antes de entregar. Lo automático (contraste, nombres accesibles, movimiento reducido, temporizadores, diccionarios) ya lo vigilan las pruebas: `npm run test`.
 
 Marca `[x]` al cumplirse y anota el dispositivo, el navegador y la fecha.

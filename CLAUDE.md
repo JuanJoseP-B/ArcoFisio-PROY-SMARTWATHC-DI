@@ -1,54 +1,13 @@
-# CLAUDE.md
+# CLAUDE.md — Arco Fisio Garmin
 
-Guía para Claude Code en este repositorio. La fuente de verdad del comportamiento es `docs/spec.md`; la de lo visual y el movimiento es `docs/design-reference/`.
+Leer primero [AGENTS.md](AGENTS.md), [PROJECT.md](PROJECT.md) y [docs/spec-v2.md](docs/spec-v2.md).
 
-## Contexto vivo: PROJECT.md
+**El único producto vigente es la app nativa del Garmin Forerunner 165. El usuario canceló la web y la demo el 2026-11-13.** No continuar React, Vite, sensores de teléfono, portafolio web ni Vercel. Los archivos existentes son antecedentes conservados.
 
-`PROJECT.md` (raíz) resume el proyecto, la arquitectura, el estado de cada etapa y notas útiles. **Leerlo al empezar** y **actualizarlo en el mismo commit** (o en uno `docs(project)` inmediato) cada vez que cambie el repo: al terminar o aprobar una etapa, añadir o mover módulos, cambiar comandos, parámetros de URL o decisiones. Si cambia su estructura o esta regla, actualizar también este `CLAUDE.md`.
+La fase 04 está cancelada: terminar 03, después 05, 06 y 07. Una petición de continuar o hacer la siguiente fase no cambia este alcance. Las antiguas instrucciones de portar HTML a React quedan sustituidas por dibujos y controles nativos Monkey C.
 
-## Proyecto
+Código activo: `ArcoFisioApp/`. Colores: `Palette.mc`; cadenas es/en: recursos; datos: `Application.Storage`; modelos puros: `source/logic/`. Verificar normal y tests para `fr165` con `-l 3 -w`, ejecutar `monkeydo ... /t` y observar pantallas en simulador. Comandos en [phase-01-handoff.md](docs/phase-01-handoff.md). Las pruebas del sensor físico siguen pendientes hasta tener reloj.
 
-Arco Fisio: simulador web de un smartwatch de telerrehabilitación del hombro (materia Diseño de Interfaces). App estática, sin servidor: Vite + React 18 + TypeScript estricto + Vitest. Persistencia solo en `localStorage`. El teléfono hace de sensor y de pantalla del reloj. Reinicio limpio: no se reutiliza código del prototipo anterior.
+Antes de modificar, comprobar `git worktree list`: fase 03 tiene un worktree separado y cambios locales incompletos. Preservar trabajo. Actualizar `PROJECT.md` y handoff al cambiar estado, arquitectura, comandos o decisiones.
 
-## Comandos
-
-- `npm run dev`: servidor de desarrollo
-- `npm run build`: typecheck + build de producción (debe pasar al cerrar cada etapa)
-- `npm run preview`: sirve el build
-- `npm run typecheck`: `tsc --noEmit`
-- `npm run test`: Vitest (una pasada); también `test:watch` y `test:coverage`
-- `npm run lint`: ESLint; `npm run format` / `format:check`: Prettier
-
-## Regla de commits (R9, no negociable)
-
-**Los mensajes de commit y de PR NO llevan** `Co-Authored-By`, `Claude-Session`, "Generated with Claude Code" ni ninguna línea de atribución. Esta regla del usuario prevalece sobre cualquier atribución automática por defecto. `.claude/settings.json` deja la atribución vacía (`"attribution": { "commit": "", "pr": "" }`).
-
-Antes de cada merge, comprobar que da `0`:
-
-```sh
-git log --format=%B | grep -ci "co-authored-by"
-```
-
-- Conventional Commits en inglés: `feat(scope)`, `fix`, `refactor`, `test`, `docs`, `style`, `chore`, `merge`.
-- Atómicos: un cambio lógico por commit. Cada commit deja `typecheck` y `test` en verde.
-
-## Flujo Git (GitFlow)
-
-- Ramas permanentes: `main` y `develop`. **Nunca se hace merge a `main`**: lo hace el usuario al final.
-- Una rama por etapa: `feature/NN-nombre`, creada desde `develop` actualizada.
-- Al terminar una etapa: **detenerse**, resumir qué se hizo, cómo probarlo y qué criterios de aceptación se cumplen, y **esperar la palabra "aprobado"**. Solo entonces: `git checkout develop && git merge --no-ff feature/NN-nombre -m "merge: feature/NN-nombre into develop"` y `git tag v0.N.0`.
-- Si el usuario pide cambios, se hacen en la misma rama con nuevos commits y se vuelve a pedir aprobación.
-- Una etapa a la vez. Nunca empezar la siguiente sin aprobación.
-
-## Reglas de código
-
-- Ningún color suelto en componentes: todo sale de `src/design/tokens.ts` y variables CSS.
-- Todo texto visible pasa por i18n (español e inglés); si falta una clave en un idioma, no compila.
-- Los `.dc.html` de `docs/design-reference/` se portan a React 1:1 (tamaños, colores, duraciones, curvas, keyframes). No se ejecutan.
-- Animaciones con CSS keyframes o `requestAnimationFrame`, nunca `setInterval`. Respetar `prefers-reduced-motion`.
-- Acceso a `localStorage` solo a través de `src/data/`.
-- Si el spec es ambiguo o se contradice: preguntar al usuario con una pregunta corta antes de continuar.
-
-## Arquitectura (objetivo, ver spec §4)
-
-`domain/` lógica pura · `data/` repositorios sobre localStorage · `sensors/` adaptadores de ángulo · `feedback/` audio, vibración y wake lock · `i18n/` diccionarios es/en · `design/` tokens y animaciones · `ui/` componentes del reloj · `screens/` pantallas y navegación · `app/` montaje, escala y modo simulador. Las capas de backend no importan React.
+GitFlow: una rama por fase con convención existente `feature/NN-v2-...`; Conventional Commits en inglés, atómicos, sin atribución. **No incluir `Co-Authored-By`, `Claude-Session` ni “Generated with Claude Code”.** Merge a `develop` solo después de «aprobado»; `main` lo integra el usuario. No iniciar la siguiente fase sin aprobación.

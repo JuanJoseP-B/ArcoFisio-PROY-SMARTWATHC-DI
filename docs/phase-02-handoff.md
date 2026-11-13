@@ -1,5 +1,7 @@
 # Fase 02 · Identidad y navegación (reloj)
 
+> Actualización de revisión (2026-11-13): fase 02 integrada en `develop` mediante `47b11ac`. Se repitieron compilación y 59 pruebas con resultado correcto; la revisión visual encontró textos superpuestos/truncados. Detalle en [phase-02-03-review.md](phase-02-03-review.md). La adaptación web está **cancelada**, no aplazada. Rige el [SPEC Garmin](spec-v2.md).
+
 **Estado:** pantallas 01 a 07 implementadas en `ArcoFisioApp/` para Forerunner 165, con toque y botones, sin necesitar el sensor. Rama `feature/02-v2-identidad-navegacion`.
 
 ## Qué hay
@@ -17,5 +19,5 @@
 ## Sin verificar (requiere sensor o reloj real)
 
 - Cualquier lectura real del acelerómetro y las transiciones reales entre los estados del sensor.
-- Aspecto y tamaño de toque en el reloj físico; revisión visual en el simulador no hecha en esta pasada.
+- Aspecto y tamaño de toque en el reloj físico. Revisión visual posterior parcial en simulador registrada en el informe; no equivale a aprobación del conjunto.
 - Que Medir, Sesión rápida y Arco doloroso respondan con lecturas vivas.

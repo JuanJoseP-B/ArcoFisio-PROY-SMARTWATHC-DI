@@ -1,6 +1,8 @@
 # Arco Fisio · Paquete de traspaso de diseño (modo claro)
 
-Este paquete reúne todo lo necesario para implementar la interfaz de **Arco Fisio**, un prototipo académico de telerehabilitación del hombro que simula un smartwatch circular (el teléfono hace de pantalla y de sensor).
+Este paquete conserva la referencia visual de **Arco Fisio**, proyecto académico de telerrehabilitación del hombro. Desde el 2026-11-13 el único destino de implementación es la app nativa para **Garmin Forerunner 165**. La web y la demo están canceladas; el teléfono no es el sensor del producto vigente.
+
+**Prevalece [el SPEC Garmin](../docs/spec-v2.md).** Los HTML, SVG, previews y textos históricos sobre navegador/teléfono son material de consulta visual, no una fase web pendiente. El [prompt de continuación](docs/07-prompt-para-codex.md) se actualizó al alcance Garmin.
 
 Estado: **modo claro completo (21 canvases)**. El modo oscuro está pendiente de diseño; en `tokens/` hay una propuesta de valores para él.
 
