@@ -21,7 +21,7 @@ Sesión de dos series en Forerunner 165: muestras con tiempo de captura, calibra
 
 Snapshot confirmado `fb9bcf6`: 108/108. Estado local medido en 2026-11-13: compila normal/tests/simulación y **116/116 pasan** (corregida `menuItemsOpenTheirScreens`, añadidas 8 pruebas de integración). Después se editaron `Widgets.mc` (fuente de botones), `ScreensHome.mc` (descripción del menú) y cadenas es/en **sin recompilar**. Ver [handoff](../../docs/phase-03-handoff.md).
 
-No hay commits nuevos desde `fb9bcf6`: todo el trabajo anterior está sin confirmar en Git.
+Actualización 2026-11-13 (tarde): el trabajo ya está confirmado y subido (`b73e4a9` integración, `eb8bbb1` pantallas, `62a8d5f` pruebas, `34656a8` documentación). Se recompilaron normal, tests y simulación tras las ediciones visuales (correctas, solo la advertencia del icono) y se ejecutaron las pruebas: **116/116**. Pendiente de T6/T7: observar en simulador las pantallas listadas arriba, es/en, reapertura real y las decisiones de producto. En esa sesión el simulador no recibió clics ni teclas (sin foco de escritorio), así que no se observó nada nuevo en pantalla.
 
 ## Decisiones pendientes
 

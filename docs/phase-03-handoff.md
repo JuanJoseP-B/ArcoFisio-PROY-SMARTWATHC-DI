@@ -1,6 +1,6 @@
 # Fase 03 · Handoff para continuar (Codex)
 
-Fecha: 2026-11-13. Rama `feature/03-v2-sesion-garmin`, worktree `phase03`, último commit `fb9bcf6`. **Todo lo descrito aquí está sin confirmar en Git** (cambios locales). Alcance: solo app nativa Garmin Forerunner 165; web y demo canceladas, fase 04 cancelada. Leer antes `AGENTS.md`, `PROJECT.md` y `docs/spec-v2.md`.
+Fecha: 2026-11-13. Rama `feature/03-v2-sesion-garmin`, worktree `phase03`, último commit `fb9bcf6`. **Actualización:** el trabajo descrito aquí ya está confirmado y subido (cabeza `34656a8`). Tras las ediciones de la sección 2 se recompilaron las tres variantes y las pruebas dieron **116/116** (2026-11-13); la verificación visual de la sección 3 sigue pendiente. Alcance: solo app nativa Garmin Forerunner 165; web y demo canceladas, fase 04 cancelada. Leer antes `AGENTS.md`, `PROJECT.md` y `docs/spec-v2.md`.
 
 ## 1. Qué se comprobó en esta sesión
 

@@ -15,7 +15,7 @@ Fuentes vigentes: [AGENTS.md](AGENTS.md), [SPEC Garmin](docs/spec-v2.md), [revis
 | 00 | Integrada en `develop`, `28ac8d3`; entorno y plantilla verificados. |
 | 01 | Sensor/calibración/diagnóstico implementados. Validación física pendiente: no hay reloj disponible. [Handoff](docs/phase-01-handoff.md), [plan físico](docs/sensor-test-plan.md). |
 | 02 | Integrada en `develop` mediante `47b11ac`. Normal y tests compilan; 59 tests pasan. Revisión visual detecta superposición en Ajustes y explicaciones truncadas en menú. Objetivo mínimo difiere del SPEC. |
-| 03 | En curso en worktree separado, sin commits nuevos tras `fb9bcf6`. Estado local: compila (normal, tests, simulación) y **116/116 tests pasan** (último resultado medido); sesión de dos series, descanso, pérdida/recuperación, fallo/reintento de guardado y resumen observados en simulador con muestras sintéticas. Ediciones visuales posteriores sin compilar; faltan pantallas por observar, es/en, reapertura, decisiones de producto y cierre. [Handoff](docs/phase-03-handoff.md). |
+| 03 | En curso en worktree separado; todo el trabajo está confirmado y subido (`34656a8`). Medido el 2026-11-13 tras las ediciones visuales: compila normal, tests y simulación, y **116/116 tests pasan**. Sesión de dos series, descanso, pérdida/recuperación, fallo/reintento de guardado y resumen observados en simulador con muestras sintéticas. Faltan observar pantallas (rango, arco doloroso, pausa, terminar anticipado, Ajustes, es/en), reapertura real, decisiones de producto y aprobación. [Handoff](docs/phase-03-handoff.md). |
 | 04 | **Cancelada: demo web. No es trabajo pendiente.** |
 | 05 | Pendiente: rutinas y reproductor Garmin, después del cierre de 03. |
 | 06 | Pendiente: historial, guía local y ajustes Garmin. |
@@ -27,13 +27,13 @@ Comprobar de nuevo con `git worktree list` al retomar:
 
 - Principal `C:/Users/jjper/Documents/3.PROY-SMARTWATCH-DI`: rama `feature/02-v2-identidad-navegacion`, `4416df2`, cambios locales web anteriores a la cancelación. Preservarlos.
 - `C:/Users/jjper/Documents/3.PROY-SMARTWATCH-DI-worktrees/phase01`: rama `feature/01-v2-watch-sensor`.
-- `C:/Users/jjper/Documents/3.PROY-SMARTWATCH-DI-worktrees/phase03`: rama `feature/03-v2-sesion-garmin`, `fb9bcf6`, más cambios locales sin commit. **Aquí está fase 03**, no en la carpeta principal.
+- `C:/Users/jjper/Documents/3.PROY-SMARTWATCH-DI-worktrees/phase03`: rama `feature/03-v2-sesion-garmin`, `34656a8`, sin cambios locales pendientes. **Aquí está fase 03**, no en la carpeta principal.
 
 No cambiar ramas ni descartar trabajo para localizar una fase. Las copias antiguas de documentos en otros worktrees pueden preceder a la cancelación; trasladar allí el alcance vigente antes de continuar. Consultar el informe para distinguir qué se compiló y probó.
 
 ## Próximo trabajo
 
-1. Recompilar fase 03 (normal, tests, simulación) y ejecutar pruebas: hay ediciones de botones, menú y cadenas sin compilar. Detalle en [handoff de fase 03](docs/phase-03-handoff.md).
+1. ~~Recompilar fase 03 y ejecutar pruebas~~ Hecho el 2026-11-13: tres variantes compilan y 116/116 pasan. Detalle en [handoff de fase 03](docs/phase-03-handoff.md).
 2. Observar en simulador, es y en, las pantallas pendientes (rango, arco doloroso, pausa, terminar anticipado, Ajustes, menú sin sensor) y corregir desbordes.
 3. Comprobar persistencia al cerrar y reabrir la app, y que los avisos (`Cues`) no fallen.
 4. Acordar con el usuario prioridad/conteo del arco y el objetivo mínimo (SPEC 0°; código 10°). No inventar aprobación.
