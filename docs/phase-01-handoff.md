@@ -39,3 +39,5 @@ Una vez abierta la ventana, ejecutar primero las pruebas y luego el paquete norm
 - Instalar el paquete normal en un Forerunner 165 físico y abrir Arco Fisio. Calibrar con el brazo extendido hacia abajo y mantenerlo quieto durante la cuenta. Usar una referencia externa para repetir al menos tres veces las posturas a 0°, 45°, 90° y por encima de 90° (anotar el ángulo de referencia). Registrar valor estable, dispersión y demora visible. Repetir una postura flexionando el codo y girando la muñeca por separado.
 - En Diagnóstico, registrar cadencia, edad de muestra, origen del tiempo y pérdidas. Comparar lotes y consulta. Anotar qué sucede si se interrumpen las lecturas y si se perciben el tono y la vibración con los ajustes del reloj activos. Comprobar botones y toque.
 - Conservar las mediciones y decidir si la lectura desde la muñeca es suficientemente repetible para guiar la sesión. La fase queda abierta hasta completar esta prueba.
+
+Usar [phase-01-device-record.md](phase-01-device-record.md) para registrar las condiciones, cada repetición y los resultados de diagnóstico.
