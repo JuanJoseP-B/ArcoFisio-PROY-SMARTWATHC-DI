@@ -161,8 +161,9 @@ module Phase02Tests {
         return MenuModel.target(MenuModel.QUICK) == FlowModel.SCREEN_EXERCISE
             && MenuModel.target(MenuModel.MEASURE) == FlowModel.SCREEN_MEASURE
             && MenuModel.target(MenuModel.SETTINGS) == FlowModel.SCREEN_SETTINGS
+            && MenuModel.target(MenuModel.PAIN) == FlowModel.SCREEN_PAIN
             && MenuModel.target(MenuModel.HISTORY) == FlowModel.SCREEN_SOON
-            && MenuModel.target(MenuModel.PAIN) == FlowModel.SCREEN_SOON;
+            && MenuModel.target(MenuModel.ROUTINES) == FlowModel.SCREEN_SOON;
     }
 
     (:test)
