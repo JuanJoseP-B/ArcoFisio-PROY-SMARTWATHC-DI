@@ -8,7 +8,9 @@ _Última actualización: 2026-10-20 · etapas 0–14 mezcladas en `develop` (`v1
 
 El [spec v2](docs/spec-v2.md) define las fases para la app nativa en Garmin Forerunner 165 y la demo web del portafolio con el diseño Marea. El estado que se documenta a continuación corresponde a la versión web v1.
 
-La fase 00 de v2 (`feature/00-v2-bootstrap`) está terminada y en espera de aprobación: la plantilla compila para `fr165`, abre en el simulador del Forerunner 165 y la web v1 abre con `?sim=1`. Los comandos de compilación y simulador están en la [continuidad de fase](docs/phase-00-handoff.md). Sigue la fase 01 (sensor en el reloj).
+La fase 00 de v2 está integrada en `develop` (`28ac8d3`). La plantilla Garmin y la demo web se verificaron en esa fase. Los comandos quedaron en la [continuidad de fase 00](docs/phase-00-handoff.md).
+
+La fase 01 sigue en `feature/01-v2-watch-sensor`. El prototipo y el paquete de pruebas compilan para `fr165`. Las verificaciones restantes y el protocolo para el reloj físico se registran en la [continuidad de fase 01](docs/phase-01-handoff.md).
 
 ## Qué es
 

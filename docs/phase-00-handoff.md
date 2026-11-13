@@ -2,7 +2,9 @@
 
 Fuente vigente: `docs/spec-v2.md`. `docs/spec.md` describe la versión web histórica. Este archivo debe actualizarse al terminar cada fase con lo realizado, las comprobaciones, las decisiones y lo pendiente.
 
-## Fase 00 · Base reproducible — terminada, en espera de aprobación
+## Fase 00 · Base reproducible — terminada e integrada en `develop`
+
+Integración registrada en `28ac8d3`.
 
 Criterio del spec (§4): la plantilla compila y abre en el simulador del Forerunner 165, la web v1 abre con `?sim=1` y quedan documentados los comandos y el estado inicial.
 
@@ -40,4 +42,4 @@ Desde la raíz del repositorio, con `SDK` apuntando a la carpeta del SDK activo 
 
 ## Siguiente: fase 01 · Sensor en el reloj
 
-Prototipo técnico de los canvas 03 y 08: declarar el permiso de sensor, leer muestras con tiempos, calibrar y dibujar grados; medir latencia, estabilidad, interrupciones y disponibilidad de tonos y vibración. Requiere el reloj físico para cerrar su criterio de aceptación (`spec-v2.md` §4). No se empieza sin la aprobación de la fase 00.
+El estado del prototipo y el protocolo de medición se registran en [la continuidad de fase 01](phase-01-handoff.md).
