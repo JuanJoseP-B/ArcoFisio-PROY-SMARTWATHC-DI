@@ -33,6 +33,34 @@ export const color = {
 
 export type ColorToken = keyof typeof color
 
+/** Marea light palette from the v2 design handoff, separate during v1 migration. */
+export const mareaColor = {
+  background: '#EAF0F9',
+  paper: '#F7F9FD',
+  card: '#FFFFFF',
+  ink: '#0F1B3D',
+  inkSecondary: '#4B5878',
+  line: '#D3DCEF',
+  accent: '#4263EB',
+  accentDark: '#2B45B8',
+  accentTint: '#DCE4FF',
+  onAccent: '#FFFFFF',
+  mint: '#4FD1B5',
+  mintDark: '#0B6B58',
+  mintTint: '#D6F5EE',
+  onMint: '#06332B',
+  amber: '#FFB26B',
+  amberDark: '#8F4504',
+  amberTint: '#FFE9D2',
+  onAmber: '#3A1C00',
+  rose: '#F2668B',
+  roseDark: '#A3234B',
+  roseTint: '#FDE0E8',
+  onRose: '#3A0618',
+  water: '#4263EB',
+  shadow: 'rgba(15, 27, 61, 0.13)',
+} as const
+
 /** Colors of the intro illustration (archer, prairie, sky). Used by the intro only. */
 export const sceneColor = {
   skyTop: '#D98A3A',

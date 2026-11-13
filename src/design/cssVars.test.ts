@@ -6,6 +6,8 @@ describe('buildCssVariables', () => {
 
   it('exposes colors, geometry, type and motion under the --af- prefix', () => {
     expect(vars['--af-color-ink']).toBe('#1F3A2B')
+    expect(vars['--af-marea-background']).toBe('#EAF0F9')
+    expect(vars['--af-marea-accent-dark']).toBe('#2B45B8')
     expect(vars['--af-color-zone-pain-tint']).toBe('#F4D3C8')
     expect(vars['--af-screen-size']).toBe('384px')
     expect(vars['--af-safe-diameter']).toBe('328px')

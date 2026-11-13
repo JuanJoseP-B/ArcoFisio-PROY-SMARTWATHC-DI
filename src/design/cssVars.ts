@@ -4,6 +4,7 @@ import {
   easing,
   fontFamily,
   geometry,
+  mareaColor,
   safeDiameter,
   sceneColor,
   space,
@@ -22,6 +23,10 @@ export function buildCssVariables(): Record<string, string> {
   const vars: Record<string, string> = {}
 
   for (const [name, value] of Object.entries(color)) vars[`--af-color-${kebab(name)}`] = value
+
+  for (const [name, value] of Object.entries(mareaColor)) {
+    vars[`--af-marea-${kebab(name)}`] = value
+  }
 
   for (const [name, value] of Object.entries(sceneColor)) vars[`--af-scene-${kebab(name)}`] = value
 
