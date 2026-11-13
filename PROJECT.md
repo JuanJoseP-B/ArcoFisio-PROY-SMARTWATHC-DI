@@ -12,6 +12,8 @@ La fase 00 de v2 está integrada en `develop` (`28ac8d3`). La plantilla Garmin y
 
 La fase 01 sigue en `feature/01-v2-watch-sensor`. El prototipo y el paquete de pruebas compilan para `fr165`. Las verificaciones restantes y el protocolo para el reloj físico se registran en la [continuidad de fase 01](docs/phase-01-handoff.md).
 
+La fase 02 de v2 (`feature/02-v2-identidad-navegacion`) se enfoca por ahora **solo en la app Garmin**: pantallas 01–07 (carga y bienvenida, idioma, estados del sensor, cara, menú radial, ejercicio y asistente rápido) con toque y botones, compiladas para `fr165` con 59 pruebas unitarias en verde. Falta verlas en el simulador y en el reloj real; detalle en [`docs/phase-02-handoff.md`](docs/phase-02-handoff.md). La adaptación web de esas pantallas queda aplazada (el usuario la adapta después).
+
 ## Qué es
 
 Simulador web de un smartwatch de telerrehabilitación del hombro (materia Diseño de Interfaces). El teléfono hace de sensor (inclinación del brazo → ángulo) y de pantalla del reloj. El reloj guía al paciente a **llegar** al ángulo prescrito y **no pasarse**, evitando su arco doloroso, con feedback visual, sonoro y por vibración.
@@ -140,3 +142,4 @@ Commits en `develop` tras la etapa 7: 207 (la meta R4 de más de 100 ya se cumpl
 - 2026-10-20: etapa 13 aprobada, mezclada y etiquetada `v0.13.0`; arranca la etapa 14.
 - 2026-10-20: etapa 14 terminada (contraste, accesibilidad, reglas de movimiento y temporizadores, `vercel.json`, README y lista de verificación); mezclada y etiquetada `v1.0.0` por indicación del usuario.
 - 2026-11-12: fase 00 de v2 terminada (plantilla Garmin compilada y observada en el simulador `fr165`, web v1 comprobada con `?sim=1`, comandos documentados); esperando aprobación.
+- 2026-11-13: fase 02 de v2, parte Garmin (pantallas 01–07, 59 pruebas, compila para `fr165`); web aplazada.
