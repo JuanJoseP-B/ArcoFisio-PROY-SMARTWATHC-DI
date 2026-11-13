@@ -11,13 +11,24 @@ interface NavProviderProps {
   children?: ReactNode
 }
 
-/** Holds the screen stack and gives screens `push`, `back`, `replace`, `reset` and `popTo`. Escape goes back. */
+/** Keys that go back; Backspace is left alone while the person types in a field. */
+const isTyping = (target: EventTarget | null): boolean =>
+  target instanceof HTMLElement &&
+  (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) &&
+  !(target instanceof HTMLInputElement && ['range', 'checkbox', 'radio'].includes(target.type))
+
+/**
+ * Holds the screen stack and gives screens `push`, `back`, `replace`, `reset` and `popTo`.
+ * Escape and Backspace go back.
+ */
 export function NavProvider({ initial = initialNav, children }: NavProviderProps) {
   const [state, dispatch] = useReducer(navReducer, initial)
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') dispatch({ type: 'back' })
+      if (event.key === 'Escape' || (event.key === 'Backspace' && !isTyping(event.target))) {
+        dispatch({ type: 'back' })
+      }
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)

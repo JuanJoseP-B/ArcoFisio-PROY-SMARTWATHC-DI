@@ -2,6 +2,7 @@ import type { Exercise } from '../../data/types'
 
 export type ScreenId =
   | 'intro'
+  | 'welcome'
   | 'face'
   | 'language'
   | 'setup'
@@ -24,8 +25,10 @@ export interface Route {
   readonly id: ScreenId
   /** Routine to show, run or edit: the detail, the session and the builder use it. */
   readonly routineId?: string
-  /** Exercise being configured, for the config and counts screens. */
+  /** Exercise being configured, for the config wizard. */
   readonly exercise?: Exercise
+  /** Step of the quick-session wizard (1 to 4): each step is its own entry, so back goes one step. */
+  readonly step?: number
 }
 
 export interface NavState {
@@ -47,12 +50,13 @@ export const currentRoute = (state: NavState): Route => state.stack[state.stack.
 export const canGoBack = (state: NavState): boolean => state.stack.length > 1
 
 export const sameRoute = (a: Route, b: Route): boolean =>
-  a.id === b.id && a.routineId === b.routineId && a.exercise === b.exercise
+  a.id === b.id && a.routineId === b.routineId && a.exercise === b.exercise && a.step === b.step
 
 /** Identity of a screen on show: a new key replays the radial entrance. */
 export const routeKey = (route: Route): string => {
   const detail = route.routineId ?? route.exercise
-  return detail ? `${route.id}:${detail}` : route.id
+  const base = detail ? `${route.id}:${detail}` : route.id
+  return route.step === undefined ? base : `${base}:${route.step}`
 }
 
 /**

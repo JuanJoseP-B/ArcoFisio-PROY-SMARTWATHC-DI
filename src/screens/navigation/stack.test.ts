@@ -118,4 +118,14 @@ describe('routes', () => {
     expect(routeKey({ id: 'session', routineId: 'abc' })).toBe('session:abc')
     expect(routeKey({ id: 'config', exercise: 'flexion' })).toBe('config:flexion')
   })
+
+  it('treats each wizard step as its own screen', () => {
+    const one = { id: 'config', exercise: 'abduction', step: 1 } as const
+    const two = { id: 'config', exercise: 'abduction', step: 2 } as const
+    expect(sameRoute(one, two)).toBe(false)
+    expect(sameRoute(one, { ...one })).toBe(true)
+    expect(routeKey(two)).toBe('config:abduction:2')
+    const state = run([push(one), push(two)])
+    expect(ids(navReducer(state, { type: 'back' }))).toEqual(['intro', 'config'])
+  })
 })
