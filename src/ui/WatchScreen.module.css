@@ -22,3 +22,11 @@
   align-items: center;
   justify-content: center;
 }
+
+/* Marea: the paper disc inside a 3 px line ring with a soft drop shadow (handoff 02). */
+.screen[data-theme='marea'] {
+  background: var(--af-marea-paper);
+  box-shadow:
+    0 0 0 3px var(--af-marea-line),
+    0 20px 44px var(--af-marea-shadow);
+}

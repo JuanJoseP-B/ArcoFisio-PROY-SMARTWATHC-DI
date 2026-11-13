@@ -22,3 +22,12 @@
   );
   pointer-events: none;
 }
+
+.bezel[data-theme='marea'] {
+  background: transparent;
+  box-shadow: none;
+}
+
+.bezel[data-theme='marea'] .glass {
+  display: none;
+}

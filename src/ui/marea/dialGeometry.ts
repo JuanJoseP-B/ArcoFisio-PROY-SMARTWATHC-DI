@@ -60,6 +60,9 @@ export function ringButtonCenter(index: number, count: number, radius: number): 
   }
 }
 
+/** Water level the loading animation leaves behind: the level of 90 degrees. */
+export const LOADING_END_LEVEL = 192
+
 /** Water level of screens without a measurement, by tide phase (handoff 04). */
 export const AMBIENT_WATER = {
   loading: 338,

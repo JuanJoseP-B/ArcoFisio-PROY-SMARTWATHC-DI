@@ -1,0 +1,55 @@
+.water {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--af-screen-size);
+  height: var(--af-screen-size);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.surface {
+  transition: transform var(--af-marea-dur-water-level) var(--af-marea-ease-water);
+}
+
+.layer {
+  animation-name: drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.back {
+  animation-duration: var(--af-marea-dur-wave-back);
+  animation-direction: reverse;
+}
+
+.front {
+  animation-duration: var(--af-marea-dur-wave-front);
+}
+
+.fillBack {
+  fill: var(--af-marea-water);
+  opacity: var(--af-marea-wave-back-opacity);
+}
+
+.fillFront {
+  fill: var(--af-marea-water);
+  opacity: var(--af-marea-wave-front-opacity);
+}
+
+/* One period is exactly 192 px, so the loop has no seam. */
+@keyframes drift {
+  to {
+    transform: translateX(192px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    animation: none;
+  }
+
+  .surface {
+    transition: none;
+  }
+}

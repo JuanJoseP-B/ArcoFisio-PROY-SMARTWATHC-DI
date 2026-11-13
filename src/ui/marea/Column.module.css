@@ -1,0 +1,12 @@
+.column {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--af-screen-size);
+  height: var(--af-screen-size);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}

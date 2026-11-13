@@ -1,0 +1,55 @@
+/* Text styles of the Marea handoff (02): one place for every screen. Figures never use the serif. */
+.big {
+  margin: 0;
+  font-weight: var(--af-marea-type-big-weight);
+  font-size: var(--af-marea-type-big-size);
+  line-height: var(--af-marea-type-big-line);
+  letter-spacing: var(--af-marea-type-big-tracking);
+  font-variant-numeric: tabular-nums;
+}
+
+.mid {
+  margin: 0;
+  font-weight: var(--af-marea-type-mid-weight);
+  font-size: var(--af-marea-type-mid-size);
+  line-height: var(--af-marea-type-mid-line);
+  letter-spacing: var(--af-marea-type-mid-tracking);
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  margin: 0;
+  font-weight: var(--af-marea-type-title-weight);
+  font-size: var(--af-marea-type-title-size);
+  line-height: var(--af-marea-type-title-line);
+  letter-spacing: var(--af-marea-type-title-tracking);
+}
+
+/* The guide's voice: Newsreader italic. */
+.message {
+  margin: 0;
+  font-family: var(--af-marea-font-serif);
+  font-style: italic;
+  font-weight: var(--af-marea-type-message-weight);
+  font-size: var(--af-marea-type-message-size);
+  line-height: var(--af-marea-type-message-line);
+  color: var(--af-marea-ink);
+}
+
+.label {
+  margin: 0;
+  font-weight: var(--af-marea-type-label-weight);
+  font-size: var(--af-marea-type-label-size);
+  line-height: var(--af-marea-type-label-line);
+  letter-spacing: var(--af-marea-type-label-tracking);
+  text-transform: uppercase;
+  color: var(--af-marea-text-secondary);
+}
+
+.sub {
+  margin: 0;
+  font-weight: var(--af-marea-type-sub-weight);
+  font-size: var(--af-marea-type-sub-size);
+  line-height: var(--af-marea-type-sub-line);
+  color: var(--af-marea-text-secondary);
+}
