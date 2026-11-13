@@ -1,4 +1,5 @@
 import Toybox.Application;
+import Toybox.Time;
 import Toybox.System;
 import Toybox.Graphics;
 import Toybox.Lang;
@@ -10,6 +11,9 @@ import Toybox.WatchUi;
 // the routing rules themselves live in FlowModel.
 class AppState {
 
+    var session as SessionCoordinator;
+    var simulation as SimulatedSensor;
+    var calibrationDestination as Number = FlowModel.SCREEN_MEASURE;
     var reader as SensorReader;
     var tracker as ArmTracker;
 
@@ -29,19 +33,24 @@ class AppState {
 
     private var _stack as NavStack = new NavStack();
     private var _screen as Screen;
+    private var _simulationReturn as Screen?;
+    private var _resumeFromSimulation as Boolean = false;
 
     function initialize(reader as SensorReader, tracker as ArmTracker) {
         self.reader = reader;
+        session = new SessionCoordinator();
+        simulation = new SimulatedSensor();
         self.tracker = tracker;
 
         var deviceSpanish = System.getDeviceSettings().systemLanguage == System.LANGUAGE_SPA;
         language = LanguageModel.normalize(Prefs.read(Prefs.KEY_LANGUAGE), LanguageModel.defaultFor(deviceSpanish));
         onboarded = Prefs.readFlag(Prefs.KEY_ONBOARDED);
-        sensorAllowed = Prefs.readFlag(Prefs.KEY_SENSOR_ALLOWED);
+        sensorAllowed = BuildMode.SIMULATED || Prefs.readFlag(Prefs.KEY_SENSOR_ALLOWED);
         wizard = WizardModel.restore(Prefs.read(Prefs.KEY_WIZARD));
         weekSessions = Prefs.readNumber(Prefs.KEY_WEEK_SESSIONS, 0);
         demoRoutine = Prefs.readFlag(Prefs.KEY_DEMO_ROUTINE);
         Tr.setLanguage(language);
+        Cues.configure(Prefs.readBool(Prefs.KEY_SOUND, true), Prefs.readBool(Prefs.KEY_VIBRATION, true));
 
         _stack.reset(FlowModel.SCREEN_LOADING);
         _screen = new LoadingScreen(self);
@@ -52,6 +61,53 @@ class AppState {
         if (sensorAllowed) {
             reader.start();
         }
+    }
+
+    function tick(now as Number) as Void {
+        var hold = tracker.calibrationHold();
+        simulation.tick(now, reader, wizard.value(WizardRules.STEP_ANGLE), hold != null && !hold.isDone());
+        reader.tick(now);
+        var wasActive = session.active;
+        var events = session.tick(now, Time.now().value(), hasSensor(), tracker);
+        var cue = Cues.forEvents(events);
+        if (cue != null) { Cues.play(cue); }
+        if (events == 512) { Cues.play(Cues.CUE_REST_END); }
+        if (wasActive && !session.active) { replaceWith(FlowModel.SCREEN_SUMMARY); }
+        _screen.tick(now);
+    }
+
+    function startSession() as Void {
+        if (!hasSensor()) { go(FlowModel.SCREEN_SENSOR); return; }
+        if (!tracker.isCalibrated()) { calibrateFor(FlowModel.SCREEN_SESSION); return; }
+        session.start(wizard, System.getTimer(), tracker);
+        simulation.restart();
+        replaceWith(FlowModel.SCREEN_SESSION);
+    }
+
+    function calibrateFor(destination as Number) as Void {
+        calibrationDestination = destination;
+        go(FlowModel.SCREEN_CALIBRATE);
+    }
+
+    function finishCalibration() as Void {
+        tracker.cancelCalibration();
+        if (calibrationDestination == FlowModel.SCREEN_SESSION) { startSession(); }
+        else { replaceWith(calibrationDestination); }
+    }
+
+    function openSimulation() as Void {
+        if (!BuildMode.SIMULATED || _simulationReturn != null) { return; }
+        _simulationReturn = _screen;
+        _resumeFromSimulation = session.active && session.dialog == SessionCoordinator.DIALOG_NONE;
+        if (_resumeFromSimulation) { session.pause(tracker); }
+        _screen = new SimulationScreen(self);
+    }
+    function closeSimulation() as Void {
+        var previous = _simulationReturn;
+        if (previous == null) { return; }
+        _screen = previous;
+        _simulationReturn = null;
+        if (_resumeFromSimulation) { session.resume(hasSensor(), System.getTimer(), tracker); }
     }
 
     function current() as Screen {
@@ -140,9 +196,7 @@ class AppState {
     }
 
     function openScreen(screen as Number) as Void {
-        if (screen == FlowModel.SCREEN_MEASURE) {
-            openPhase01(MainView.PAGE_LIVE);
-        } else if (screen == FlowModel.SCREEN_DIAGNOSTICS) {
+        if (screen == FlowModel.SCREEN_DIAGNOSTICS) {
             openPhase01(MainView.PAGE_DIAGNOSTICS);
         } else {
             go(screen);
@@ -163,7 +217,17 @@ class AppState {
     }
 
     private function makeScreen(screen as Number) as Screen {
-        if (screen == FlowModel.SCREEN_LOADING) {
+        if (screen == FlowModel.SCREEN_CALIBRATE) {
+            return new CalibrateScreen(self);
+        } else if (screen == FlowModel.SCREEN_MEASURE) {
+            return new RangeScreen(self);
+        } else if (screen == FlowModel.SCREEN_PAIN) {
+            return new PainScreen(self);
+        } else if (screen == FlowModel.SCREEN_SUMMARY) {
+            return new SummaryScreen(self);
+        } else if (screen == FlowModel.SCREEN_SIMULATION) {
+            return new SimulationScreen(self);
+        } else if (screen == FlowModel.SCREEN_LOADING) {
             return new LoadingScreen(self);
         } else if (screen == FlowModel.SCREEN_WELCOME) {
             return new WelcomeScreen(self);
@@ -200,6 +264,9 @@ class NavView extends WatchUi.View {
 
     function onUpdate(dc as Dc) as Void {
         _app.current().draw(dc);
+        if (BuildMode.SIMULATED) {
+            W.pill(dc, dc.getWidth()/2, W.u(dc,34), Tr.t(:Simulated), Palette.AMBERT, Palette.AMBERD, null);
+        }
     }
 }
 
@@ -219,6 +286,9 @@ class NavDelegate extends WatchUi.InputDelegate {
     function onTap(event as WatchUi.ClickEvent) as Boolean {
         var xy = event.getCoordinates();
         _app.keyMode = false;
+        if (BuildMode.SIMULATED && xy[1] < 55) {
+            _app.openSimulation(); WatchUi.requestUpdate(); return true;
+        }
         _app.current().tap(xy[0], xy[1]);
         WatchUi.requestUpdate();
         return true;

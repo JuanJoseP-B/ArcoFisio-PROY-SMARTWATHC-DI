@@ -102,7 +102,7 @@ class WizardScreen extends Screen {
         } else if (action == :next) {
             if (_app.wizard.advance()) {
                 _app.saveWizard();
-                _app.go(FlowModel.SCREEN_SESSION);
+                _app.startSession();
             }
         }
     }
@@ -190,28 +190,3 @@ function summaryOf(app as AppState) as String {
     ]);
 }
 
-// Where "Empezar" ends in this phase. The live session is phase 03.
-class SessionScreen extends Screen {
-
-    function initialize(app as AppState) {
-        Screen.initialize(app);
-    }
-
-    function act(action as Symbol) as Void {
-        if (action == :back) {
-            _app.back();
-        }
-    }
-
-    function draw(dc as Dc) as Void {
-        begin(dc);
-        var cx = dc.getWidth() / 2;
-        W.water(dc, 0.12f);
-        W.text(dc, cx, W.u(dc, 98), Graphics.FONT_XTINY, Tr.t(:SessionTitle), Palette.INK2);
-        W.text(dc, cx, W.u(dc, 140), Graphics.FONT_SMALL, summaryOf(_app), Palette.INK);
-        W.text(dc, cx, W.u(dc, 172), Graphics.FONT_XTINY,
-            Tr.f(:WizRestValue, [_app.wizard.value(WizardRules.STEP_REST)]) + " " + Tr.t(:WizRest), Palette.INK2);
-        W.paragraph(dc, Tr.t(:SessionBody), [Graphics.FONT_XTINY], cx, 196, 240, 50, Palette.INK2);
-        button(dc, 192, 290, 160, 52, Tr.t(:Back), W.BUTTON_PRIMARY, :back);
-    }
-}

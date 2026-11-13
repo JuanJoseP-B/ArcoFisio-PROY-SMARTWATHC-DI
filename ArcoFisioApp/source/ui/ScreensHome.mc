@@ -141,7 +141,7 @@ class MenuScreen extends Screen {
         var cx = dc.getWidth() / 2;
         if (MenuModel.isEnabled(item, hasSensor)) {
             W.text(dc, cx, W.u(dc, 148), Graphics.FONT_SMALL, Tr.t(MenuText.NAMES[item]), Palette.INK);
-            W.paragraph(dc, Tr.t(MenuText.DESCRIPTIONS[item]), [Graphics.FONT_XTINY], cx, 164, 196, 60, Palette.INK2);
+            W.paragraph(dc, Tr.t(MenuText.DESCRIPTIONS[item]), [Graphics.FONT_XTINY], cx, 160, 230, 66, Palette.INK2);
             button(dc, 192, 246, 130, 46, Tr.t(:Open), W.BUTTON_PRIMARY, :open);
         } else {
             W.pill(dc, cx, W.u(dc, 134), Tr.t(:NoSensor), Palette.AMBERT, Palette.AMBERD, :alert);
@@ -238,7 +238,7 @@ class SettingsScreen extends Screen {
         } else if (action == :diagnostics) {
             _app.openScreen(FlowModel.SCREEN_DIAGNOSTICS);
         } else if (action == :demo) {
-            _app.setDemoRoutine(!_app.demoRoutine);
+            _app.go(FlowModel.SCREEN_SUMMARY);
         } else if (action == :back) {
             _app.back();
         }
@@ -250,7 +250,7 @@ class SettingsScreen extends Screen {
         W.text(dc, cx, W.u(dc, 52), Graphics.FONT_XTINY, Tr.t(:SettingsTitle), Palette.INK2);
         row(dc, 104, Tr.t(:SettingsLang), Tr.t(_app.language == LanguageModel.SPANISH ? :LangSpanish : :LangEnglish), :language);
         row(dc, 166, Tr.t(:SettingsDiag), "", :diagnostics);
-        row(dc, 228, Tr.t(:SettingsDemo), Tr.t(_app.demoRoutine ? :Yes : :No), :demo);
+        row(dc, 228, Tr.t(:LastSummary), "", :demo);
         button(dc, 192, 316, 150, 46, Tr.t(:Back), W.BUTTON_LINK, :back);
     }
 

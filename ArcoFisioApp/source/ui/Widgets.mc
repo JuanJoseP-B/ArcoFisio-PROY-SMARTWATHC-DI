@@ -143,7 +143,14 @@ module W {
             dc.drawRoundedRectangle(x - gap, y - gap, w + 2 * gap, h + 2 * gap, h / 2 + gap);
         }
         dc.setPenWidth(1);
-        text(dc, centerX, centerY, width < 150 ? Graphics.FONT_TINY : Graphics.FONT_SMALL, label, foreground);
+        // Largest label font that fits inside the pill, never touching its edge.
+        var fonts = [Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_XTINY] as Array<FontType>;
+        var room = w - u(dc, 28);
+        var font = fonts[fonts.size() - 1];
+        for (var i = 0; i < fonts.size(); i++) {
+            if (dc.getTextWidthInPixels(label, fonts[i]) <= room) { font = fonts[i]; break; }
+        }
+        text(dc, centerX, centerY, font, label, foreground);
     }
 
     // Round button of the steppers: `-` or `+`.

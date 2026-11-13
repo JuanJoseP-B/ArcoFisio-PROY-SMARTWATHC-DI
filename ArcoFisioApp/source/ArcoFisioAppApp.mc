@@ -44,8 +44,7 @@ class ArcoFisioAppApp extends Application.AppBase {
 
     function onTick() as Void {
         var now = System.getTimer();
-        _reader.tick(now);
-        _state.current().tick(now);
+        _state.tick(now);
         _ticks += 1;
         if (_state.current().isAnimated() || _ticks % SensorConfig.TICKS_PER_REDRAW == 0) {
             WatchUi.requestUpdate();

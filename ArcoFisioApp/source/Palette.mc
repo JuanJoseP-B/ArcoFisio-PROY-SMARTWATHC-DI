@@ -34,6 +34,9 @@ module Palette {
     const WATER_BACK = 0xDAE1FA;
     const WATER_FRONT = 0xC1CCF8;
 
+    // `ink` at 60 % over `paper`: the veil behind a dialog (canvas 20).
+    const VEIL = 0x6C748A;
+
     // `ink2` at 65 % over `bg`: the dimmed icon of a disabled menu item.
     const DISABLED = 0x838DA5;
 }
