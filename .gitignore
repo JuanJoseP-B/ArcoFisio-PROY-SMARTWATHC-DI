@@ -8,3 +8,12 @@ coverage
 .DS_Store
 Thumbs.db
 .claude/settings.local.json
+
+# Connect IQ signing material
+/developer_key
+*.prg
+*.iq
+*.debug.xml
+/ArcoFisioApp/gen/
+/ArcoFisioApp/mir/
+/ArcoFisioApp/internal-mir/

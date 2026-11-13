@@ -1,0 +1,31 @@
+{"v":3,"createdOnFiles":{"v":1,"at":"2026-11-12T23:10:00Z"},"title":"Arco Fisio — Interfaz de reloj","launch":{"view":"canvas"},"pages":[{"id":"claro","name":"Modo claro"}],"boards":{
+"Main.dc.html":{"x":0,"y":0,"w":1776,"h":1040,"title":"00 · Identidad y sistema"},
+"01-Intro.dc.html":{"x":0,"y":1300,"w":912,"h":720,"title":"01 · Intro y carga","is_interactive":true},
+"02-Idioma.dc.html":{"x":992,"y":1300,"w":912,"h":720,"title":"02 · Idioma","is_interactive":true},
+"03-Sensor.dc.html":{"x":1984,"y":1300,"w":1776,"h":720,"title":"03 · Sensor y permisos","is_interactive":true},
+"04-Cara.dc.html":{"x":0,"y":2300,"w":1344,"h":720,"title":"04 · Cara principal","is_interactive":true},
+"05-Menu.dc.html":{"x":1424,"y":2300,"w":912,"h":720,"title":"05 · Menú principal","is_interactive":true},
+"06-Ejercicio.dc.html":{"x":2416,"y":2300,"w":912,"h":720,"title":"06 · Selector de ejercicio","is_interactive":true},
+"07-SesionRapida.dc.html":{"x":3408,"y":2300,"w":1776,"h":720,"title":"07 · Sesión rápida","is_interactive":true},
+"08-Calibracion.dc.html":{"x":0,"y":3300,"w":1776,"h":720,"title":"08 · Rango y calibración","is_interactive":true},
+"09-Rutinas.dc.html":{"x":1856,"y":3300,"w":1344,"h":720,"title":"09 · Biblioteca de rutinas","is_interactive":true},
+"10-DetalleRutina.dc.html":{"x":3280,"y":3300,"w":912,"h":720,"title":"10 · Detalle de rutina","is_interactive":true},
+"11-Constructor.dc.html":{"x":4272,"y":3300,"w":1344,"h":720,"title":"11 · Constructor de rutina","is_interactive":true},
+"12-ArcoDoloroso.dc.html":{"x":0,"y":4300,"w":1344,"h":720,"title":"12 · Arco doloroso","is_interactive":true},
+"13-SesionVivo.dc.html":{"x":1424,"y":4300,"w":1776,"h":720,"title":"13 · Sesión en vivo"},
+"14-Reproductor.dc.html":{"x":3280,"y":4300,"w":1344,"h":720,"title":"14 · Reproductor de rutina","is_interactive":true},
+"15-Descanso.dc.html":{"x":0,"y":5300,"w":912,"h":720,"title":"15 · Descanso","is_interactive":true},
+"16-Resumen.dc.html":{"x":992,"y":5300,"w":1344,"h":720,"title":"16 · Resumen de sesión","is_interactive":true},
+"17-Historial.dc.html":{"x":2416,"y":5300,"w":1344,"h":720,"title":"17 · Historial","is_interactive":true},
+"18-GuiaIA.dc.html":{"x":3840,"y":5300,"w":1344,"h":720,"title":"18 · Guía IA","is_interactive":true},
+"19-Ajustes.dc.html":{"x":0,"y":6300,"w":1776,"h":720,"title":"19 · Ajustes","is_interactive":true},
+"20-Estados.dc.html":{"x":1856,"y":6300,"w":1344,"h":1240,"title":"20 · Estados y diálogos","is_interactive":true}
+},"order":["Main.dc.html","01-Intro.dc.html","02-Idioma.dc.html","03-Sensor.dc.html","04-Cara.dc.html","05-Menu.dc.html","06-Ejercicio.dc.html","07-SesionRapida.dc.html","08-Calibracion.dc.html","09-Rutinas.dc.html","10-DetalleRutina.dc.html","11-Constructor.dc.html","12-ArcoDoloroso.dc.html","13-SesionVivo.dc.html","14-Reproductor.dc.html","15-Descanso.dc.html","16-Resumen.dc.html","17-Historial.dc.html","18-GuiaIA.dc.html","19-Ajustes.dc.html","20-Estados.dc.html"],"notes":{
+"t0":{"x":0,"y":-260,"text":"Arco Fisio · Modo claro","kind":"title1","maxW":1776},
+"t1":{"x":0,"y":1060,"text":"1 · Primer arranque","kind":"title1","maxW":3760},
+"t2":{"x":0,"y":2060,"text":"2 · Cara, menú y sesión rápida","kind":"title1","maxW":5184},
+"t3":{"x":0,"y":3060,"text":"3 · Medir, rutinas y constructor","kind":"title1","maxW":5616},
+"t4":{"x":0,"y":4060,"text":"4 · Arco doloroso y sesión en vivo","kind":"title1","maxW":4624},
+"t5":{"x":0,"y":5060,"text":"5 · Descanso, resumen e historial","kind":"title1","maxW":5184},
+"t6":{"x":0,"y":6060,"text":"6 · Ajustes y estados","kind":"title1","maxW":3200}
+},"designSystems":[]}

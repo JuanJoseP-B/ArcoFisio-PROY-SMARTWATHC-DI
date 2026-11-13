@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Intro y carga</title>
+<link rel="stylesheet" href="arco.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap">
+</helmet>
+<div class="b lt" style="width:912px;height:720px">
+<div class="hd"><span class="n">01</span><h1>Intro y carga</h1><p>Una gota, una ola, Hipo</p>
+<div style="margin-left:auto;display:flex;gap:10px;align-items:center"><span class="tl">Marea 1/5</span><span class="tide" style="margin:0"><i class="on"></i><i></i><i></i><i></i><i></i></span></div></div>
+
+<div class="row">
+<div class="col">
+<sc-if value="{{run}}" hint-placeholder-val="{{ true }}">
+<div class="w">
+<svg viewBox="0 0 384 384">
+<g style="animation:ld-rise 1.9s cubic-bezier(.3,.7,.3,1) .9s both">
+<g style="animation:dr 13s linear infinite reverse" opacity=".16"><path fill="var(--water)" d="M-192 192q48-12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g>
+<g style="animation:dr 8s linear infinite" opacity=".3"><path fill="var(--water)" d="M-192 200q48 12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g>
+</g>
+<circle cx="192" cy="22" r="8" fill="var(--acc)" style="animation:ld-drop .7s cubic-bezier(.5,0,.9,.6) .2s both"/>
+<circle cx="192" cy="326" r="70" fill="none" stroke="var(--acc)" stroke-width="3" style="transform-box:fill-box;transform-origin:center;animation:ld-rip 1.2s ease-out .85s both"/>
+<circle cx="192" cy="326" r="70" fill="none" stroke="var(--acc)" stroke-width="2" style="transform-box:fill-box;transform-origin:center;animation:ld-rip 1.2s ease-out 1.15s both"/>
+</svg>
+<div class="c" style="gap:10px">
+<div class="ld-in"><svg viewBox="14 2 84 138" width="116" height="191" role="img" aria-label="Hipo, el caballito de mar de Arco Fisio"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M62 22l-4-11M70 20l2-12M77 25l9-9" stroke="var(--acc)" stroke-width="4"/><path d="M62 42C46 56 42 80 56 98c10 12 6 28-8 32-12 3-18-9-8-14" stroke="var(--acc)" stroke-width="15"/><path d="M62 42C46 56 42 80 56 98c10 12 6 28-8 32-12 3-18-9-8-14" stroke="#fff" stroke-width="15" stroke-dasharray="1.6 8" stroke-linecap="butt" opacity=".55"/></g><path d="M60 66C80 62 92 76 86 86 80 96 68 96 62 96Z" fill="var(--acc)" opacity=".5"/><ellipse cx="66" cy="34" rx="16" ry="14" fill="var(--acc)"/><rect x="24" y="33" width="38" height="9" rx="4.5" fill="var(--acc)" transform="rotate(10 60 36)"/><circle cx="70" cy="31" r="3.6" fill="#fff"/><circle cx="70.8" cy="31.2" r="1.7" fill="var(--ink)"/></svg></div>
+<div class="ld-f1" style="font:700 34px 'DM Sans',sans-serif;letter-spacing:-.02em">Arco <span class="it" style="font-size:38px;color:var(--acc2)">Fisio</span></div>
+<div class="ld-f2 it" style="font-size:19px;color:var(--ink2)">tu hombro, a su ritmo</div>
+</div>
+</div>
+</sc-if>
+<div class="cap"><b>Carga · 3,8 s, en cada apertura</b><span>0–0,9 s una gota cae y deja ondas. 0,9–2,8 s la ola sube hasta el nivel de 90°. 2–2,9 s Hipo emerge. 3–3,8 s aparece el nombre. Después, la ola entrega paso a la cara del reloj.</span></div>
+<button class="btn s" onClick="{{replay}}" style="align-self:flex-start">Reproducir otra vez</button>
+</div>
+
+<div class="col">
+<div class="w">
+<svg viewBox="0 0 384 384"><g style="animation:dr 13s linear infinite reverse" opacity=".16"><path fill="var(--water)" d="M-192 338q48-12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g><g style="animation:dr 8s linear infinite" opacity=".3"><path fill="var(--water)" d="M-192 346q48 12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g></svg>
+<div class="c" style="gap:8px;padding-top:6px">
+<svg viewBox="14 2 84 138" width="64" height="105" role="img" aria-label="Hipo"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M62 22l-4-11M70 20l2-12M77 25l9-9" stroke="var(--acc)" stroke-width="4"/><path d="M62 42C46 56 42 80 56 98c10 12 6 28-8 32-12 3-18-9-8-14" stroke="var(--acc)" stroke-width="15"/><path d="M62 42C46 56 42 80 56 98c10 12 6 28-8 32-12 3-18-9-8-14" stroke="#fff" stroke-width="15" stroke-dasharray="1.6 8" stroke-linecap="butt" opacity=".55"/></g><path d="M60 66C80 62 92 76 86 86 80 96 68 96 62 96Z" fill="var(--acc)" opacity=".5"/><ellipse cx="66" cy="34" rx="16" ry="14" fill="var(--acc)"/><rect x="24" y="33" width="38" height="9" rx="4.5" fill="var(--acc)" transform="rotate(10 60 36)"/><circle cx="70" cy="31" r="3.6" fill="#fff"/><circle cx="70.8" cy="31.2" r="1.7" fill="var(--ink)"/></svg>
+<div class="msg" style="font-size:30px">Hola, soy Hipo.</div>
+<div class="sub">Te acompaño a mover tu hombro con calma.</div>
+<a class="btn" href="02-Idioma.html" style="margin-top:4px">Comenzar</a>
+</div>
+</div>
+<div class="cap"><b>Bienvenida · solo la primera vez</b><span>Un saludo y una acción. Al tocar Comenzar, la ola sube un nivel y se pasa a elegir idioma.</span></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":912,"height":720}}'>
+class Component extends DCLogic {
+renderVals() {
+const run = (this.state || {}).run !== false;
+return { run, replay: () => { this.setState({ run: false }); setTimeout(() => this.setState({ run: true }), 90); } };
+}
+}
+</script>
+</body>
+</html>

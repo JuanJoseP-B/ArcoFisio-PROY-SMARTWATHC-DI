@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Sensor y permisos</title>
+<link rel="stylesheet" href="arco.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap">
+</helmet>
+<div class="b lt" style="width:1776px;height:720px">
+<div class="hd"><span class="n">03</span><h1>Sensor y permisos</h1><p>Pedir, recuperar y confirmar</p>
+<div style="margin-left:auto;display:flex;gap:10px;align-items:center"><span class="tl">Marea 2/5</span><span class="tide" style="margin:0"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></div></div>
+
+<div class="row">
+
+<div class="col">
+<div class="w">
+<svg viewBox="0 0 384 384"><g style="animation:dr 13s linear infinite reverse" opacity=".16"><path fill="var(--water)" d="M-192 318q48-12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g><g style="animation:dr 8s linear infinite" opacity=".3"><path fill="var(--water)" d="M-192 326q48 12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g></svg>
+<div class="c" style="gap:6px;padding:0 52px">
+<div style="width:68px;height:68px;border-radius:50%;background:var(--tint);color:var(--acc2);display:flex;align-items:center;justify-content:center"><svg class="ic" viewBox="0 0 24 24" style="width:38px;height:38px"><path d="M3 19h18M5 19a7 7 0 0 1 14 0M12 19l4-6"/></svg></div>
+<div class="msg">Necesito tu sensor</div>
+<div class="sub">Mide la inclinación de tu brazo. Los datos se quedan en este dispositivo.</div>
+<a class="btn" href="#" style="min-width:150px">Permitir</a>
+<a href="#" style="font:700 15px 'DM Sans',sans-serif;color:var(--acc2);min-height:40px;display:inline-flex;align-items:center;text-decoration:none">Ahora no</a>
+</div>
+</div>
+<div class="cap"><b>Solicitar permiso</b><span>Explica para qué sirve antes de pedirlo y dónde quedan los datos.</span></div>
+</div>
+
+<div class="col">
+<div class="w">
+<svg viewBox="0 0 384 384"><g style="animation:dr 13s linear infinite reverse" opacity=".16"><path fill="var(--water)" d="M-192 318q48-12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g><g style="animation:dr 8s linear infinite" opacity=".3"><path fill="var(--water)" d="M-192 326q48 12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g></svg>
+<div class="c" style="gap:6px;padding:0 54px">
+<div style="width:64px;height:64px;border-radius:50%;background:var(--ambert);color:var(--amberd);display:flex;align-items:center;justify-content:center"><svg class="ic" viewBox="0 0 24 24" style="width:34px;height:34px"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.01"/></svg></div>
+<div class="ttl">Permiso denegado</div>
+<div class="sub">Sin el sensor no puedo medir tu ángulo.</div>
+<a class="btn" href="#" style="min-width:170px">Abrir ajustes</a>
+<a class="btn o" href="#" style="min-width:170px">Reintentar</a>
+</div>
+</div>
+<div class="cap"><b>Permiso denegado</b><span>Error recuperable: dos salidas claras, sin culpar a la persona.</span></div>
+</div>
+
+<div class="col">
+<div class="w">
+<svg viewBox="0 0 384 384"><g style="animation:dr 13s linear infinite reverse" opacity=".16"><path fill="var(--water)" d="M-192 318q48-12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g><g style="animation:dr 8s linear infinite" opacity=".3"><path fill="var(--water)" d="M-192 326q48 12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g></svg>
+<div class="c" style="gap:6px;padding:0 52px">
+<div style="width:64px;height:64px;border-radius:50%;background:var(--line);color:var(--ink2);display:flex;align-items:center;justify-content:center"><svg class="ic" viewBox="0 0 24 24" style="width:34px;height:34px"><path d="M3 19h18M5 19a7 7 0 0 1 14 0M12 19l4-6"/><path d="M4 4l16 16"/></svg></div>
+<div class="ttl">Sensor no disponible</div>
+<div class="sub">Este dispositivo no tiene sensor de movimiento. Prueba en otro teléfono.</div>
+<a class="btn" href="#" style="min-width:170px">Reintentar</a>
+<a href="#" style="font:700 15px 'DM Sans',sans-serif;color:var(--acc2);min-height:40px;display:inline-flex;align-items:center;text-decoration:none">Entendido</a>
+</div>
+</div>
+<div class="cap"><b>Sensor no disponible</b><span>Se explica el motivo y se ofrece reintentar. La app no inventa lecturas.</span></div>
+</div>
+
+<div class="col">
+<div class="w">
+<svg viewBox="0 0 384 384"><g style="animation:dr 13s linear infinite reverse" opacity=".16"><path fill="var(--water)" d="M-192 350q48-12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g><g style="animation:dr 8s linear infinite" opacity=".3"><path fill="var(--water)" d="M-192 357q48 12 96 0t96 0t96 0t96 0t96 0t96 0t96 0t96 0V400H-192Z"/></g></svg>
+<svg viewBox="0 0 384 384" fill="none"><path d="M192 362A170 170 0 0 0 192 22" stroke="var(--line)" stroke-width="8" stroke-linecap="round"/><path d="M192 362A170 170 0 0 0 192 22" stroke="var(--ink)" stroke-width="16" stroke-dasharray="1.6 28.07" opacity=".22"/><circle cx="192" cy="362" r="10" fill="var(--mint)" stroke="var(--paper)" stroke-width="4"/></svg>
+<div class="c" style="gap:8px">
+<div class="lbl">Lectura en vivo</div>
+<div class="big" style="font-size:72px">0°</div>
+<span class="pill m"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Sensor listo</span>
+<a class="btn" href="04-Cara.html" style="min-width:150px;margin-top:4px">Continuar</a>
+</div>
+</div>
+<div class="cap"><b>Sensor listo</b><span>Muestra la lectura real para confirmar que responde. La ola sube y se entra a la cara del reloj.</span></div>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1776,"height":720}}'>
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
