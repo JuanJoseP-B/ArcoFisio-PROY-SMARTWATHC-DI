@@ -21,8 +21,10 @@ module AngleMath {
     // against the zero vector (a resting watch reads about 1000 milli-g).
     const MIN_GRAVITY_NORM = 0.000001d;
 
-    // Three components: x, y, z. The unit does not matter (milli-g on the watch).
-    typedef Vec3 as Array<Numeric>;
+    // Three components: x, y, z. The unit does not matter (milli-g on the
+    // watch). Arrays are invariant for the strict type checker, so each
+    // element type in use is listed.
+    typedef Vec3 as Array<Numeric> or Array<Number> or Array<Float> or Array<Double>;
 
     function dot(a as Vec3, b as Vec3) as Double {
         return a[0].toDouble() * b[0].toDouble()

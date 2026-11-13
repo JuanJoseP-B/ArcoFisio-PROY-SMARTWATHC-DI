@@ -1,0 +1,82 @@
+<strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <!-- Spanish. Same ids as resources/strings/strings.xml (English, base). -->
+    <string id="AppName">Arco Fisio</string>
+
+    <!-- Shared -->
+    <string id="DegreesFormat">$1$°</string>
+    <string id="DegreeSign">°</string>
+    <string id="NoValue">--</string>
+
+    <!-- Hints: what START or a tap does on the current screen -->
+    <string id="HintCalibrate">START o toque: calibrar</string>
+    <string id="HintMeasure">START o toque: medir</string>
+    <string id="HintRetry">START o toque: reintentar</string>
+    <string id="HintOptions">START o toque: opciones</string>
+    <string id="HintSwitchSource">START o toque: cambiar fuente</string>
+    <string id="HintTest">START o toque: probar</string>
+    <string id="HintReady">START o toque: estoy listo</string>
+    <string id="HintMeasureRange">START o toque: medir rango</string>
+    <string id="HintCancel">BACK: cancelar</string>
+
+    <!-- Sensor status page (canvas 03) -->
+    <string id="StatusTitle">Sensor</string>
+    <string id="StatusReady">Sensor listo</string>
+    <string id="StatusStarting">Iniciando sensor</string>
+    <string id="StatusUnavailable">Sensor no disponible</string>
+    <string id="StatusLost">Señal perdida</string>
+    <string id="StatusBodyStarting">Esperando la primera lectura.</string>
+    <string id="StatusBodyNotCalibrated">Aún sin calibrar.</string>
+    <string id="StatusBodyCalibrated">Calibrado. Esperando el ángulo.</string>
+    <string id="StatusBodyLive">Lectura en vivo: $1$</string>
+    <string id="StatusBodyLost">Sin lecturas recientes. No se muestra ningún ángulo.</string>
+    <string id="StatusBodyUnavailable">Este reloj no envía lecturas de movimiento.</string>
+
+    <!-- Live angle page (canvas 08, measure range) -->
+    <string id="LiveTitle">Ángulo en vivo</string>
+    <string id="LiveMax">Máximo $1$</string>
+    <string id="LiveNoSignal">Sin señal</string>
+    <string id="LiveNotCalibrated">Calibra primero: brazo abajo será 0°.</string>
+    <string id="MenuTitle">Opciones</string>
+    <string id="MenuResetMax">Reiniciar máximo</string>
+    <string id="MenuRecalibrate">Recalibrar</string>
+
+    <!-- Diagnostics page -->
+    <string id="DiagTitle">Diagnóstico</string>
+    <string id="DiagSourceListener">Fuente: escucha $1$ Hz</string>
+    <string id="DiagSourcePolling">Fuente: sondeo $1$ ms</string>
+    <string id="DiagCadence">Cadencia: $1$ Hz</string>
+    <string id="DiagAge">Edad: $1$ ms</string>
+    <string id="DiagLosses">Pérdidas: $1$</string>
+    <string id="DiagRaw">mg: $1$ / $2$ / $3$</string>
+    <string id="DiagTimeSensor">Tiempo: sensor</string>
+    <string id="DiagTimeEstimated">Tiempo: estimado</string>
+    <string id="DiagTimeRead">Tiempo: de lectura</string>
+    <string id="DiagTimeUnknown">Tiempo: --</string>
+
+    <!-- Tone and vibration page -->
+    <string id="FeedbackTitle">Tono y vibración</string>
+    <string id="FeedbackToneSupported">Tono: disponible</string>
+    <string id="FeedbackToneUnsupported">Tono: no disponible</string>
+    <string id="FeedbackToneMuted">(tonos apagados en el reloj)</string>
+    <string id="FeedbackVibrationSupported">Vibración: disponible</string>
+    <string id="FeedbackVibrationUnsupported">Vibración: no disponible</string>
+    <string id="FeedbackVibrationMuted">(vibración apagada en el reloj)</string>
+    <string id="FeedbackLastNone">Aún sin pruebas</string>
+    <string id="FeedbackLastTone">Tono solicitado</string>
+    <string id="FeedbackLastVibration">Vibración solicitada</string>
+    <string id="FeedbackLastRejected">El reloj rechazó la solicitud</string>
+    <string id="MenuPlayTone">Reproducir tono</string>
+    <string id="MenuVibrate">Vibrar</string>
+
+    <!-- Calibration steps (canvas 08) -->
+    <string id="CalTitle">Calibración</string>
+    <string id="CalInstruction">Deja el brazo abajo, relajado.</string>
+    <string id="CalInstructionDetail">Esa posición será 0°.</string>
+    <string id="CalSeconds">$1$ s</string>
+    <string id="CalHoldStill">Quédate quieto</string>
+    <string id="CalMoved">Te moviste. Empieza de nuevo.</string>
+    <string id="CalNoSignal">Sin señal. Esperando al sensor.</string>
+    <string id="CalDone">Calibrado</string>
+    <string id="CalDoneDetail">Brazo abajo = 0°. Ahora levanta el brazo para medir tu rango.</string>
+    <string id="CalNotStored">Calibrado, pero no se pudo guardar. Se pedirá de nuevo la próxima vez.</string>
+</strings>
