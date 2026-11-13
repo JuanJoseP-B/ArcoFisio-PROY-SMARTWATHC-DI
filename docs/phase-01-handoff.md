@@ -1,6 +1,6 @@
 # Fase 01 · Sensor en el reloj
 
-**Estado:** en curso en `feature/01-v2-watch-sensor`, desde `develop` (`28ac8d3`). La fase 00 ya quedó integrada. El criterio de aceptación de la fase 01 está en `docs/spec-v2.md` §4 y requiere un Forerunner 165 físico.
+**Estado:** prototipo terminado y verificado en el simulador (compilación, 30 pruebas y estado sin sensor); falta la prueba en reloj físico. Rama `feature/01-v2-watch-sensor`, desde `develop` (`28ac8d3`). La fase 00 ya quedó integrada. El criterio de aceptación de la fase 01 está en `docs/spec-v2.md` §4 y requiere un Forerunner 165 físico.
 
 ## Qué quedó implementado
 
@@ -40,4 +40,4 @@ Una vez abierta la ventana, ejecutar primero las pruebas y luego el paquete norm
 - En Diagnóstico, registrar cadencia, edad de muestra, origen del tiempo y pérdidas. Comparar lotes y consulta. Anotar qué sucede si se interrumpen las lecturas y si se perciben el tono y la vibración con los ajustes del reloj activos. Comprobar botones y toque.
 - Conservar las mediciones y decidir si la lectura desde la muñeca es suficientemente repetible para guiar la sesión. La fase queda abierta hasta completar esta prueba.
 
-Usar [phase-01-device-record.md](phase-01-device-record.md) para registrar las condiciones, cada repetición y los resultados de diagnóstico.
+El procedimiento completo para cuando haya reloj está en [sensor-test-plan.md](sensor-test-plan.md). Usar [phase-01-device-record.md](phase-01-device-record.md) para registrar las condiciones, cada repetición y los resultados de diagnóstico.
