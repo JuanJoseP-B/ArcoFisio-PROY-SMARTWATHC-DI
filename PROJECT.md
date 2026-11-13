@@ -4,6 +4,12 @@
 
 _Última actualización: 2026-10-20 · etapas 0–14 mezcladas en `develop` (`v1.0.0`). Falta que el usuario mezcle `develop` en `main` y despliegue en Vercel._
 
+## Replanteamiento v2
+
+El [spec v2](docs/spec-v2.md) define las fases para la app nativa en Garmin Forerunner 165 y la demo web del portafolio con el diseño Marea. El estado que se documenta a continuación corresponde a la versión web v1.
+
+La fase 00 de v2 está en curso en `feature/00-v2-bootstrap`. La compilación Garmin y la apertura de la demo web están verificadas; falta observar la app en el simulador. Ver [continuidad de fase](docs/phase-00-handoff.md).
+
 ## Qué es
 
 Simulador web de un smartwatch de telerrehabilitación del hombro (materia Diseño de Interfaces). El teléfono hace de sensor (inclinación del brazo → ángulo) y de pantalla del reloj. El reloj guía al paciente a **llegar** al ángulo prescrito y **no pasarse**, evitando su arco doloroso, con feedback visual, sonoro y por vibración.
